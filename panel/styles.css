@@ -36,6 +36,9 @@ button { cursor: pointer; }
 .login-card p { color: var(--tenue); line-height: 1.5; }
 .login-card label { display: block; margin: 22px 0 6px; font-size: 12px; font-weight: 600; }
 .login-card input { width: 100%; border: 1px solid var(--linea); border-radius: 9px; padding: 11px; background: #fff; }
+.password-field { position: relative; }
+.password-field input { padding-right: 78px; }
+.login-card .password-toggle { position: absolute; top: 50%; right: 7px; width: auto; margin: 0; transform: translateY(-50%); padding: 6px 9px; border: 0; border-radius: 6px; background: transparent; color: var(--acento); font-size: 12px; }
 .login-card button { width: 100%; margin-top: 14px; padding: 11px; border: 0; border-radius: 9px; background: var(--tinta); color: #fff; font-weight: 600; }
 .form-error { min-height: 20px; margin: 10px 0 0 !important; font-size: 13px; }
 

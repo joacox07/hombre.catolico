@@ -164,6 +164,13 @@
     consultar(); polling = window.setInterval(consultar, 5000);
   }
   function init() {
+    document.getElementById("password-toggle").addEventListener("click", function () {
+      var input = document.getElementById("password");
+      var visible = input.type === "text";
+      input.type = visible ? "password" : "text";
+      this.textContent = visible ? "Mostrar" : "Ocultar";
+      this.setAttribute("aria-pressed", String(!visible));
+    });
     document.getElementById("login-form").addEventListener("submit", function (event) {
       event.preventDefault(); var password = document.getElementById("password").value;
       api("/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: password }) }).then(function () { document.getElementById("password").value = ""; cargarLote(); }).catch(function (error) { document.getElementById("login-error").textContent = error.message; });

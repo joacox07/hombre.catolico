@@ -16,7 +16,10 @@
       <h1>Hombre Católico</h1>
       <p>Ingresá la clave para revisar y descargar los lotes desde tu celular.</p>
       <label for="password">Clave</label>
-      <input id="password" name="password" type="password" autocomplete="current-password" required />
+      <div class="password-field">
+        <input id="password" name="password" type="password" autocomplete="current-password" required />
+        <button class="password-toggle" id="password-toggle" type="button" aria-controls="password" aria-pressed="false">Mostrar</button>
+      </div>
       <button type="submit">Entrar</button>
       <p class="form-error" id="login-error" role="alert"></p>
     </form>
