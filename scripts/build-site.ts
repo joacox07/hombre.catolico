@@ -1,7 +1,6 @@
 /**
- * Arma `site/` para publicar el panel en GitHub Pages (funciona bajo /usuario.github.io/repo/).
- * Copia panel + templates + assets + data a un solo árbol con index.html en la raíz y rutas
- * relativas (SITE_BASE="" y HC_ARTE_BASE="assets/arte/"). El modo local no se toca.
+ * Arma `site/` para Vercel: panel estático + API serverless. El panel consulta el lote vivo
+ * desde GitHub y usa las imágenes del repo remoto, por eso no necesita redeploy por cada lote.
  *
  * Uso:  tsx scripts/build-site.ts   → genera ./site
  */
@@ -11,6 +10,9 @@ import { dirname, resolve, join } from "node:path";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = join(ROOT, "site");
+const OWNER = process.env.GITHUB_OWNER || "joacox07";
+const REPO = process.env.GITHUB_REPO || "hombre.catolico";
+const BRANCH = process.env.GITHUB_BRANCH || "claude/hombre-catolico-instagram-ogg8ao";
 
 async function main() {
   await rm(SITE, { recursive: true, force: true });
@@ -24,7 +26,7 @@ async function main() {
   await cp(join(ROOT, "assets"), join(SITE, "assets"), { recursive: true });
   await cp(join(ROOT, "data"), join(SITE, "data"), { recursive: true });
 
-  // index.html: rutas absolutas → relativas + inyección de la base del sitio.
+  // index.html: rutas absolutas → relativas + inyección de APIs y arte remoto.
   let html = await readFile(join(ROOT, "panel", "index.html"), "utf8");
   html = html
     .replace(/\/templates\//g, "templates/")
@@ -32,7 +34,7 @@ async function main() {
     .replace(/\/panel\/app\.js/g, "app.js")
     .replace(
       '<script src="templates/render.js"></script>',
-      '<script>window.SITE_BASE="";window.HC_ARTE_BASE="assets/arte/";</script>\n<script src="templates/render.js"></script>',
+      `<script>window.SITE_BASE="";window.HC_API_BASE="/api";window.HC_ARTE_BASE=${JSON.stringify(`https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/assets/arte/`)};</script>\n<script src="templates/render.js"></script>`,
     );
   await writeFile(join(SITE, "index.html"), html);
 
@@ -40,10 +42,7 @@ async function main() {
   await copyFile(join(ROOT, "panel", "app.js"), join(SITE, "app.js"));
   await copyFile(join(ROOT, "panel", "styles.css"), join(SITE, "styles.css"));
 
-  // .nojekyll para que Pages sirva archivos que empiezan con _ y no procese Jekyll.
-  await writeFile(join(SITE, ".nojekyll"), "");
-
-  console.log("✓ site/ listo para GitHub Pages");
+  console.log("✓ site/ listo para Vercel");
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

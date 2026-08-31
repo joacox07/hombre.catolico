@@ -1,0 +1,46 @@
+name: Reempaquetar descargas
+run-name: Reempaquetar un lote existente
+
+on:
+  workflow_dispatch:
+    inputs:
+      lote:
+        description: "Ruta del lote (vacío = el más reciente)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  empaquetar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Renderizar y empaquetar
+        env:
+          LOTE: ${{ github.event.inputs.lote }}
+        run: |
+          if [ -n "$LOTE" ]; then
+            ARCHIVO="$LOTE"
+          else
+            ARCHIVO=$(jq -r '.lotes[0].file' data/lotes/index.json)
+          fi
+          npm run empaquetar -- "$ARCHIVO" --render
+          echo "LOTE_ID=$(jq -r '.id // .semana' "$ARCHIVO")" >> "$GITHUB_ENV"
+      - name: Publicar ZIPs del lote
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="lote-${LOTE_ID}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" out/descargas/"$LOTE_ID"/*.zip --clobber
+          else
+            gh release create "$tag" out/descargas/"$LOTE_ID"/*.zip --title "Lote ${LOTE_ID}" --notes "Descargas listas para Instagram."
+          fi

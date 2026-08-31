@@ -16,6 +16,8 @@
     "recuperar": "tsx pipeline/recuperacion.ts",
     "lote": "tsx pipeline/lote.ts",
     "generar": "tsx pipeline/generar.ts",
+    "empaquetar": "tsx scripts/empaquetar-lote.ts",
+    "test": "tsx --test tests/**/*.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

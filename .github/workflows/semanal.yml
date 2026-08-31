@@ -1,4 +1,5 @@
 name: Lote semanal
+run-name: ${{ github.event.inputs.solicitud != '' && format('Lote móvil {0}', github.event.inputs.solicitud) || 'Lote semanal programado' }}
 
 # Corre el empleado IA una vez por semana (y a pedido). Genera el lote con OpenAI (texto +
 # imágenes) + arte de dominio público, renderiza y commitea el resultado para revisar en el panel.
@@ -12,6 +13,10 @@ on:
       cantidad:
         description: "Cuántas piezas generar"
         default: "3"
+      solicitud:
+        description: "Identificador interno del panel móvil"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -39,6 +44,7 @@ jobs:
           IMAGEN_MODEL: ${{ vars.IMAGEN_MODEL }}
           IMAGEN_QUALITY: ${{ vars.IMAGEN_QUALITY }}
           IMAGEN_SIZE: ${{ vars.IMAGEN_SIZE }}
+          LOTE_ID: ${{ github.run_id }}
         run: npm run generar -- ${{ github.event.inputs.cantidad || '3' }}
 
       - name: Commitear el lote
@@ -49,6 +55,22 @@ jobs:
           if git diff --cached --quiet; then
             echo "Sin cambios que commitear."
           else
-            git commit -m "Lote semanal generado por el empleado IA [skip ci]"
+            git commit -m "Lote semanal generado por el empleado IA"
             git push
+          fi
+
+      - name: Empaquetar descargas
+        run: |
+          npm run empaquetar -- --render
+          echo "LOTE_ID=$(jq -r '.lotes[0].id // .lotes[0].semana' data/lotes/index.json)" >> "$GITHUB_ENV"
+
+      - name: Publicar ZIPs del lote
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="lote-${LOTE_ID}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" out/descargas/"$LOTE_ID"/*.zip --clobber
+          else
+            gh release create "$tag" out/descargas/"$LOTE_ID"/*.zip --title "Lote ${LOTE_ID}" --notes "Descargas listas para Instagram."
           fi

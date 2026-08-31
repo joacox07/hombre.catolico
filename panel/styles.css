@@ -19,6 +19,25 @@ body {
   font-size: 15px;
   -webkit-text-size-adjust: 100%;
 }
+button, input { font: inherit; }
+button { cursor: pointer; }
+.primary, .secondary, .download {
+  border: 1px solid transparent; border-radius: 9px; padding: 9px 12px; font-size: 13px; font-weight: 600;
+}
+.primary, .download { background: var(--tinta); color: #fff; }
+.primary:disabled { opacity: .55; cursor: wait; }
+.secondary { background: transparent; color: var(--tenue); border-color: var(--linea); }
+.eyebrow { margin: 0 0 2px; color: var(--acento); font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.generation-status { max-width: 900px; margin: 0 auto; padding: 8px 16px; color: var(--tenue); font-size: 13px; min-height: 34px; }
+.generation-status.error, .form-error { color: var(--alto); }
+.login-shell { min-height: 100svh; display: grid; place-items: center; padding: 24px; background: radial-gradient(circle at top, #e9dfce, var(--bg) 46%); }
+.login-card { width: min(100%, 390px); background: var(--panel); border: 1px solid var(--linea); border-radius: 16px; padding: 28px; box-shadow: 0 18px 40px rgba(45, 38, 29, .08); }
+.login-card h1 { font: 600 34px/1.1 "Cormorant Garamond", Georgia, serif; margin: 0 0 10px; }
+.login-card p { color: var(--tenue); line-height: 1.5; }
+.login-card label { display: block; margin: 22px 0 6px; font-size: 12px; font-weight: 600; }
+.login-card input { width: 100%; border: 1px solid var(--linea); border-radius: 9px; padding: 11px; background: #fff; }
+.login-card button { width: 100%; margin-top: 14px; padding: 11px; border: 0; border-radius: 9px; background: var(--tinta); color: #fff; font-weight: 600; }
+.form-error { min-height: 20px; margin: 10px 0 0 !important; font-size: 13px; }
 
 /* ---------- Topbar ---------- */
 .topbar {
@@ -103,6 +122,8 @@ body {
 .meta .row { padding: 10px 0; border-top: 1px solid var(--linea); }
 .meta .k { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--tenue); margin-bottom: 4px; }
 .meta .v { font-size: 14px; line-height: 1.5; }
+.meta .acciones { display: flex; gap: 8px; margin: 14px 0 2px; }
+.download { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
 .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; }
 .badge.estado { background: #efe9dd; color: var(--tinta); }
 .badge.aprobado { background: #e5efe2; color: var(--ok); }

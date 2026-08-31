@@ -3,27 +3,45 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Panel visor — @hombre.catolico</title>
+<title>Mesa editorial — @hombre.catolico</title>
 <link rel="stylesheet" href="/templates/tokens.css" />
 <link rel="stylesheet" href="/templates/pieza.css" />
 <link rel="stylesheet" href="/panel/styles.css" />
 <script src="/templates/render.js"></script>
 </head>
 <body>
-  <div class="topbar">
-    <h1>Panel visor</h1>
-    <span class="sub" id="lote-info">cargando…</span>
-    <span class="grow"></span>
-    <span class="aviso">Modo lectura · estética v2 · fondos procedurales hasta cargar arte en assets/arte/</span>
-  </div>
-  <div class="layout">
-    <aside class="sidebar">
-      <h2>Lote de la semana</h2>
-      <div id="lista"></div>
-    </aside>
-    <main class="main">
-      <div id="detalle" class="post-wrap"></div>
-    </main>
+  <section class="login-shell" id="login-shell" hidden>
+    <form class="login-card" id="login-form">
+      <p class="eyebrow">Mesa editorial</p>
+      <h1>Hombre Católico</h1>
+      <p>Ingresá la clave para revisar y descargar los lotes desde tu celular.</p>
+      <label for="password">Clave</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required />
+      <button type="submit">Entrar</button>
+      <p class="form-error" id="login-error" role="alert"></p>
+    </form>
+  </section>
+  <div id="app-shell" hidden>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Mesa editorial</p>
+        <h1>@hombre.catolico</h1>
+      </div>
+      <span class="sub" id="lote-info">Cargando lote…</span>
+      <span class="grow"></span>
+      <button class="secondary" id="logout" type="button">Salir</button>
+      <button class="primary" id="generar" type="button">Generar 3 piezas</button>
+    </header>
+    <p class="generation-status" id="generation-status" aria-live="polite"></p>
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Lote actual</h2>
+        <div id="lista"></div>
+      </aside>
+      <main class="main">
+        <div id="detalle" class="post-wrap"></div>
+      </main>
+    </div>
   </div>
   <script src="/panel/app.js"></script>
 </body>

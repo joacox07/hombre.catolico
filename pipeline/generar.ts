@@ -86,6 +86,7 @@ async function main() {
   const ctx = await contextoSemanal(n);
   if (ctx.sugerencia.length === 0) throw new Error("No hay temas candidatos en el backlog.");
   const semana = semanaISO();
+  const corrida = process.env.LOTE_ID ? `${semana}-${process.env.LOTE_ID}` : undefined;
   const sys = await systemRedaccion();
   const concilio = await leerTxt(".claude/skills/revisor-sacerdote/SKILL.md");
 
@@ -147,7 +148,7 @@ async function main() {
   execFileSync("npx", ["tsx", "scripts/render.ts", ...rutas], { cwd: ROOT, stdio: "inherit" });
 
   // 7. Ensamblar lote + memoria
-  const file = await ensamblarLote({ semana, nombre: `Lote ${semana}`, piezas: specPiezas as any });
+  const file = await ensamblarLote({ semana, id: corrida, nombre: `Lote ${semana}`, piezas: specPiezas as any });
   console.log(`\n✓ Lote listo: ${file} · ${specPiezas.length} piezas · nada publicado (revisá en el panel).`);
 }
 

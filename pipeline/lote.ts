@@ -14,18 +14,20 @@ import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve, join } from "node:path";
 import type { Backlog, Registro, RegistroPieza } from "./tipos.ts";
+import { archivoLote, idLote } from "./lote-id.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const leer = async <T>(rel: string): Promise<T> => JSON.parse(await readFile(join(ROOT, rel), "utf8")) as T;
 const escribir = (rel: string, obj: unknown) => writeFile(join(ROOT, rel), JSON.stringify(obj, null, 2) + "\n");
 
 interface SpecPieza { ref: string; fecha_propuesta: string; estado?: string; revisor?: unknown; }
-interface Spec { semana: string; nombre?: string; piezas: SpecPieza[]; }
+interface Spec { semana: string; id?: string; nombre?: string; piezas: SpecPieza[]; }
 
 export async function ensamblarLote(spec: Spec): Promise<string> {
   const registro = await leer<Registro>("data/registro.json");
   const backlog = await leer<Backlog>("data/backlog.json");
   const ahora = new Date().toISOString();
+  const loteId = idLote(spec.semana, spec.id);
 
   // Construir el lote y registrar cada pieza.
   const piezasLote = [];
@@ -45,7 +47,7 @@ export async function ensamblarLote(spec: Spec): Promise<string> {
 
     // Memoria: append al registro (evita repetir tema/fuentes).
     const entrada: RegistroPieza = {
-      id: `${pieza.id}-${spec.semana}`,
+      id: `${pieza.id}-${loteId}`,
       tema: temaId,
       pilar: pieza.pilar,
       santos: pieza.santos || (pieza.slides ? [] : []),
@@ -63,9 +65,10 @@ export async function ensamblarLote(spec: Spec): Promise<string> {
     if (t && t.estado === "backlog") t.estado = "generado";
   }
 
-  const file = `data/lotes/lote-${spec.semana}.json`;
+  const file = archivoLote(loteId);
   await mkdir(join(ROOT, "data", "lotes"), { recursive: true });
   await escribir(file, {
+    id: loteId,
     nombre: spec.nombre || `Lote ${spec.semana}`,
     semana: spec.semana,
     generado: ahora.slice(0, 10),
@@ -73,10 +76,10 @@ export async function ensamblarLote(spec: Spec): Promise<string> {
   });
 
   // Índice de lotes (más nuevo primero).
-  let index: { lotes: Array<{ file: string; nombre: string; semana: string; generado: string }> } = { lotes: [] };
+  let index: { lotes: Array<{ id?: string; file: string; nombre: string; semana: string; generado: string }> } = { lotes: [] };
   if (existsSync(join(ROOT, "data/lotes/index.json"))) index = await leer("data/lotes/index.json");
-  index.lotes = index.lotes.filter((l) => l.semana !== spec.semana);
-  index.lotes.unshift({ file: "/" + file, nombre: spec.nombre || `Lote ${spec.semana}`, semana: spec.semana, generado: ahora.slice(0, 10) });
+  index.lotes = index.lotes.filter((l) => (l.id || l.semana) !== loteId);
+  index.lotes.unshift({ id: loteId, file: "/" + file, nombre: spec.nombre || `Lote ${spec.semana}`, semana: spec.semana, generado: ahora.slice(0, 10) });
   await escribir("data/lotes/index.json", index);
 
   // Persistir memoria + backlog.
