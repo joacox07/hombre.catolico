@@ -13,5 +13,5 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["scripts/**/*.ts", "pipeline/**/*.ts", "panel/**/*.ts"]
+  "include": ["scripts/**/*.ts", "pipeline/**/*.ts"]
 }

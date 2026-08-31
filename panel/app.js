@@ -2,7 +2,8 @@
    Reutiliza el render real (window.HC) de templates/render.js: la previsualización es la pieza. */
 (function () {
   "use strict";
-  var LOTE = "/data/lotes/lote-demo.json";
+  var LOTE_FALLBACK = "/data/lotes/lote-demo.json";
+  var INDICE = "/data/lotes/index.json";
   var MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
   var ICON = {
     like: '<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-10-9.3C.6 9 1.7 5.7 4.8 5.1 7 4.7 8.8 6 12 9c3.2-3 5-4.3 7.2-3.9 3.1.6 4.2 3.9 2.8 6.6C19.5 16.1 12 21 12 21z"/></svg>',
@@ -166,8 +167,19 @@
 
   function render() { renderLista(); renderDetalle(); }
 
+  // Resuelve qué lote cargar: ?lote=archivo.json → ese; si no, el más nuevo del índice; si no, el demo.
+  function resolverLote() {
+    var qs = new URLSearchParams(location.search).get("lote");
+    if (qs) return Promise.resolve(qs.indexOf("/") === 0 ? qs : "/data/lotes/" + qs);
+    return fetch(INDICE)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (idx) { return (idx && idx.lotes && idx.lotes[0]) ? idx.lotes[0].file : LOTE_FALLBACK; })
+      .catch(function () { return LOTE_FALLBACK; });
+  }
+
   function init() {
-    fetch(LOTE)
+    resolverLote()
+      .then(function (loteUrl) { return fetch(loteUrl); })
       .then(function (r) { return r.json(); })
       .then(function (l) {
         lote = l;

@@ -1,0 +1,4 @@
+{
+  "descripcion": "Memoria del empleado: todo lo que ya se generó/publicó. El pipeline lo lee ANTES de elegir temas para no repetirse. Append por pieza.",
+  "piezas": []
+}
