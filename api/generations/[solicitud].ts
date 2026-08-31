@@ -1,8 +1,7 @@
-import type { ServerResponse } from "node:http";
-import { estadoGeneracion } from "../_lib/github.ts";
-import { requiereSesion, responder, type ApiRequest } from "../_lib/http.ts";
+import { estadoGeneracion } from "../_lib/github.js";
+import { requiereSesion, responder } from "../_lib/http.js";
 
-export default async function handler(req: ApiRequest, res: ServerResponse) {
+export default async function handler(req: any, res: any) {
   if (req.method !== "GET") return responder(res, 405, { error: "Método no permitido." });
   if (!requiereSesion(req, res)) return;
   const solicitud = req.query?.solicitud;

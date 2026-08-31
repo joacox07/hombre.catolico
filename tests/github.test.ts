@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { buscarCorrida } from "../api/_lib/github.ts";
+import { buscarCorrida } from "../api/_lib/github.js";
 
 test("encuentra sólo la corrida móvil solicitada", () => {
   const corrida = buscarCorrida("movil-abc", [

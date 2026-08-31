@@ -1,8 +1,7 @@
-import type { ServerResponse } from "node:http";
-import { coincideSecreto, crearSesion } from "./_lib/auth.ts";
-import { borrarSesion, cuerpoJson, cookieSesion, responder, type ApiRequest } from "./_lib/http.ts";
+import { coincideSecreto, crearSesion } from "./_lib/auth.js";
+import { borrarSesion, cuerpoJson, cookieSesion, responder } from "./_lib/http.js";
 
-export default async function handler(req: ApiRequest, res: ServerResponse) {
+export default async function handler(req: any, res: any) {
   if (req.method === "DELETE") {
     borrarSesion(res);
     responder(res, 200, { ok: true });
@@ -13,7 +12,7 @@ export default async function handler(req: ApiRequest, res: ServerResponse) {
     return;
   }
   try {
-    const { password } = await cuerpoJson<{ password?: string }>(req);
+    const { password } = await cuerpoJson(req) as { password?: string };
     const esperada = process.env.PANEL_PASSWORD;
     const secreto = process.env.SESSION_SECRET;
     if (!esperada || !secreto) throw new Error("Panel sin configurar.");

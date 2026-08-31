@@ -1,9 +1,8 @@
 import { randomUUID } from "node:crypto";
-import type { ServerResponse } from "node:http";
-import { dispararGeneracion } from "../_lib/github.ts";
-import { requiereSesion, responder, type ApiRequest } from "../_lib/http.ts";
+import { dispararGeneracion } from "../_lib/github.js";
+import { requiereSesion, responder } from "../_lib/http.js";
 
-export default async function handler(req: ApiRequest, res: ServerResponse) {
+export default async function handler(req: any, res: any) {
   if (req.method !== "POST") return responder(res, 405, { error: "Método no permitido." });
   if (!requiereSesion(req, res)) return;
   const solicitud = `movil-${randomUUID()}`;

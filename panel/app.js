@@ -19,7 +19,9 @@
   function api(path, options) {
     return fetch(API + path, Object.assign({ credentials: "same-origin" }, options || {})).then(function (res) {
       return res.text().then(function (text) {
-        var data = text ? JSON.parse(text) : {};
+        var data = {};
+        try { data = text ? JSON.parse(text) : {}; }
+        catch (_) { data = { error: res.ok ? "El servidor devolvió una respuesta inválida." : "El servidor devolvió un error. Intentá de nuevo." }; }
         if (!res.ok) { var err = new Error(data.error || "No se pudo completar la acción."); err.status = res.status; throw err; }
         return data;
       });

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { coincideSecreto, crearSesion, leerSesion } from "../api/_lib/auth.ts";
+import { coincideSecreto, crearSesion, leerSesion } from "../api/_lib/auth.js";
 
 test("acepta una sesión firmada antes de su vencimiento", () => {
   const ahora = 1_700_000_000_000;
