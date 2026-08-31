@@ -1,5 +1,6 @@
 /* Panel visor — UI de herramienta, mobile-first (se usa sobre todo desde el celular). */
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 :root {
   --bg: #f4f2ee;
   --panel: #ffffff;
@@ -127,6 +128,10 @@ button { cursor: pointer; }
 .meta .v { font-size: 14px; line-height: 1.5; }
 .meta .acciones { display: flex; gap: 8px; margin: 14px 0 2px; }
 .download { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+.caption-editor { margin: 14px 0 2px; padding-top: 12px; border-top: 1px solid var(--linea); }
+.caption-editor textarea { width: 100%; min-height: 170px; resize: vertical; border: 1px solid var(--linea); border-radius: 9px; padding: 10px; color: var(--tinta); background: #faf8f4; font: 14px/1.45 "DM Sans", "Inter", -apple-system, "Segoe UI", sans-serif; white-space: pre-wrap; }
+.caption-editor button { margin-top: 8px; }
+.copy-status { min-height: 18px; margin: 7px 0 0; color: var(--ok); font-size: 12px; }
 .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; }
 .badge.estado { background: #efe9dd; color: var(--tinta); }
 .badge.aprobado { background: #e5efe2; color: var(--ok); }

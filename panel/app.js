@@ -43,11 +43,16 @@
   function mostrarLogin(mensaje) {
     document.getElementById("app-shell").hidden = true;
     document.getElementById("login-shell").hidden = false;
+    document.getElementById("login-form").reset();
+    var input = document.getElementById("password"), toggle = document.getElementById("password-toggle");
+    input.type = "password"; toggle.textContent = "Mostrar"; toggle.setAttribute("aria-pressed", "false");
     document.getElementById("login-error").textContent = mensaje || "";
+    window.scrollTo(0, 0);
   }
   function mostrarPanel() {
     document.getElementById("login-shell").hidden = true;
     document.getElementById("app-shell").hidden = false;
+    window.scrollTo(0, 0);
   }
   function estadoGeneracion(texto, error) {
     var el = document.getElementById("generation-status");
@@ -89,9 +94,11 @@
     }).join("");
     var fuentes = (pieza.fuentes || []).map(function (f) { return '<span class="chip">' + esc(f) + "</span>"; }).join("");
     var descarga = API && lote && lote.id ? '<div class="acciones"><a class="download" href="' + esc(API + "/downloads/" + encodeURIComponent(lote.id) + "/" + encodeURIComponent(pieza.id)) + '">Descargar ZIP</a></div>' : "";
+    var caption = (pieza.caption || "").trim();
+    var editorCaption = caption ? '<div class="caption-editor"><div class="k">Descripción para Instagram</div><textarea readonly aria-label="Descripción para Instagram">' + esc(caption) + '</textarea><button class="secondary" type="button">Copiar descripción</button><p class="copy-status" aria-live="polite"></p></div>' : "";
     var metaEl = document.createElement("div"); metaEl.className = "meta";
     metaEl.innerHTML = "<h3>" + esc(pieza.titulo || pieza.tema || pieza.id) + "</h3>" +
-      '<div class="tema">' + esc((pieza.pilar ? pieza.pilar + " · " : "") + (pieza.tema || "")) + "</div>" + descarga +
+      '<div class="tema">' + esc((pieza.pilar ? pieza.pilar + " · " : "") + (pieza.tema || "")) + "</div>" + descarga + editorCaption +
       '<div class="row"><div class="k">Estado</div><div class="v">' + badge(meta.estado) + "</div></div>" +
       '<div class="row"><div class="k">Fecha propuesta</div><div class="v">' + esc(fechaLinda(meta.fecha_propuesta)) + "</div></div>" +
       '<div class="row"><div class="k">Revisor sacerdote</div><div class="v">' + badge(rev.veredicto) +
@@ -99,8 +106,27 @@
       '<div class="row"><div class="k">Citas verificadas</div><div class="v">' + (rev.citas_verificadas ? "Sí" : '<span class="warn-line">No — verificar antes de publicar</span>') + "</div></div>" +
       (clasif ? '<div class="row"><div class="k">Clasificación doctrinal</div>' + clasif + "</div>" : "") +
       (fuentes ? '<div class="row"><div class="k">Fuentes</div><div class="v">' + fuentes + "</div></div>" : "");
+    if (caption) {
+      var areaCaption = metaEl.querySelector("textarea"), botonCopiar = metaEl.querySelector(".caption-editor button"), estadoCopiado = metaEl.querySelector(".copy-status");
+      botonCopiar.addEventListener("click", function () { copiarDescripcion(caption, areaCaption, estadoCopiado); });
+    }
     var cont = document.getElementById("detalle"); cont.innerHTML = ""; cont.appendChild(post); cont.appendChild(metaEl);
     pintarMedia(); pintarCaption();
+  }
+  function copiarDescripcion(texto, area, estado) {
+    function seleccionar() {
+      area.focus(); area.select(); area.setSelectionRange(0, texto.length);
+    }
+    function fallback() {
+      seleccionar();
+      try {
+        if (document.execCommand("copy")) { estado.textContent = "Descripción copiada."; return; }
+      } catch (_) {}
+      estado.textContent = "Descripción seleccionada. Copiala desde el menú.";
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(texto).then(function () { estado.textContent = "Descripción copiada."; }).catch(fallback);
+    } else fallback();
   }
   function escalarMedia() {
     var media = document.getElementById("media"), canvas = media && media.querySelector(".hc-canvas");

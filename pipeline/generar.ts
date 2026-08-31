@@ -16,6 +16,7 @@ import { verificarCitas } from "./verificar.ts";
 import { resolverArte } from "./arte.ts";
 import { ensamblarLote } from "./lote.ts";
 import { chat } from "./openai.ts";
+import { captionLista } from "./caption.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const leerTxt = (rel: string) => readFile(join(ROOT, rel), "utf8");
@@ -78,6 +79,13 @@ async function systemRedaccion(): Promise<string> {
     "  madera a la luz de una vela'; oración: 'un hombre arrodillado en una capilla en penumbra';",
     "  fortaleza: 'un soldado medieval en oración antes de la batalla'), SIN santos identificables y SIN texto.",
     "- El `titulo` de portada y el fondo tienen que 'conversar': elegí una imagen que haga sentido con el gancho.",
+    "",
+    "REGLA DE CAPTION — OBLIGATORIA en cada pieza:",
+    "- Escribí en español, listo para copiar y pegar en Instagram.",
+    "- Abrí con un gancho breve; desarrollá la idea en 1-2 párrafos claros, fieles a las fichas.",
+    "- Cerrá con UN CTA orgánico y variable: guardar, compartir o comentar. No prometas envíos, recursos, mensajes privados ni automatizaciones.",
+    "- Terminá con una línea separada de 3 a 5 hashtags en español, específicos al tema y sin hashtags genéricos de relleno.",
+    "- No agregues citas textuales, datos ni afirmaciones doctrinales que no estén respaldados por las fichas.",
   ].join("\n");
 }
 
@@ -103,8 +111,16 @@ async function main() {
       // 1. Redacción anclada
       const userRedaccion = `TEMA: ${tema.titulo} (pilar ${tema.pilar}, formato ${tema.formato}, ${tema.sensible ? "SENSIBLE" : "normal"}).\n` +
         `FICHAS DISPONIBLES (única fuente citable):\n${JSON.stringify(fichas, null, 2)}`;
-      const contenido = jsonSeguro<any>(await chat(sys, userRedaccion, { json: true }), null);
-      if (!contenido || !Array.isArray(contenido.slides)) throw new Error("el modelo no devolvió una pieza válida");
+      let contenido: any = null;
+      for (let intento = 0; intento < 2; intento++) {
+        const pedido = intento === 0 ? userRedaccion : userRedaccion + "\n\nLa respuesta anterior no incluyó una caption válida. Reintentá y cumplí exactamente la regla de caption.";
+        const candidato = jsonSeguro<any>(await chat(sys, pedido, { json: true }), null);
+        if (candidato && Array.isArray(candidato.slides) && captionLista(candidato.caption)) {
+          contenido = candidato;
+          break;
+        }
+      }
+      if (!contenido) throw new Error("el modelo no devolvió una pieza con slides y caption válida");
       const pieza: any = { id: tema.id, tema: tema.titulo, pilar: tema.pilar, tipo: tema.formato, santos: tema.santos, nivel: tema.nivel, ...contenido };
 
       // 2. Concilio (criterio) + 3. verificación de citas (determinista)
