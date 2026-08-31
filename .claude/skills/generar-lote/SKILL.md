@@ -10,6 +10,11 @@ Sos el empleado que produce el contenido de la semana para @hombre.catolico. Tra
 escribir nada, consultás la memoria. Nada que generes se publica solo; queda en el panel para
 que una persona lo apruebe.
 
+> **Versión automática (producción):** el mismo procedimiento está codificado en
+> `pipeline/generar.ts` y corre solo con **`npm run generar`** en GitHub Actions (OpenAI para
+> texto e imágenes). Este documento es la referencia del criterio; si lo corrés a mano como
+> agente, seguí los pasos igual.
+
 ## Insumos que gobiernan tu trabajo
 
 - `manual/` — identidad, **guía de voz** (anti red-pill), **taxonomía doctrina/opinión**,

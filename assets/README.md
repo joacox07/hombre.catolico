@@ -2,8 +2,15 @@
 
 ## Arte (`assets/arte/`)
 
-Solo **arte de dominio público**, con procedencia registrada. Por cada obra, un archivo
-`.json` hermano con los metadatos:
+El pipeline guarda el arte de cada pieza acá, con procedencia en un `.json` hermano:
+- `assets/arte/descargado/` — obras de **dominio público** bajadas por el pipeline (Wikimedia,
+  etc.), con su procedencia y licencia.
+- `assets/arte/generado/` — fondos **generados por IA** (`gpt-image-1`), con el **prompt**
+  registrado. No son obra histórica; nunca se presentan como tal.
+- Sueltas en `assets/arte/` — obras **curadas a mano** por vos.
+
+La pieza decide su imagen con un `arte_plan` (`{ fuente: "descarga"|"ia"|"curada", query|prompt|archivo }`);
+`pipeline/arte.ts` lo resuelve y setea `pieza.arte`. Formato del `.json` de procedencia:
 
 ```json
 {

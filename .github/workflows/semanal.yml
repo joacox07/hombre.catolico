@@ -1,0 +1,54 @@
+name: Lote semanal
+
+# Corre el empleado IA una vez por semana (y a pedido). Genera el lote con OpenAI (texto +
+# imágenes) + arte de dominio público, renderiza y commitea el resultado para revisar en el panel.
+# NADA se publica en Instagram: el output es el lote a la espera de aprobación humana.
+
+on:
+  schedule:
+    - cron: "0 12 * * 1" # lunes 12:00 UTC
+  workflow_dispatch:
+    inputs:
+      cantidad:
+        description: "Cuántas piezas generar"
+        default: "3"
+
+permissions:
+  contents: write
+
+jobs:
+  generar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - run: npm ci
+
+      - name: Instalar Chromium (Playwright)
+        run: npx playwright install --with-deps chromium
+
+      - name: Generar el lote
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_TEXT_MODEL: ${{ vars.OPENAI_TEXT_MODEL }}
+          IMAGEN_MODEL: ${{ vars.IMAGEN_MODEL }}
+          IMAGEN_QUALITY: ${{ vars.IMAGEN_QUALITY }}
+          IMAGEN_SIZE: ${{ vars.IMAGEN_SIZE }}
+        run: npm run generar -- ${{ github.event.inputs.cantidad || '3' }}
+
+      - name: Commitear el lote
+        run: |
+          git config user.name "hombre-catolico-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data/ assets/arte/ || true
+          if git diff --cached --quiet; then
+            echo "Sin cambios que commitear."
+          else
+            git commit -m "Lote semanal generado por el empleado IA [skip ci]"
+            git push
+          fi
