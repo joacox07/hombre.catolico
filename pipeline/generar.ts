@@ -65,8 +65,19 @@ async function systemRedaccion(): Promise<string> {
      "caption":"...", "fuentes":["idFicha"],
      "clasificacion_doctrinal":[{"afirmacion":"...","nivel":1,"etiqueta":"..."}],
      "revision_humana": false,
-     "arte_plan": { "fuente":"descarga"|"ia", "query":"(si descarga: obra PD, autor)", "prompt":"(si ia: escena atmosférica, SIN santos identificables)" } }`,
-    "Para un santo real / obra famosa usá arte_plan.descarga; para una atmósfera inexistente, arte_plan.ia.",
+     "arte_plan": { "fuente":"descarga"|"ia", "query":"(si descarga)", "prompt":"(si ia)" } }`,
+    "",
+    "REGLA DE IMAGEN (arte_plan) — OBLIGATORIA en cada pieza. Pensá con criterio qué imagen",
+    "acompaña mejor a ESTE tema; la imagen debe reforzar el mensaje, no ser al azar:",
+    "- Si el tema tiene un santo real, una escena bíblica/histórica o una obra famosa →",
+    "  fuente:'descarga' con `query` en INGLÉS, con AUTOR + OBRA concretos (da mejores resultados):",
+    "  ej. 'Georges de La Tour Saint Joseph the carpenter', 'Rembrandt apostle Paul', 'Caravaggio Saint Jerome writing',",
+    "  'Guido Reni Saint Michael archangel', 'El Greco Christ'.",
+    "- Si el tema es una virtud o idea abstracta sin obra obvia → fuente:'ia' con `prompt` de una",
+    "  ESCENA ATMOSFÉRICA simbólica y coherente con el tema (ej. trabajo: 'un carpintero trabajando la",
+    "  madera a la luz de una vela'; oración: 'un hombre arrodillado en una capilla en penumbra';",
+    "  fortaleza: 'un soldado medieval en oración antes de la batalla'), SIN santos identificables y SIN texto.",
+    "- El `titulo` de portada y el fondo tienen que 'conversar': elegí una imagen que haga sentido con el gancho.",
   ].join("\n");
 }
 
