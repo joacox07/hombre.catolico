@@ -54,7 +54,7 @@ export async function dispararGeneracion(solicitud: string): Promise<void> {
 }
 
 export function buscarCorrida(solicitud: string, corridas: Run[]): { estado: string; resultado: string | null; url: string } | null {
-  const corrida = corridas.find((item) => item.display_title?.includes(solicitud));
+  const corrida = corridas.find((item) => item.display_title === `Lote móvil ${solicitud}`);
   return corrida ? {
     estado: corrida.status || "queued",
     resultado: corrida.conclusion || null,

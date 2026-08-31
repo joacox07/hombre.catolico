@@ -86,7 +86,7 @@ async function main() {
   const ctx = await contextoSemanal(n);
   if (ctx.sugerencia.length === 0) throw new Error("No hay temas candidatos en el backlog.");
   const semana = semanaISO();
-  const corrida = process.env.LOTE_ID ? `${semana}-${process.env.LOTE_ID}` : undefined;
+  const corrida = process.env.LOTE_ID || undefined;
   const sys = await systemRedaccion();
   const concilio = await leerTxt(".claude/skills/revisor-sacerdote/SKILL.md");
 

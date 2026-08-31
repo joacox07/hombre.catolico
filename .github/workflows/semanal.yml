@@ -21,6 +21,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: generar-lote-hombre-catolico
+  cancel-in-progress: false
+
 jobs:
   generar:
     runs-on: ubuntu-latest

@@ -14,3 +14,9 @@ test("encuentra sólo la corrida móvil solicitada", () => {
 test("informa cuando la corrida aún no aparece en GitHub", () => {
   assert.equal(buscarCorrida("movil-abc", []), null);
 });
+
+test("no confunde una solicitud con otra que comparte prefijo", () => {
+  assert.equal(buscarCorrida("movil-abc", [
+    { display_title: "Lote móvil movil-abc-extra", status: "completed", conclusion: "success", html_url: "otra" },
+  ]), null);
+});
