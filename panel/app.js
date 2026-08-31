@@ -119,11 +119,20 @@
     pintarCaption();
   }
 
+  // Escala el lienzo (1080×1350) al ancho real del contenedor: fluido en cualquier pantalla.
+  function escalarMedia() {
+    var media = document.getElementById("media");
+    if (!media) return;
+    var c = media.querySelector(".hc-canvas");
+    if (c) c.style.transform = "scale(" + (media.clientWidth / 1080) + ")";
+  }
+
   function pintarMedia() {
     var it = items[sel], pieza = it.pieza, total = slideCount(pieza);
     var media = document.getElementById("media");
     media.innerHTML = "";
     media.appendChild(canvasFor(pieza, slide));
+    escalarMedia();
     if (total > 1) {
       var prev = document.createElement("button");
       prev.className = "nav prev"; prev.textContent = "‹"; prev.disabled = slide === 0;
@@ -201,5 +210,6 @@
       });
   }
 
+  window.addEventListener("resize", escalarMedia);
   init();
 })();
