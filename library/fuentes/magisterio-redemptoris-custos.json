@@ -1,0 +1,18 @@
+{
+  "id": "magisterio-redemptoris-custos",
+  "tipo": "Magisterio",
+  "titulo_fuente": "Exhortación apostólica Redemptoris Custos",
+  "autor": "San Juan Pablo II",
+  "referencia_exacta": "Redemptoris Custos, n. 8",
+  "enlace": "https://www.vatican.va/content/john-paul-ii/es/apost_exhortations/documents/hf_jp-ii_exh_15081989_redemptoris-custos.html",
+  "fragmento_textual": "PENDIENTE — pegar el fragmento verbatim de la sección citada desde vaticano.va.",
+  "traduccion": "",
+  "afirmacion_que_sostiene": "El trabajo cotidiano de José fue expresión de amor y participación en la obra de la salvación: la paternidad y el trabajo ocultos son camino de santidad.",
+  "clasificacion_doctrinal": { "nivel": 2, "etiqueta": "Magisterio (exhortación apostólica)" },
+  "contexto": "Documento central sobre San José. Fuente principal para el eje del proyecto: paternidad, trabajo, silencio, custodia. Elegir y verificar los fragmentos concretos antes de citar.",
+  "temas_asociados": ["san-jose", "paternidad", "trabajo", "custodia", "silencio"],
+  "pilares": ["Fe", "Deber", "Familia"],
+  "santos_asociados": ["San José"],
+  "verificado": false,
+  "nota_verificacion": "Falta pegar el verbatim exacto del número citado. Fuente oficial: vaticano.va."
+}

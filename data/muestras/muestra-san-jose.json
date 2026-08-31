@@ -1,0 +1,70 @@
+{
+  "id": "san-jose-fuerza-sin-espectaculo",
+  "tipo": "carrusel",
+  "pilar": "Fe",
+  "tema": "San José: fuerza sin espectáculo",
+  "titulo": "La fuerza de San José no necesitaba testigos",
+  "slides": [
+    {
+      "tipo": "portada",
+      "kicker": "San José",
+      "titulo": "La fuerza de San José no necesitaba testigos",
+      "subtitulo": "La virilidad que el mundo no aplaude"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "El planteo",
+      "titulo": "El hombre fuerte del Evangelio no dice una palabra",
+      "cuerpo": "José está en los momentos decisivos de la infancia de Jesús. Y en todo el Evangelio no se registra de él ni una sola frase. Se lo conoce por lo que hace, no por lo que dice.",
+      "fuente": "Cf. Mt 1–2 · Sagrada Escritura"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Obediencia",
+      "titulo": "Su fortaleza fue obedecer sin demora",
+      "cuerpo": "«Despertado José del sueño, hizo como el ángel del Señor le había mandado.» No discute ni exige explicaciones: escucha a Dios y actúa.",
+      "fuente": "Mt 1,24 · Sagrada Escritura"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Trabajo",
+      "titulo": "Custodió con las manos, no con discursos",
+      "cuerpo": "Protegió y proveyó a la Sagrada Familia con su trabajo callado de artesano. La provisión y la custodia se demuestran; no se proclaman.",
+      "fuente": "Cf. Redemptoris Custos, n. 8 · Magisterio"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Una distinción",
+      "titulo": "Fuerte no es lo mismo que duro",
+      "cuerpo": "La fortaleza es una virtud cardinal: sostiene el bien aunque cueste. La dureza es un defecto. José fue firme y manso a la vez: eso es hombría cristiana.",
+      "fuente": "Cf. Catecismo, sobre la virtud de la fortaleza"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Para vos",
+      "titulo": "La virilidad se mide en lo que sostenés",
+      "cuerpo": "¿Dónde te toca hoy ser fuerte sin que nadie lo vea? Cumplir tu deber, sostener a los tuyos, callar cuando el orgullo quiere hablar.",
+      "fuente": ""
+    },
+    {
+      "tipo": "cierre",
+      "titulo": "Fe firme · carácter · sacrificio",
+      "cuerpo": "San José, varón justo y custodio silencioso: enseñanos a ser fuertes sin espectáculo.",
+      "fuentes": [
+        "Mt 1,24 · Sagrada Escritura",
+        "Redemptoris Custos, n. 8 · Magisterio (por verificar)"
+      ],
+      "cta": "Guardalo para tu oración y compartilo con un hermano."
+    }
+  ],
+  "caption": "San José está en los momentos decisivos del Evangelio y no pronuncia una sola palabra. Su fuerza no era ruido: era obediencia a Dios, trabajo callado y custodia de los suyos.\n\nEl mundo confunde fortaleza con dureza. José muestra lo contrario: firme y manso a la vez. Esa es la virilidad que no busca aplauso.\n\nFuentes: Mt 1,24 (Sagrada Escritura); San Juan Pablo II, Redemptoris Custos, n. 8 (Magisterio).\n\n✠ Guardalo para tu oración y compartilo con un hermano que lo necesite.",
+  "fuentes": ["escritura-mt-1-24", "magisterio-redemptoris-custos"],
+  "clasificacion_doctrinal": [
+    { "afirmacion": "José obedece a Dios en silencio y actúa", "nivel": 1, "etiqueta": "Sagrada Escritura" },
+    { "afirmacion": "Su trabajo y custodia son camino de santidad", "nivel": 2, "etiqueta": "Magisterio (por verificar)" },
+    { "afirmacion": "Fortaleza no es dureza", "nivel": 2, "etiqueta": "Catecismo (referencia general)" }
+  ],
+  "revision_humana": false,
+  "estado": "muestra",
+  "nota": "Pieza de ejemplo (gold sample) para plantillas y render. Antes de publicarla, verificar las fichas Redemptoris Custos y la referencia a la fortaleza en el Catecismo."
+}

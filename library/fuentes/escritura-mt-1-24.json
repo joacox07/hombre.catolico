@@ -1,0 +1,18 @@
+{
+  "id": "escritura-mt-1-24",
+  "tipo": "Escritura",
+  "titulo_fuente": "Evangelio según San Mateo",
+  "autor": "San Mateo",
+  "referencia_exacta": "Mt 1,24",
+  "enlace": "https://www.vatican.va/archive/ESL0506/__PVU.HTM",
+  "fragmento_textual": "Despertado José del sueño, hizo como el ángel del Señor le había mandado, y recibió a su mujer.",
+  "traduccion": "POR CONFIRMAR — semilla orientativa. Recomendado: Biblia Torres Amat (católica, dominio público).",
+  "afirmacion_que_sostiene": "San José obedece a Dios sin decir una palabra: su fortaleza es silenciosa y obediente. Modelo de obediencia y responsabilidad, no de protagonismo.",
+  "clasificacion_doctrinal": { "nivel": 1, "etiqueta": "Sagrada Escritura" },
+  "contexto": "San José no pronuncia ni una palabra en el Evangelio; se lo conoce por sus obras. Base para el eje 'silencio, fortaleza, obediencia' de la figura central de la cuenta.",
+  "temas_asociados": ["san-jose", "obediencia", "silencio", "responsabilidad"],
+  "pilares": ["Fe", "Deber"],
+  "santos_asociados": ["San José"],
+  "verificado": false,
+  "nota_verificacion": "Confirmar verbatim y traducción de referencia."
+}

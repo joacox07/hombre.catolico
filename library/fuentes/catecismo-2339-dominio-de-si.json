@@ -1,0 +1,18 @@
+{
+  "id": "catecismo-2339-dominio-de-si",
+  "tipo": "Catecismo",
+  "titulo_fuente": "Catecismo de la Iglesia Católica",
+  "autor": "",
+  "referencia_exacta": "CIC 2339",
+  "enlace": "https://www.vatican.va/archive/catechism_sp/p3s2c2a6_sp.html",
+  "fragmento_textual": "La castidad supone el aprendizaje del dominio de sí, que es una pedagogía de la libertad humana. La alternativa es clara: o el hombre gobierna sus pasiones y encuentra la paz, o se deja dominar por ellas y se hace desdichado.",
+  "traduccion": "",
+  "afirmacion_que_sostiene": "El dominio de sí es una pedagogía de la libertad: gobernar las pasiones libera; ser gobernado por ellas esclaviza. Fundamento para castidad, templanza, pureza y autodominio.",
+  "clasificacion_doctrinal": { "nivel": 2, "etiqueta": "Catecismo / Magisterio" },
+  "contexto": "Del capítulo sobre el sexto mandamiento. Encuadra la castidad y el autodominio como camino de libertad y felicidad, no como represión. Útil para pureza masculina, templanza y dominio propio sin caer en tono de culpa aplastante.",
+  "temas_asociados": ["castidad", "dominio-propio", "templanza", "pureza", "libertad"],
+  "pilares": ["Virtud"],
+  "santos_asociados": [],
+  "verificado": false,
+  "nota_verificacion": "Confirmar verbatim contra la edición oficial del CIC en vaticano.va."
+}

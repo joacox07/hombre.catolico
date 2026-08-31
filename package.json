@@ -1,0 +1,23 @@
+{
+  "name": "hombre-catolico",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Sistema de contenido para la cuenta @hombre.catolico",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "render:sample": "tsx scripts/render.ts --sample",
+    "render": "tsx scripts/render.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "playwright": "^1.49.0"
+  }
+}

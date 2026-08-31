@@ -1,0 +1,19 @@
+# dependencias
+node_modules/
+
+# salidas de render
+out/
+*.png.tmp
+
+# secretos y config local
+.env
+.env.local
+*.key
+
+# sistema
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+npm-debug.log*

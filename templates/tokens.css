@@ -1,0 +1,55 @@
+/* Tokens de diseño — @hombre.catolico
+   Fuente única de verdad para color y tipografía. Plantillas y panel importan de acá. */
+
+:root {
+  /* Paleta */
+  --carbon:        #201D19;
+  --tabaco:        #4B4034;
+  --bronce:        #927B5C;
+  --pergamino:     #E7DED0;
+  --oliva:         #555949;
+  --vino:          #6A4841;
+
+  /* Roles semánticos */
+  --fondo-oscuro:  var(--carbon);
+  --fondo-claro:   var(--pergamino);
+  --texto-claro:   var(--pergamino);
+  --texto-oscuro:  var(--carbon);
+  --acento:        var(--bronce);
+  --apoyo:         var(--oliva);
+
+  /* Tipografía */
+  --serif:  "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif;
+  --sans:   "DM Sans", "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Dimensiones de pieza (Instagram) */
+  --pieza-w: 1080px;
+  --pieza-h: 1350px; /* 4:5 vertical */
+}
+
+/* Carga de fuentes locales (colocar los .woff2 en assets/fonts/).
+   Si faltan, el stack de fallback mantiene la pieza legible. */
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("../assets/fonts/CormorantGaramond-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("../assets/fonts/CormorantGaramond-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Sans";
+  src: url("../assets/fonts/DMSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Sans";
+  src: url("../assets/fonts/DMSans-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}

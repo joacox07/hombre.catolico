@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hombre.catolico/library/schema.json",
+  "title": "Ficha de fuente",
+  "type": "object",
+  "required": [
+    "id",
+    "tipo",
+    "titulo_fuente",
+    "referencia_exacta",
+    "fragmento_textual",
+    "afirmacion_que_sostiene",
+    "clasificacion_doctrinal",
+    "verificado"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "Identificador único en kebab-case"
+    },
+    "tipo": {
+      "type": "string",
+      "enum": [
+        "Escritura",
+        "Catecismo",
+        "Magisterio",
+        "Derecho",
+        "Padres",
+        "Doctores/Santos",
+        "Autores espirituales",
+        "Opinión"
+      ]
+    },
+    "titulo_fuente": { "type": "string", "minLength": 1 },
+    "autor": { "type": "string" },
+    "referencia_exacta": { "type": "string", "minLength": 1 },
+    "enlace": { "type": "string", "format": "uri" },
+    "fragmento_textual": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Texto exacto y verbatim citable"
+    },
+    "traduccion": {
+      "type": "string",
+      "description": "Versión/traducción (relevante para Escritura)"
+    },
+    "afirmacion_que_sostiene": { "type": "string", "minLength": 1 },
+    "clasificacion_doctrinal": {
+      "type": "object",
+      "required": ["nivel", "etiqueta"],
+      "additionalProperties": false,
+      "properties": {
+        "nivel": { "type": "integer", "minimum": 1, "maximum": 7 },
+        "etiqueta": { "type": "string" }
+      }
+    },
+    "contexto": { "type": "string" },
+    "temas_asociados": { "type": "array", "items": { "type": "string" } },
+    "pilares": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["Fe", "Virtud", "Deber", "Familia"] }
+    },
+    "santos_asociados": { "type": "array", "items": { "type": "string" } },
+    "verificado": {
+      "type": "boolean",
+      "description": "true solo cuando una persona confirmó texto y referencia"
+    },
+    "nota_verificacion": { "type": "string" }
+  }
+}

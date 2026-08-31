@@ -1,0 +1,18 @@
+{
+  "id": "magisterio-laborem-exercens",
+  "tipo": "Magisterio",
+  "titulo_fuente": "Carta encíclica Laborem Exercens",
+  "autor": "San Juan Pablo II",
+  "referencia_exacta": "Laborem Exercens (sobre el trabajo humano)",
+  "enlace": "https://www.vatican.va/content/john-paul-ii/es/encyclicals/documents/hf_jp-ii_enc_14091981_laborem-exercens.html",
+  "fragmento_textual": "PENDIENTE — pegar el fragmento verbatim de la sección citada desde vaticano.va.",
+  "traduccion": "",
+  "afirmacion_que_sostiene": "El trabajo humano tiene valor y dignidad, y es camino de santificación; por él el hombre participa de la obra del Creador.",
+  "clasificacion_doctrinal": { "nivel": 2, "etiqueta": "Magisterio (encíclica)" },
+  "contexto": "Encíclica de referencia sobre el trabajo. Para el pilar Deber: trabajo como vocación y santificación, responsabilidad, no como mero medio de estatus o dinero. Verificar los fragmentos concretos.",
+  "temas_asociados": ["trabajo", "deber", "vocacion", "disciplina"],
+  "pilares": ["Deber"],
+  "santos_asociados": [],
+  "verificado": false,
+  "nota_verificacion": "Falta pegar el verbatim exacto del número citado. Fuente oficial: vaticano.va."
+}
