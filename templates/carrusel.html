@@ -2,155 +2,20 @@
 <html lang="es">
 <head>
 <meta charset="utf-8" />
-<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="/templates/tokens.css" />
+<link rel="stylesheet" href="/templates/pieza.css" />
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { background: #111; }
-
-  /* Lienzo de una diapositiva a resolución Instagram 4:5 */
-  #canvas {
-    position: relative;
-    width: var(--pieza-w);
-    height: var(--pieza-h);
-    overflow: hidden;
-    color: var(--texto-claro);
-    font-family: var(--sans);
-    background: var(--carbon);
-  }
-
-  /* Capa de imagen (arte) + velo para legibilidad */
-  .arte {
-    position: absolute; inset: 0;
-    background-size: cover; background-position: center;
-    /* Fallback elegante si no hay obra cargada aún */
-    background-image:
-      radial-gradient(120% 80% at 50% 15%, #5a4d3d 0%, #2b251e 55%, #201d19 100%);
-  }
-  .velo {
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(32,29,25,.15) 0%, rgba(32,29,25,.35) 45%, rgba(32,29,25,.86) 100%);
-  }
-  .marco {
-    position: absolute; inset: 44px;
-    border: 1.5px solid rgba(231,222,208,.28);
-  }
-
-  .contenido {
-    position: absolute; inset: 0;
-    padding: 104px 96px;
-    display: flex; flex-direction: column;
-  }
-
-  .cruz { font-family: var(--serif); font-size: 40px; color: var(--acento); opacity: .9; }
-
-  .kicker {
-    font-family: var(--sans); font-weight: 500;
-    letter-spacing: .22em; text-transform: uppercase;
-    font-size: 22px; color: var(--acento);
-  }
-
-  .titulo {
-    font-family: var(--serif); font-weight: 600;
-    line-height: 1.04; letter-spacing: .01em;
-    color: var(--pergamino);
-  }
-  .portada .titulo { font-size: 104px; }
-  .contenido-slide .titulo { font-size: 68px; }
-
-  .subtitulo {
-    font-family: var(--serif); font-style: italic; font-weight: 500;
-    font-size: 40px; color: rgba(231,222,208,.86); line-height: 1.25;
-  }
-
-  .cuerpo {
-    font-family: var(--sans); font-weight: 400;
-    font-size: 40px; line-height: 1.42; color: rgba(231,222,208,.92);
-  }
-
-  .fuente {
-    font-family: var(--sans); font-weight: 500;
-    font-size: 26px; color: var(--acento); line-height: 1.4;
-  }
-  .credito {
-    font-family: var(--sans); font-size: 20px;
-    color: rgba(231,222,208,.55); letter-spacing: .04em;
-  }
-  .fila { display: flex; align-items: baseline; gap: 16px; }
-  .grow { flex: 1; }
-  .push { margin-top: auto; }
-  .gap-s { margin-top: 20px; }
-  .gap-m { margin-top: 32px; }
-  .gap-l { margin-top: 56px; }
-  .lista-fuentes { display: flex; flex-direction: column; gap: 12px; }
-  .marca {
-    font-family: var(--serif); font-size: 26px; letter-spacing: .06em;
-    color: rgba(231,222,208,.7);
-  }
 </style>
+<script src="/templates/render.js"></script>
 </head>
 <body>
-  <div id="canvas"></div>
-
+  <div id="canvas" class="hc-canvas"></div>
 <script>
-  const esc = (s) => String(s ?? "").replace(/[&<>]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[c]));
-
-  // Renderiza UNA diapositiva de la pieza en #canvas. El script de render la llama por índice.
+  // La plantilla renderiza UNA diapositiva por vez; el script de render la llama por índice.
   window.renderSlide = function (pieza, index) {
-    const canvas = document.getElementById("canvas");
-    const slide = pieza.slides[index];
-    const arteUrl = pieza.arte && pieza.arte.archivo
-      ? `../assets/arte/${pieza.arte.archivo}` : null;
-    const bg = arteUrl ? `background-image:url('${esc(arteUrl)}')` : "";
-
-    let inner = "";
-    if (slide.tipo === "portada") {
-      inner = `
-        <div class="arte" style="${bg}"></div>
-        <div class="velo"></div>
-        <div class="marco"></div>
-        <div class="contenido portada">
-          <div class="fila"><span class="cruz">✠</span></div>
-          <div class="push"></div>
-          ${slide.kicker ? `<div class="kicker">${esc(slide.kicker)}</div>` : ""}
-          <h1 class="titulo gap-s">${esc(slide.titulo)}</h1>
-          ${slide.subtitulo ? `<p class="subtitulo gap-m">${esc(slide.subtitulo)}</p>` : ""}
-          <div class="gap-l fila">
-            <span class="marca grow">@hombre.catolico</span>
-            ${slide.credito_obra ? `<span class="credito">${esc(slide.credito_obra)}</span>` : ""}
-          </div>
-        </div>`;
-    } else if (slide.tipo === "cierre") {
-      const fuentes = (slide.fuentes || []).map(f => `<div class="fuente">${esc(f)}</div>`).join("");
-      inner = `
-        <div class="arte" style="${bg};filter:saturate(.7) brightness(.5)"></div>
-        <div class="velo" style="background:linear-gradient(180deg,rgba(32,29,25,.82),rgba(32,29,25,.92))"></div>
-        <div class="marco"></div>
-        <div class="contenido contenido-slide">
-          <div class="fila"><span class="cruz">✠</span></div>
-          ${slide.titulo ? `<h2 class="titulo gap-m" style="font-size:56px">${esc(slide.titulo)}</h2>` : ""}
-          ${slide.cuerpo ? `<p class="cuerpo gap-m">${esc(slide.cuerpo)}</p>` : ""}
-          <div class="push"></div>
-          <div class="kicker">Fuentes</div>
-          <div class="lista-fuentes gap-s">${fuentes}</div>
-          ${slide.cta ? `<p class="subtitulo gap-m" style="font-size:34px">${esc(slide.cta)}</p>` : ""}
-          <div class="gap-m"><span class="marca">@hombre.catolico</span></div>
-        </div>`;
-    } else { // contenido
-      inner = `
-        <div class="arte" style="background-image:radial-gradient(120% 80% at 50% 20%, #4b4034 0%, #2b251e 60%, #201d19 100%)"></div>
-        <div class="marco"></div>
-        <div class="contenido contenido-slide">
-          ${slide.kicker ? `<div class="kicker">${esc(slide.kicker)}</div>` : ""}
-          ${slide.titulo ? `<h2 class="titulo gap-s">${esc(slide.titulo)}</h2>` : ""}
-          <p class="cuerpo gap-m grow">${esc(slide.cuerpo)}</p>
-          ${slide.fuente ? `<div class="fuente gap-m">${esc(slide.fuente)}</div>` : ""}
-          <div class="gap-s fila">
-            <span class="credito grow">${esc((index + 1) + " · " + (pieza.slides.length))}</span>
-            <span class="marca" style="font-size:22px">@hombre.catolico</span>
-          </div>
-        </div>`;
-    }
-    canvas.innerHTML = inner;
+    document.getElementById("canvas").innerHTML = window.HC.slideHTML(pieza, index);
   };
 </script>
 </body>

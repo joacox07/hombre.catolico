@@ -1,0 +1,29 @@
+{
+  "nombre": "Lote de muestra",
+  "semana": "2026-W36",
+  "generado": "2026-08-31",
+  "piezas": [
+    {
+      "ref": "/data/muestras/muestra-san-jose.json",
+      "fecha_propuesta": "2026-09-02 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "aprobado",
+        "citas_verificadas": false,
+        "requiere_revision_humana": false,
+        "nota": "Tono y doctrina en orden. Antes de publicar: verificar las fichas Redemptoris Custos y la referencia a la fortaleza en el Catecismo."
+      }
+    },
+    {
+      "ref": "/data/muestras/muestra-cita-1cor.json",
+      "fecha_propuesta": "2026-09-04 12:30",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "corregir",
+        "citas_verificadas": false,
+        "requiere_revision_humana": false,
+        "nota": "Confirmar la traducción de referencia (recomendado: Torres Amat, dominio público) antes de publicar."
+      }
+    }
+  ]
+}

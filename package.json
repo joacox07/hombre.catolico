@@ -10,6 +10,7 @@
   "scripts": {
     "render:sample": "tsx scripts/render.ts --sample",
     "render": "tsx scripts/render.ts",
+    "panel": "tsx scripts/serve.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

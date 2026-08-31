@@ -1,0 +1,107 @@
+/* Panel visor — UI de herramienta (neutra a propósito; la estética de marca vive en las piezas). */
+* { box-sizing: border-box; }
+:root {
+  --bg: #f4f2ee;
+  --panel: #ffffff;
+  --linea: #e3ded4;
+  --tinta: #23201c;
+  --tenue: #7c766c;
+  --acento: #927b5c;
+  --ok: #4f7a4f;
+  --warn: #9a6a2f;
+  --alto: #a24a3d;
+}
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--tinta);
+  font-family: "DM Sans", "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+.topbar {
+  display: flex; align-items: baseline; gap: 16px;
+  padding: 16px 24px; border-bottom: 1px solid var(--linea); background: var(--panel);
+}
+.topbar h1 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 24px; margin: 0; font-weight: 600; }
+.topbar .sub { color: var(--tenue); font-size: 13px; }
+.topbar .grow { flex: 1; }
+.topbar .aviso { color: var(--tenue); font-size: 12px; font-style: italic; }
+
+.layout { display: grid; grid-template-columns: 300px 1fr; min-height: calc(100vh - 58px); }
+
+/* Sidebar: lista del lote */
+.sidebar { border-right: 1px solid var(--linea); background: var(--panel); padding: 12px; overflow-y: auto; }
+.sidebar h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--tenue); margin: 8px 6px 12px; }
+.pieza-card {
+  display: flex; gap: 12px; align-items: center; padding: 10px; border-radius: 12px;
+  cursor: pointer; border: 1px solid transparent; margin-bottom: 6px;
+}
+.pieza-card:hover { background: #faf8f4; }
+.pieza-card.activa { background: #f2ede3; border-color: var(--linea); }
+.pieza-card .thumb {
+  width: 46px; height: 58px; border-radius: 8px; overflow: hidden; flex: 0 0 auto;
+  background: #201d19; position: relative;
+}
+.pieza-card .thumb .hc-canvas { transform: scale(0.0426); transform-origin: top left; }
+.pieza-card .info { min-width: 0; }
+.pieza-card .tit { font-weight: 500; line-height: 1.25; }
+.pieza-card .meta-min { color: var(--tenue); font-size: 12px; margin-top: 2px; }
+
+/* Main: post + metadatos */
+.main { padding: 28px; display: flex; justify-content: center; overflow-y: auto; }
+.post-wrap { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+
+.ig-post { width: 420px; background: var(--panel); border: 1px solid var(--linea); border-radius: 8px; overflow: hidden; }
+.ig-head { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
+.ig-avatar {
+  width: 34px; height: 34px; border-radius: 50%; flex: 0 0 auto;
+  background: radial-gradient(circle at 30% 30%, #927b5c, #4b4034);
+  color: #e7ded0; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
+}
+.ig-head .u { font-weight: 600; font-size: 13px; }
+.ig-head .u small { display: block; font-weight: 400; color: var(--tenue); font-size: 11px; }
+.ig-head .dots { margin-left: auto; color: var(--tinta); letter-spacing: 2px; }
+
+.ig-media { position: relative; width: 420px; height: 525px; background: #201d19; overflow: hidden; }
+.ig-media .hc-canvas { transform: scale(0.388889); transform-origin: top left; }
+.ig-media .nav {
+  position: absolute; top: 50%; transform: translateY(-50%); width: 30px; height: 30px;
+  border-radius: 50%; background: rgba(255,255,255,.85); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; color: #23201c; font-size: 16px;
+}
+.ig-media .nav.prev { left: 10px; } .ig-media .nav.next { right: 10px; }
+.ig-media .nav:disabled { opacity: 0; pointer-events: none; }
+.ig-media .contador {
+  position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,.55); color: #fff;
+  font-size: 11px; padding: 3px 8px; border-radius: 10px;
+}
+.ig-dots { display: flex; gap: 5px; justify-content: center; padding: 10px 0 4px; }
+.ig-dots i { width: 6px; height: 6px; border-radius: 50%; background: #cfc8bb; }
+.ig-dots i.on { background: var(--acento); }
+
+.ig-actions { display: flex; gap: 16px; padding: 4px 12px 2px; }
+.ig-actions .sp { flex: 1; }
+.ig-actions svg { width: 24px; height: 24px; stroke: var(--tinta); fill: none; stroke-width: 1.8; }
+.ig-caption { padding: 6px 12px 14px; line-height: 1.4; }
+.ig-caption .u { font-weight: 600; margin-right: 6px; }
+.ig-caption .txt { white-space: pre-wrap; }
+.ig-caption .mas { color: var(--tenue); cursor: pointer; }
+.ig-caption .fecha { display: block; color: var(--tenue); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; margin-top: 8px; }
+
+/* Panel de metadatos */
+.meta { width: 340px; background: var(--panel); border: 1px solid var(--linea); border-radius: 12px; padding: 16px 18px; }
+.meta h3 { margin: 0 0 4px; font-size: 15px; }
+.meta .tema { color: var(--tenue); font-size: 13px; margin-bottom: 14px; }
+.meta .row { padding: 10px 0; border-top: 1px solid var(--linea); }
+.meta .k { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--tenue); margin-bottom: 4px; }
+.meta .v { font-size: 13px; line-height: 1.45; }
+.badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+.badge.estado { background: #efe9dd; color: var(--tinta); }
+.badge.aprobado { background: #e5efe2; color: var(--ok); }
+.badge.corregir { background: #f4ecdc; color: var(--warn); }
+.badge.revision_humana, .badge.rechazado { background: #f3e2df; color: var(--alto); }
+.chip { display: inline-block; background: #f2ede3; border: 1px solid var(--linea); border-radius: 8px; padding: 2px 8px; font-size: 12px; margin: 0 4px 4px 0; }
+.nivel { color: var(--acento); font-weight: 600; }
+.warn-line { color: var(--warn); }

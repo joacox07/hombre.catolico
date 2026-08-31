@@ -2,67 +2,19 @@
 <html lang="es">
 <head>
 <meta charset="utf-8" />
-<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="/templates/tokens.css" />
+<link rel="stylesheet" href="/templates/pieza.css" />
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { background: #111; }
-  #canvas {
-    position: relative;
-    width: var(--pieza-w); height: var(--pieza-h);
-    overflow: hidden; color: var(--texto-claro);
-    font-family: var(--sans); background: var(--carbon);
-  }
-  .arte {
-    position: absolute; inset: 0;
-    background-size: cover; background-position: center;
-    background-image: radial-gradient(110% 75% at 50% 12%, #5a4d3d 0%, #2b251e 58%, #201d19 100%);
-  }
-  .velo { position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(32,29,25,.30), rgba(32,29,25,.55) 50%, rgba(32,29,25,.9)); }
-  .marco { position: absolute; inset: 44px; border: 1.5px solid rgba(231,222,208,.28); }
-  .contenido { position: absolute; inset: 0; padding: 120px 100px; display: flex; flex-direction: column; }
-  .cruz { font-family: var(--serif); font-size: 44px; color: var(--acento); }
-  .comilla { font-family: var(--serif); font-size: 150px; line-height: .5; color: var(--acento); opacity: .5; height: 70px; }
-  .cita {
-    font-family: var(--serif); font-weight: 500; font-style: italic;
-    font-size: 80px; line-height: 1.16; color: var(--pergamino);
-  }
-  .autor {
-    font-family: var(--sans); font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
-    font-size: 30px; color: var(--acento);
-  }
-  .fuente { font-family: var(--sans); font-size: 26px; color: rgba(231,222,208,.6); letter-spacing: .03em; }
-  .marca { font-family: var(--serif); font-size: 28px; letter-spacing: .06em; color: rgba(231,222,208,.7); }
-  .push { margin-top: auto; }
-  .gap-s { margin-top: 18px; } .gap-m { margin-top: 34px; } .gap-l { margin-top: 60px; }
-  .fila { display: flex; align-items: baseline; gap: 16px; } .grow { flex: 1; }
 </style>
+<script src="/templates/render.js"></script>
 </head>
 <body>
-  <div id="canvas"></div>
+  <div id="canvas" class="hc-canvas cita"></div>
 <script>
-  const esc = (s) => String(s ?? "").replace(/[&<>]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[c]));
-  // Pieza tipo "cita": { cita, autor, fuente, arte?, credito_obra? }
   window.renderCita = function (pieza) {
-    const c = document.getElementById("canvas");
-    const bg = pieza.arte && pieza.arte.archivo ? `background-image:url('../assets/arte/${esc(pieza.arte.archivo)}')` : "";
-    c.innerHTML = `
-      <div class="arte" style="${bg}"></div>
-      <div class="velo"></div>
-      <div class="marco"></div>
-      <div class="contenido">
-        <div class="fila"><span class="cruz">✠</span></div>
-        <div class="push"></div>
-        <div class="comilla">&ldquo;</div>
-        <blockquote class="cita gap-s">${esc(pieza.cita)}</blockquote>
-        <div class="autor gap-l">${esc(pieza.autor)}</div>
-        ${pieza.fuente ? `<div class="fuente gap-s">${esc(pieza.fuente)}</div>` : ""}
-        <div class="push"></div>
-        <div class="fila">
-          <span class="marca grow">@hombre.catolico</span>
-          ${pieza.credito_obra ? `<span class="fuente">${esc(pieza.credito_obra)}</span>` : ""}
-        </div>
-      </div>`;
+    document.getElementById("canvas").innerHTML = window.HC.citaHTML(pieza);
   };
 </script>
 </body>
