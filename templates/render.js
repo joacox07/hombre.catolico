@@ -18,10 +18,15 @@
       return "<p>" + emph(p.replace(/\n/g, " ")) + "</p>";
     }).join("");
   }
+  // Base de las imágenes de arte. Por defecto ruta absoluta (local, servidor en la raíz);
+  // en GitHub Pages el panel setea window.HC_ARTE_BASE = "assets/arte/" (relativa a la URL).
+  function arteBase() {
+    return (typeof window !== "undefined" && window.HC_ARTE_BASE) || "/assets/arte/";
+  }
   // Capa de tratamiento común. arte = {archivo?} de la pieza.
   function layers(arte) {
     var bg = arte && arte.archivo
-      ? '<div class="capa arte" style="background-image:url(\'/assets/arte/' + esc(arte.archivo) + '\')"></div>'
+      ? '<div class="capa arte" style="background-image:url(\'' + arteBase() + esc(arte.archivo) + '\')"></div>'
       : '<div class="capa arte proc"></div>';
     return bg + '<div class="capa grade"></div><div class="capa vineta"></div><div class="capa grano"></div>';
   }

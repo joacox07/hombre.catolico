@@ -2,6 +2,10 @@
    Reutiliza el render real (window.HC) de templates/render.js: la previsualización es la pieza. */
 (function () {
   "use strict";
+  // Base del sitio. Local (servidor en la raíz) = "/". En GitHub Pages el build setea
+  // window.SITE_BASE = "" y sirve index.html en la raíz del sitio → rutas relativas.
+  var BASE = (typeof window.SITE_BASE !== "undefined") ? window.SITE_BASE : "/";
+  function url(p) { return BASE + String(p).replace(/^\//, ""); }
   var LOTE_FALLBACK = "/data/lotes/lote-demo.json";
   var INDICE = "/data/lotes/index.json";
   var MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
@@ -171,7 +175,7 @@
   function resolverLote() {
     var qs = new URLSearchParams(location.search).get("lote");
     if (qs) return Promise.resolve(qs.indexOf("/") === 0 ? qs : "/data/lotes/" + qs);
-    return fetch(INDICE)
+    return fetch(url(INDICE))
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (idx) { return (idx && idx.lotes && idx.lotes[0]) ? idx.lotes[0].file : LOTE_FALLBACK; })
       .catch(function () { return LOTE_FALLBACK; });
@@ -179,14 +183,14 @@
 
   function init() {
     resolverLote()
-      .then(function (loteUrl) { return fetch(loteUrl); })
+      .then(function (loteUrl) { return fetch(url(loteUrl)); })
       .then(function (r) { return r.json(); })
       .then(function (l) {
         lote = l;
         document.getElementById("lote-info").textContent =
           l.nombre + " · " + l.semana + " · " + l.piezas.length + " piezas";
         return Promise.all(l.piezas.map(function (p) {
-          return fetch(p.ref).then(function (r) { return r.json(); }).then(function (pieza) {
+          return fetch(url(p.ref)).then(function (r) { return r.json(); }).then(function (pieza) {
             return { meta: p, pieza: pieza };
           });
         }));

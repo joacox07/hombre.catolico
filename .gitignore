@@ -5,6 +5,9 @@ node_modules/
 out/
 *.png.tmp
 
+# build del sitio para Pages (se genera en CI)
+site/
+
 # secretos y config local
 .env
 .env.local

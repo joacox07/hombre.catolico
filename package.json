@@ -11,6 +11,7 @@
     "render:sample": "tsx scripts/render.ts --sample",
     "render": "tsx scripts/render.ts",
     "panel": "tsx scripts/serve.ts",
+    "build:site": "tsx scripts/build-site.ts",
     "estado": "tsx pipeline/estado.ts",
     "recuperar": "tsx pipeline/recuperacion.ts",
     "lote": "tsx pipeline/lote.ts",
