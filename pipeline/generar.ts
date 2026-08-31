@@ -30,6 +30,18 @@ function semanaISO(d = new Date()): string {
   return `${t.getUTCFullYear()}-W${String(week).padStart(2, "0")}`;
 }
 
+/** Parsea JSON aunque venga envuelto en ```json ... ``` o con texto alrededor. */
+function jsonSeguro<T>(s: string, fallback: T): T {
+  try {
+    const limpio = s.replace(/```json\s*|\s*```/g, "").trim();
+    const ini = limpio.indexOf("{");
+    const fin = limpio.lastIndexOf("}");
+    return JSON.parse(ini >= 0 && fin > ini ? limpio.slice(ini, fin + 1) : limpio) as T;
+  } catch {
+    return fallback;
+  }
+}
+
 async function systemRedaccion(): Promise<string> {
   const [voz, doctrina, formato, estetica] = await Promise.all([
     leerTxt("manual/01-voz.md"), leerTxt("manual/02-doctrina-y-opinion.md"),
@@ -72,45 +84,52 @@ async function main() {
   let dia = 2; // fechas propuestas escalonadas (mié/vie/dom orientativo)
 
   for (const { tema } of ctx.sugerencia) {
-    console.log(`\n▶ ${tema.id} — ${tema.titulo}`);
-    const fichas = (await recuperar([tema.id]))[tema.id];
-
-    // 1. Redacción anclada
-    const userRedaccion = `TEMA: ${tema.titulo} (pilar ${tema.pilar}, formato ${tema.formato}, ${tema.sensible ? "SENSIBLE" : "normal"}).\n` +
-      `FICHAS DISPONIBLES (única fuente citable):\n${JSON.stringify(fichas, null, 2)}`;
-    const contenido = JSON.parse(await chat(sys, userRedaccion, { json: true }));
-    const pieza: any = { id: tema.id, tema: tema.titulo, pilar: tema.pilar, tipo: tema.formato, santos: tema.santos, nivel: tema.nivel, ...contenido };
-
-    // 2. Concilio (criterio) + 3. verificación de citas (determinista)
-    const veredicto = JSON.parse(await chat(
-      concilio + "\n\nDevolvé SOLO el JSON del veredicto.",
-      `PIEZA:\n${JSON.stringify(pieza)}\n\nFICHAS:\n${JSON.stringify(fichas)}`,
-      { json: true },
-    ));
-    const chequeo = verificarCitas(pieza, fichas);
-    const revisor = {
-      veredicto: veredicto.veredicto || "revision_humana",
-      citas_verificadas: chequeo.ok,
-      requiere_revision_humana: tema.sensible || !chequeo.ok || veredicto.requiere_revision_humana === true,
-      nota: veredicto.nota || "",
-      citas: chequeo.citas,
-    };
-
-    // 4. Arte (descarga PD o IA)
     try {
-      await resolverArte(pieza);
-    } catch (e) {
-      console.warn(`  ⚠ arte falló (${String(e).slice(0, 120)}); se usa fondo procedural.`);
-    }
+      console.log(`\n▶ ${tema.id} — ${tema.titulo}`);
+      const fichas = (await recuperar([tema.id]))[tema.id];
 
-    // 5. Guardar pieza
-    const ref = `/data/piezas/${tema.id}.json`;
-    await writeFile(join(ROOT, ref.slice(1)), JSON.stringify(pieza, null, 2) + "\n");
-    rutas.push(join(ROOT, ref.slice(1)));
-    const fp = new Date(); fp.setDate(fp.getDate() + dia);
-    specPiezas.push({ ref, fecha_propuesta: `${fp.toISOString().slice(0, 10)} 20:00`, estado: "en_revision", revisor });
-    dia += 2;
+      // 1. Redacción anclada
+      const userRedaccion = `TEMA: ${tema.titulo} (pilar ${tema.pilar}, formato ${tema.formato}, ${tema.sensible ? "SENSIBLE" : "normal"}).\n` +
+        `FICHAS DISPONIBLES (única fuente citable):\n${JSON.stringify(fichas, null, 2)}`;
+      const contenido = jsonSeguro<any>(await chat(sys, userRedaccion, { json: true }), null);
+      if (!contenido || !Array.isArray(contenido.slides)) throw new Error("el modelo no devolvió una pieza válida");
+      const pieza: any = { id: tema.id, tema: tema.titulo, pilar: tema.pilar, tipo: tema.formato, santos: tema.santos, nivel: tema.nivel, ...contenido };
+
+      // 2. Concilio (criterio) + 3. verificación de citas (determinista)
+      const veredicto = jsonSeguro<any>(await chat(
+        concilio + "\n\nDevolvé SOLO el JSON del veredicto.",
+        `PIEZA:\n${JSON.stringify(pieza)}\n\nFICHAS:\n${JSON.stringify(fichas)}`,
+        { json: true },
+      ), {});
+      const chequeo = verificarCitas(pieza, fichas);
+      const revisor = {
+        veredicto: veredicto.veredicto || "revision_humana",
+        citas_verificadas: chequeo.ok,
+        requiere_revision_humana: tema.sensible || !chequeo.ok || veredicto.requiere_revision_humana === true,
+        nota: veredicto.nota || "",
+        citas: chequeo.citas,
+      };
+
+      // 4. Arte (descarga PD o IA) — si falla (p. ej. org no verificada para imágenes), fondo procedural
+      try {
+        await resolverArte(pieza);
+      } catch (e) {
+        console.warn(`  ⚠ arte falló (${String(e).slice(0, 140)}); se usa fondo procedural.`);
+      }
+
+      // 5. Guardar pieza
+      const ref = `/data/piezas/${tema.id}.json`;
+      await writeFile(join(ROOT, ref.slice(1)), JSON.stringify(pieza, null, 2) + "\n");
+      rutas.push(join(ROOT, ref.slice(1)));
+      const fp = new Date(); fp.setDate(fp.getDate() + dia);
+      specPiezas.push({ ref, fecha_propuesta: `${fp.toISOString().slice(0, 10)} 20:00`, estado: "en_revision", revisor });
+      dia += 2;
+    } catch (e) {
+      console.error(`  ✗ ${tema.id} falló: ${String(e).slice(0, 200)} — se omite y sigue.`);
+    }
   }
+
+  if (specPiezas.length === 0) throw new Error("No se generó ninguna pieza (revisá OPENAI_API_KEY y los logs).");
 
   // 6. Render de todas las piezas
   console.log("\n▶ render…");
