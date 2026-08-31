@@ -1,0 +1,75 @@
+{
+  "id": "trabajo-deber-y-santificacion",
+  "tema": "El trabajo como deber y santificación",
+  "pilar": "Deber",
+  "tipo": "carrusel",
+  "santos": [],
+  "nivel": "medio",
+  "titulo": "El trabajo como camino de santificación",
+  "slides": [
+    {
+      "tipo": "portada",
+      "kicker": "Pilar: Deber",
+      "titulo": "El trabajo como camino de santificación",
+      "subtitulo": "Cómo ennoblecernos a través del trabajo"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Evangelio según San Mateo",
+      "titulo": "San José como modelo",
+      "cuerpo": "«Despertado José del sueño, hizo como el ángel del Señor le había mandado, y recibió a su mujer.» **La fortaleza de San José es silenciosa y obediente, un ejemplo de responsabilidad.**",
+      "fuente": "Mt 1,24 · Nivel 1"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Encíclica Laborem Exercens",
+      "titulo": "El valor del trabajo humano",
+      "cuerpo": "San Juan Pablo II enseña que **el trabajo humano tiene valor y dignidad, y es camino de santificación**. Mediante él, participamos de la obra del Creador.",
+      "fuente": "Laborem Exercens · Nivel 2"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Aplicación personal",
+      "titulo": "Vivir el trabajo como vocación",
+      "cuerpo": "Reconoce tu ocupación diaria como una oportunidad para crecer en santidad. **Transforma cada tarea en un acto de servicio y dedicación a Dios.**"
+    },
+    {
+      "tipo": "cierre",
+      "titulo": "El trabajo ennoblece y santifica",
+      "cuerpo": "Siguiendo el ejemplo de San José y las enseñanzas de la Iglesia, comprendemos que el trabajo no es solo una necesidad material, sino un **camino de santificación**.",
+      "fuentes": [
+        "Mt 1,24 · Nivel 1",
+        "Laborem Exercens · Nivel 2"
+      ],
+      "cta": "Guardalo para tu examen de conciencia y compartilo con un hermano que lo necesite."
+    }
+  ],
+  "caption": "La Iglesia nos enseña que el trabajo humano es más que un medio de subsistencia: es un camino de santificación. Descubrí cómo podés vivir tu vocación diaria a través de él.",
+  "fuentes": [
+    "escritura-mt-1-24",
+    "magisterio-laborem-exercens"
+  ],
+  "clasificacion_doctrinal": [
+    {
+      "afirmacion": "San José obedece a Dios sin decir una palabra: su fortaleza es silenciosa y obediente. Modelo de obediencia y responsabilidad, no de protagonismo.",
+      "nivel": 1,
+      "etiqueta": "Sagrada Escritura"
+    },
+    {
+      "afirmacion": "El trabajo humano tiene valor y dignidad, y es camino de santificación; por él el hombre participa de la obra del Creador.",
+      "nivel": 2,
+      "etiqueta": "Magisterio"
+    }
+  ],
+  "revision_humana": false,
+  "arte_plan": {
+    "fuente": "ia",
+    "prompt": "un carpintero trabajando la madera a la luz de una vela, escena cálida y contrastada"
+  },
+  "arte": {
+    "fuente": "ia",
+    "archivo": "generado/trabajo-deber-y-santificacion.png",
+    "prompt": "un carpintero trabajando la madera a la luz de una vela, escena cálida y contrastada. pintura al óleo clásica, claroscuro cálido y tenebrismo, atmósfera sacra sobria y solemne, paleta parda y dorada, luz de vela; SIN texto, SIN palabras, SIN letras; sin rostros de santos identificables; composición vertical con espacio para texto abajo.",
+    "verificado": false
+  }
+}

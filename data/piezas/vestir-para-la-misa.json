@@ -1,0 +1,77 @@
+{
+  "id": "vestir-para-la-misa",
+  "tema": "Cómo debería vestir un hombre para la Santa Misa",
+  "pilar": "Fe",
+  "tipo": "carrusel",
+  "santos": [],
+  "nivel": "intro",
+  "titulo": "Cómo vestir adecuadamente para la Misa",
+  "slides": [
+    {
+      "tipo": "portada",
+      "kicker": "Hombre Católico",
+      "titulo": "¿Cómo deberías vestir para la Misa?",
+      "subtitulo": "La importancia de tu atuendo en la Eucaristía"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Base doctrinal",
+      "titulo": "El respeto en la vestimenta",
+      "cuerpo": "La Iglesia **valora profundamente** el respeto que se muestra en nuestra vestimenta al participar de la Eucaristía. La importancia radica en mostrar reverencia hacia el sacramento.",
+      "fuente": "Catecismo de la Iglesia Católica · Nivel 2"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Cuestión práctica",
+      "titulo": "Ejemplo de vestimenta adecuada",
+      "cuerpo": "Optá por ropa **limpia y ordenada** que refleje el respeto debido al Cuerpo de Cristo. No se trata de lujo, sino de dignidad.",
+      "fuente": "Opinión común · Nivel 7"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Cuestión cultural",
+      "titulo": "Diversidad y respeto",
+      "cuerpo": "Las normas pueden variar por cultura, pero el **principio universal** es el respeto. Cada lugar tiene sus expresiones, pero la reverencia es clave.",
+      "fuente": "Opinión común · Nivel 7"
+    },
+    {
+      "tipo": "aplicacion",
+      "kicker": "Para aplicar",
+      "titulo": "Preparate con atención",
+      "cuerpo": "Antes de salir, dedicá un momento a considerar si tu atuendo refleja la dignidad del momento que vas a compartir.",
+      "fuente": "Opinión común · Nivel 7"
+    },
+    {
+      "tipo": "cierre",
+      "titulo": "Esfuerzo en vestir con dignidad",
+      "cuerpo": "Vestir bien para la Misa es un signo de tu respeto y amor por la Eucaristía. Reflexioná sobre cómo presentarte ante Dios.",
+      "fuentes": [
+        "Catecismo de la Iglesia Católica · Nivel 2",
+        "Opinión común · Nivel 7"
+      ],
+      "cta": "Guardalo para tu próximo examen de conciencia"
+    }
+  ],
+  "caption": "Vestir adecuadamente para la Misa es una expresión de reverencia hacia Dios. Considerá tu atuendo como un reflejo de tu fe y amor a la Eucaristía. \n\nFuentes: Catecismo de la Iglesia Católica y tradición común.",
+  "fuentes": [
+    ""
+  ],
+  "clasificacion_doctrinal": [
+    {
+      "afirmacion": "La Iglesia valora profundamente el respeto que se muestra en nuestra vestimenta al participar de la Eucaristía.",
+      "nivel": 2,
+      "etiqueta": "Catecismo y Magisterio"
+    }
+  ],
+  "revision_humana": true,
+  "arte_plan": {
+    "fuente": "ia",
+    "prompt": "un hombre joven en traje sobrio, revisando su apariencia antes de asistir a una iglesia"
+  },
+  "arte": {
+    "fuente": "ia",
+    "archivo": "generado/vestir-para-la-misa.png",
+    "prompt": "un hombre joven en traje sobrio, revisando su apariencia antes de asistir a una iglesia. pintura al óleo clásica, claroscuro cálido y tenebrismo, atmósfera sacra sobria y solemne, paleta parda y dorada, luz de vela; SIN texto, SIN palabras, SIN letras; sin rostros de santos identificables; composición vertical con espacio para texto abajo.",
+    "verificado": false
+  }
+}

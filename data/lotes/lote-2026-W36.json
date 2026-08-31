@@ -1,0 +1,57 @@
+{
+  "nombre": "Lote 2026-W36",
+  "semana": "2026-W36",
+  "generado": "2026-08-31",
+  "piezas": [
+    {
+      "ref": "/data/piezas/ser-hombre-catolico.json",
+      "fecha_propuesta": "2026-09-02 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "rechazado",
+        "citas_verificadas": false,
+        "requiere_revision_humana": true,
+        "nota": "La cita clave de 1 Cor 16,13 no está verificada; se debe verificar antes de usarla para evitar errores doctrinales.",
+        "citas": [
+          {
+            "texto": "Velad, **estad firmes en la fe**, portaos varonilmente y sed fuertes.",
+            "verificada": false
+          },
+          {
+            "texto": "portarse varonilmente",
+            "verificada": false
+          }
+        ]
+      }
+    },
+    {
+      "ref": "/data/piezas/vestir-para-la-misa.json",
+      "fecha_propuesta": "2026-09-04 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "rechazado",
+        "citas_verificadas": true,
+        "requiere_revision_humana": true,
+        "nota": "La pieza requiere correcciones por falta de cita verificable y debe ser revisada humanamente debido a la sensibilidad cultural del tema de la vestimenta.",
+        "citas": []
+      }
+    },
+    {
+      "ref": "/data/piezas/trabajo-deber-y-santificacion.json",
+      "fecha_propuesta": "2026-09-06 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "rechazado",
+        "citas_verificadas": false,
+        "requiere_revision_humana": true,
+        "nota": "Las citas no están verificadas, lo cual es bloqueante. Ambas requieren obtención y confirmación de fuentes originales para seguir con la publicación.",
+        "citas": [
+          {
+            "texto": "Despertado José del sueño, hizo como el ángel del Señor le había mandado, y recibió a su mujer.",
+            "verificada": false
+          }
+        ]
+      }
+    }
+  ]
+}

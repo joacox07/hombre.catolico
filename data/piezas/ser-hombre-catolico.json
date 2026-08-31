@@ -1,0 +1,79 @@
+{
+  "id": "ser-hombre-catolico",
+  "tema": "Qué significa ser un hombre católico",
+  "pilar": "Fe",
+  "tipo": "carrusel",
+  "santos": [
+    "San José"
+  ],
+  "nivel": "intro",
+  "titulo": "Qué significa ser un hombre católico",
+  "slides": [
+    {
+      "tipo": "portada",
+      "kicker": "Pilar: Fe",
+      "titulo": "Ser un hombre católico es vivir la fe",
+      "subtitulo": "La firmeza y fortaleza nacen de la fe"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Exhortación de San Pablo",
+      "titulo": "Firmeza en la fe",
+      "cuerpo": "San Pablo nos exhorta: «Velad, **estad firmes en la fe**, portaos varonilmente y sed fuertes.» Esta **firmeza y valentía** no son estéticas vacías, sino mandatos apostólicos.",
+      "fuente": "1 Cor 16,13 · Nivel 1"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Entendiendo el texto",
+      "titulo": "Portarse varonilmente",
+      "cuerpo": "La expresión «portarse varonilmente» traduce el griego andrízesthe. **No llama a la dureza** sino a una constancia valiente y fiel. Seguir a Cristo requiere coraje espiritual.",
+      "fuente": "1 Cor 16,13 · Nivel 1"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Pilar de la fe",
+      "titulo": "Construir sobre roca",
+      "cuerpo": "Un hombre católico **construye su vida sobre la roca** de la fe. Esto le da la solidez necesaria para enfrentar las tormentas de la vida con confianza y esperanza.",
+      "fuente": "1 Cor 16,13 · Nivel 1"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Aplicación",
+      "titulo": "Vivir la fe",
+      "cuerpo": "Incorporá momentos de oración diaria y estudio de las Escrituras en tu rutina. **Esto fortalecerá tu fe** y te ayudará a ser un ejemplo de firmeza y valentía cristiana.",
+      "fuente": "1 Cor 16,13 · Nivel 1"
+    },
+    {
+      "tipo": "cierre",
+      "titulo": "La fe como base",
+      "cuerpo": "La valiente firmeza en la fe es la base de la masculinidad cristiana. Sigamos el consejo de San Pablo y busquemos vivir con integridad y coraje.",
+      "fuentes": [
+        "1 Cor 16,13 · Nivel 1"
+      ],
+      "cta": "Reflexioná sobre cómo estás viviendo tu fe hoy en día."
+    }
+  ],
+  "caption": "Ser un hombre católico exige una firmeza valiente en la fe, según nos enseña San Pablo en su exhortación. Descubrí qué significa realmente vivir esta fortaleza en tu día a día.",
+  "fuentes": [
+    "escritura-1cor-16-13"
+  ],
+  "clasificacion_doctrinal": [
+    {
+      "afirmacion": "La firmeza en la fe y la fortaleza viril son un mandato apostólico, no una estética.",
+      "nivel": 1,
+      "etiqueta": "Sagrada Escritura"
+    }
+  ],
+  "revision_humana": false,
+  "arte_plan": {
+    "fuente": "descarga",
+    "query": "Caravaggio Saint Jerome writing"
+  },
+  "arte": {
+    "fuente": "descarga",
+    "archivo": "descargado/ser-hombre-catolico.orgutmcampaignimageinfoutmcontentthumbnail",
+    "credito": "Saint Jeromelabel QS:Les,\"San Jerónimo escribiendo\"label QS:Lfr,\"Saint Jérôme\"label QS:Leu,\"San Jeronimo idazten (Caravaggio, Borghese)\"label QS:Lde,\"Hl. Hieronymus\"label QS:Lpt,\"São Jerônimo Escrevendo\"label QS:Llv,\"Svētais Hieronīms\"label QS:Laf,\"Skrywende Sint Jerome\"label QS:Ltr,\"Aziz Hieronymus\"label QS:Lja,\"書斎の聖ヒエロニムス\"label QS:Lsv,\"Den helige Hieronymus\"label QS:Lpl,\"Św. Hieronim piszący\"label QS:Lhe,\"הירונימוס הקדוש כותב\"label QS:Lnl,\"De heilige Hieronymus\"label QS:Lavk,\"Sutese Girolamo tumtikye (1) (trutca ke Caravaggio)\"label QS:Larz,\"القديس جيروم يكتب\"label QS:Lit,\"San Girolamo\"label QS:Len,\"Saint Jerome\"label QS:Lar,\"القديس جيروم يكتب\"label QS:Lzh,\"聖傑洛姆 (卡拉瓦喬)\"label QS:Lth,\"นักบุญเจอโรมเขียนหนังสือ\"",
+    "licencia": "Public domain",
+    "verificado": false
+  }
+}

@@ -1,4 +1,50 @@
 {
   "descripcion": "Memoria del empleado: todo lo que ya se generó/publicó. El pipeline lo lee ANTES de elegir temas para no repetirse. Append por pieza.",
-  "piezas": []
+  "piezas": [
+    {
+      "id": "ser-hombre-catolico-2026-W36",
+      "tema": "ser-hombre-catolico",
+      "pilar": "Fe",
+      "santos": [
+        "San José"
+      ],
+      "formato": "carrusel",
+      "fuentes": [
+        "escritura-1cor-16-13"
+      ],
+      "gancho": "Qué significa ser un hombre católico",
+      "nivel": "intro",
+      "fecha": "2026-08-31T18:16:17.024Z",
+      "estado": "en_revision"
+    },
+    {
+      "id": "vestir-para-la-misa-2026-W36",
+      "tema": "vestir-para-la-misa",
+      "pilar": "Fe",
+      "santos": [],
+      "formato": "carrusel",
+      "fuentes": [
+        ""
+      ],
+      "gancho": "Cómo vestir adecuadamente para la Misa",
+      "nivel": "intro",
+      "fecha": "2026-08-31T18:16:17.024Z",
+      "estado": "en_revision"
+    },
+    {
+      "id": "trabajo-deber-y-santificacion-2026-W36",
+      "tema": "trabajo-deber-y-santificacion",
+      "pilar": "Deber",
+      "santos": [],
+      "formato": "carrusel",
+      "fuentes": [
+        "escritura-mt-1-24",
+        "magisterio-laborem-exercens"
+      ],
+      "gancho": "El trabajo como camino de santificación",
+      "nivel": "medio",
+      "fecha": "2026-08-31T18:16:17.024Z",
+      "estado": "en_revision"
+    }
+  ]
 }
