@@ -1,72 +1,106 @@
-/* Estilos de las piezas (carrusel y cita) — @hombre.catolico
-   Compartidos por las plantillas de render y por el panel: la previsualización del panel
-   es la pieza real, no una simulación. Todo va scopeado bajo .hc-canvas para no filtrarse. */
+/* Estilos de pieza v2 — @hombre.catolico
+   Capa de tratamiento (grano + gradación cálida + viñeta) que unifica arte descargado y
+   generado, + tres arquetipos: A impacto, B texto largo, C cita devocional.
+   Todo scopeado bajo .hc-canvas. */
 
 .hc-canvas {
   position: relative;
   width: var(--pieza-w);
   height: var(--pieza-h);
   overflow: hidden;
-  color: var(--texto-claro);
-  font-family: var(--sans);
-  background: var(--carbon);
+  background: var(--negro);
+  color: var(--texto);
+  font-family: var(--serif-texto);
+}
+.hc-canvas .arq { position: absolute; inset: 0; }
+.hc-canvas .capa { position: absolute; inset: 0; }
+
+/* --- Capa de imagen + tratamiento --- */
+.hc-canvas .arte { background-size: cover; background-position: center; }
+.hc-canvas .arte.proc {
+  background-image: radial-gradient(62% 48% at 36% 30%, #7a6844 0%, #3a2f22 42%, #191410 78%);
+}
+.hc-canvas .grade {
+  background: linear-gradient(160deg, #4a3720 0%, #140f0a 100%);
+  mix-blend-mode: soft-light; opacity: .5;
+}
+.hc-canvas .vineta {
+  background: radial-gradient(118% 88% at 50% 32%, rgba(0,0,0,0) 44%, rgba(0,0,0,.6) 100%);
+}
+.hc-canvas .grano {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px; opacity: .13; mix-blend-mode: overlay;
 }
 
-/* Capas */
-.hc-canvas .arte {
-  position: absolute; inset: 0;
-  background-size: cover; background-position: center;
-  background-image: radial-gradient(120% 80% at 50% 15%, #5a4d3d 0%, #2b251e 55%, #201d19 100%);
-}
-.hc-canvas .velo {
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(32,29,25,.15) 0%, rgba(32,29,25,.35) 45%, rgba(32,29,25,.86) 100%);
-}
-.hc-canvas .marco { position: absolute; inset: 44px; border: 1.5px solid rgba(231,222,208,.28); }
-.hc-canvas .contenido { position: absolute; inset: 0; padding: 104px 96px; display: flex; flex-direction: column; }
-
-/* Tipografía y elementos */
-.hc-canvas .cruz { font-family: var(--serif); font-size: 40px; color: var(--acento); opacity: .9; }
-.hc-canvas .kicker {
-  font-family: var(--sans); font-weight: 500; letter-spacing: .22em; text-transform: uppercase;
-  font-size: 22px; color: var(--acento);
-}
-.hc-canvas .titulo {
-  font-family: var(--serif); font-weight: 600; line-height: 1.04; letter-spacing: .01em; color: var(--pergamino);
-}
-.hc-canvas .portada .titulo { font-size: 104px; }
-.hc-canvas .contenido-slide .titulo { font-size: 68px; }
-.hc-canvas .subtitulo {
-  font-family: var(--serif); font-style: italic; font-weight: 500;
-  font-size: 40px; color: rgba(231,222,208,.86); line-height: 1.25;
-}
-.hc-canvas .cuerpo {
-  font-family: var(--sans); font-weight: 400; font-size: 40px; line-height: 1.42; color: rgba(231,222,208,.92);
-}
-.hc-canvas .fuente { font-family: var(--sans); font-weight: 500; font-size: 26px; color: var(--acento); line-height: 1.4; }
-.hc-canvas .credito { font-family: var(--sans); font-size: 20px; color: rgba(231,222,208,.55); letter-spacing: .04em; }
-.hc-canvas .marca { font-family: var(--serif); font-size: 26px; letter-spacing: .06em; color: rgba(231,222,208,.7); }
-.hc-canvas .lista-fuentes { display: flex; flex-direction: column; gap: 12px; }
-
-/* Utilidades */
-.hc-canvas .fila { display: flex; align-items: baseline; gap: 16px; }
-.hc-canvas .grow { flex: 1; }
+.hc-canvas .contenido { position: absolute; inset: 0; display: flex; flex-direction: column; }
 .hc-canvas .push { margin-top: auto; }
-.hc-canvas .gap-s { margin-top: 20px; }
-.hc-canvas .gap-m { margin-top: 32px; }
-.hc-canvas .gap-l { margin-top: 56px; }
+.hc-canvas .grow { flex: 1; }
+.hc-canvas .fila { display: flex; align-items: baseline; gap: 16px; }
+.hc-canvas .marca { font-family: var(--serif-display); letter-spacing: .04em; color: var(--crema-70); font-size: 30px; }
+.hc-canvas .credito { font-family: var(--sans); font-size: 20px; color: var(--crema-50); letter-spacing: .03em; }
+.oro { color: var(--oro-claro); }
+.versalita { font-variant: small-caps; letter-spacing: .03em; }
 
-/* --- Cita (overrides y elementos propios) --- */
-.hc-canvas.cita .velo { background: linear-gradient(180deg, rgba(32,29,25,.30), rgba(32,29,25,.55) 50%, rgba(32,29,25,.9)); }
-.hc-canvas.cita .contenido { padding: 120px 100px; }
-.hc-canvas.cita .cruz { font-size: 44px; opacity: 1; }
-.hc-canvas.cita .arte { background-image: radial-gradient(110% 75% at 50% 12%, #5a4d3d 0%, #2b251e 58%, #201d19 100%); }
-.hc-canvas.cita .comilla { font-family: var(--serif); font-size: 150px; line-height: .5; color: var(--acento); opacity: .5; height: 70px; }
-.hc-canvas.cita .cita-texto {
-  font-family: var(--serif); font-weight: 500; font-style: italic; font-size: 80px; line-height: 1.16; color: var(--pergamino);
+/* ============ Arquetipo A — Enunciado / cita de impacto ============ */
+.arq-a .arte { filter: saturate(.96); }
+.arq-a .vineta {
+  background:
+    radial-gradient(120% 85% at 50% 28%, rgba(0,0,0,0) 40%, rgba(0,0,0,.45) 100%),
+    linear-gradient(180deg, rgba(20,17,13,0) 38%, rgba(20,17,13,.86) 100%);
 }
-.hc-canvas.cita .autor {
-  font-family: var(--sans); font-weight: 500; letter-spacing: .16em; text-transform: uppercase; font-size: 30px; color: var(--acento);
+.arq-a .contenido { padding: 96px; justify-content: flex-end; }
+.arq-a .kicker {
+  font-family: var(--sans); font-weight: 500; text-transform: uppercase;
+  letter-spacing: .28em; font-size: 24px; color: var(--oro); margin-bottom: 22px;
 }
-.hc-canvas.cita .fuente { color: rgba(231,222,208,.6); letter-spacing: .03em; }
-.hc-canvas.cita .marca { font-size: 28px; }
+.arq-a .titulo-impacto {
+  font-family: var(--impacto); text-transform: uppercase; font-weight: 400;
+  font-size: 118px; line-height: .95; letter-spacing: .004em; color: var(--crema);
+}
+.arq-a .titulo-impacto.q { font-size: 96px; }
+.arq-a .autor-impacto {
+  font-family: var(--sans); font-weight: 500; font-size: 30px; letter-spacing: .06em;
+  color: var(--oro); margin-top: 30px;
+}
+.arq-a .subtitulo {
+  font-family: var(--serif-display); font-style: italic; font-weight: 500;
+  font-size: 46px; line-height: 1.2; color: var(--crema-70); margin-top: 28px;
+}
+.arq-a .pie { margin-top: 44px; }
+.arq-a .cruz { font-family: var(--serif-display); font-size: 40px; color: var(--oro); }
+
+/* ============ Arquetipo B — Texto largo formativo ============ */
+.arq-b .arte { filter: brightness(.42) saturate(.85); }
+.arq-b .vineta { background: linear-gradient(180deg, rgba(20,17,13,.66), rgba(20,17,13,.82)); }
+.arq-b .contenido { padding: 88px 92px; }
+.cabecera { display: flex; align-items: center; margin-bottom: 50px; }
+.cabecera .mono { font-family: var(--serif-display); color: var(--oro); font-size: 40px; line-height: 1; }
+.cabecera .nombre {
+  font-family: var(--serif-display); font-weight: 600; letter-spacing: .16em;
+  text-transform: uppercase; font-size: 26px; color: var(--oro); margin-left: 16px;
+}
+.cabecera .handle {
+  margin-left: auto; font-family: var(--serif-display); font-style: italic;
+  font-size: 27px; color: var(--crema-50);
+}
+.arq-b .titulo {
+  font-family: var(--serif-display); font-weight: 600; font-size: 66px; line-height: 1.04;
+  color: var(--crema); margin-bottom: 30px;
+}
+.arq-b .cuerpo { font-family: var(--serif-texto); font-weight: 400; font-size: 47px; line-height: 1.36; color: var(--crema); }
+.arq-b .cuerpo p { margin: 0 0 26px; }
+.arq-b .cuerpo p:last-child { margin-bottom: 0; }
+.arq-b .fuente { font-family: var(--sans); font-weight: 500; font-size: 25px; color: var(--oro); line-height: 1.4; margin-top: 30px; }
+.arq-b .lista-fuentes { display: flex; flex-direction: column; gap: 10px; }
+.arq-b .kicker { font-family: var(--sans); font-weight: 500; text-transform: uppercase; letter-spacing: .2em; font-size: 22px; color: var(--oro); }
+.arq-b .pie { margin-top: auto; padding-top: 34px; }
+
+/* ============ Arquetipo C — Cita devocional cálida ============ */
+.arq-c .arte { filter: sepia(.45) brightness(.62) contrast(1.02) saturate(.9); }
+.arq-c .vineta { background: radial-gradient(120% 92% at 50% 45%, rgba(0,0,0,.05) 26%, rgba(20,15,10,.72) 100%); }
+.arq-c .contenido { padding: 110px 96px; align-items: center; text-align: center; justify-content: center; }
+.arq-c .comilla { font-family: var(--serif-display); font-size: 150px; line-height: .3; color: var(--oro); opacity: .5; height: 74px; }
+.arq-c .cita-texto { font-family: var(--serif-display); font-style: italic; font-weight: 500; font-size: 74px; line-height: 1.18; color: var(--crema); }
+.arq-c .autor { font-family: var(--script); font-size: 72px; color: var(--oro-claro); line-height: 1; margin-top: 46px; }
+.arq-c .fuente { font-family: var(--sans); text-transform: uppercase; letter-spacing: .12em; font-size: 24px; color: var(--crema-50); margin-top: 18px; }
+.arq-c .marca-c { position: absolute; left: 0; right: 0; bottom: 60px; text-align: center; font-family: var(--serif-display); letter-spacing: .06em; font-size: 26px; color: var(--crema-50); }

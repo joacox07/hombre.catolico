@@ -1,43 +1,65 @@
-# Dirección de arte
+# Dirección de arte (v2)
 
-**Católica tradicional + pintura clásica + masculinidad sobria.**
+Sale del factor común de las referencias del usuario (ver `referencias/`). Reemplaza la v1
+(gradiente plano) que "no transmitía nada".
+
+## Principio
+
+**Imagen real y evocadora + tratamiento cálido/oscuro/fílmico + texto crema y dorado.**
+La imagen carga el peso emocional; el texto va encima, sobrio. El dorado marca la frase clave.
 
 ## Paleta
 
-Definida una sola vez en `templates/tokens.css` (variables CSS). No usar colores sueltos.
+Definida en `templates/tokens.css`.
 
-| Nombre | Hex | Uso sugerido |
-|--------|-----|--------------|
-| Carbón | `#201D19` | Fondos oscuros, texto sobre claro |
-| Tabaco | `#4B4034` | Fondos, capas |
-| Bronce viejo | `#927B5C` | Acentos, filetes, autor/fuente |
-| Pergamino | `#E7DED0` | Fondos claros, texto sobre oscuro |
-| Oliva | `#555949` | Apoyos, subtítulos |
-| Vino apagado | `#6A4841` | Acento cálido puntual |
+| Nombre | Hex | Uso |
+|--------|-----|-----|
+| Negro cálido | `#14110D` | fondo base |
+| Carbón | `#1C1712` | fondos |
+| Tabaco / Café | `#3A2F23` / `#4B4034` | capas |
+| Crema | `#ECE3D2` | texto principal |
+| **Dorado** | `#C9A24B` / claro `#D8B25A` | acento y **frase clave** |
+| Vino / Oliva | `#6A4841` / `#555949` | apoyos puntuales |
 
-## Tipografías
+## Tipografía (`assets/fonts/`, embebidas)
 
-- **Titulares:** Cormorant Garamond (o serif clásica equivalente).
-- **Textos:** DM Sans o Inter.
+- **Anton** — impacto: titulares en mayúsculas (arquetipo A).
+- **Cormorant Garamond** — serif display: títulos y citas.
+- **EB Garamond** — serif de texto largo (arquetipo B), muy legible en párrafo.
+- **DM Sans** — etiquetas, kickers, fuentes, UI.
+- **Pinyon Script** — acento manuscrito, uso mínimo (arquetipo C).
 
-Se cargan localmente en `assets/fonts/` para que el render sea reproducible y no dependa de
-red. Fallbacks en el stack por si faltan.
+## Capa de tratamiento (lo que unifica todo)
 
-## Elementos visuales admitidos
+Toda imagen —descargada o generada por IA— pasa por la misma capa en `templates/pieza.css`:
+**arte → gradación cálida (soft-light) → viñeta/oscurecido → grano fílmico**. Así una pintura
+de dominio público y un fondo generado terminan con el mismo look coherente.
 
-San José, santos varones, mártires, padres de familia, caballeros, monjes, sacerdotes,
-iglesias, trabajo manual, oración, arte sacro, pintura europea clásica, escenas históricas
-masculinas.
+## Tres arquetipos
 
-## Uso de imágenes
+- **A · Enunciado / cita de impacto** — imagen a sangre completa + Anton en mayúsculas (crema),
+  tercio inferior, kicker dorado, subtítulo en cursiva. Para portadas de carrusel y frases fuertes.
+- **B · Texto largo formativo** — imagen muy oscurecida + EB Garamond crema, interlineado amplio,
+  **frase clave en dorado**, encabezado con monograma ✠ + "Hombre Católico" + @handle. Para
+  contenido doctrinal y captions largos como imagen. (En el texto, marcá el destacado con `**...**`.)
+- **C · Cita devocional cálida** — foto sepia/duotono o pintura + Cormorant en cursiva centrado,
+  autor en script dorado, fuente en versalitas. Para santos y citas suaves.
 
-- **Prioridad: arte histórico de dominio público.** Registrar autor, título, museo/procedencia
-  y licencia de cada obra en `assets/` (ver `assets/README.md`).
-- Fuentes seguras: Met Open Access, Rijksmuseum, National Gallery of Art (open), Getty Open
-  Content, Web Gallery of Art, Wikimedia Commons.
-- **IA visual solo para:** unificar color/tono, fondos o texturas, ampliar/adaptar, elementos
-  simbólicos puntuales. **Nunca** para generar "santos" ni para pasar por obra histórica auténtica.
+## Origen de la imagen: descargar vs. generar
 
-## San Miguel Arcángel
+Cada pieza declara `arte: { fuente: "descarga" | "ia", archivo, credito | prompt, licencia }`.
 
-Trabajarlo sin reducirlo a estética de "guerrero alfa". Fortaleza al servicio de Dios, no poder.
+- **Descargar (dominio público)** cuando el sujeto es un santo real, una escena histórica o una
+  obra famosa: Met Open Access, Rijksmuseum, National Gallery (open), Getty Open Content, Web
+  Gallery of Art, Wikimedia Commons. Registrar procedencia y licencia (ver `assets/README.md`).
+- **Generar con IA** cuando se necesita una atmósfera/composición que no existe (escritorio a la
+  luz de vela, manos trabajando la madera, capilla en penumbra) o para adaptar/extender un fondo.
+  El texto va por encima después.
+- **Guardarraíl:** no representar a un **santo real concreto** con una imagen IA dudosa ni pasar
+  una imagen IA por obra histórica auténtica. Para figuras canónicas, preferir arte real.
+
+## Nota operativa
+
+Sin imagen adjunta, la pieza usa un fondo **procedural** (chiaroscuro cálido + grano) para no
+quedar en gradiente plano. Apenas se suelta una obra en `assets/arte/` y se referencia en la
+pieza, el tratamiento la integra al estilo de las referencias.

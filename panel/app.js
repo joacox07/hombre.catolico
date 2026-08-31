@@ -20,7 +20,7 @@
 
   function canvasFor(pieza, slideIdx) {
     var el = document.createElement("div");
-    el.className = "hc-canvas" + (pieza.tipo === "cita" ? " cita" : "");
+    el.className = "hc-canvas";
     el.innerHTML = pieza.tipo === "cita" ? window.HC.citaHTML(pieza) : window.HC.slideHTML(pieza, slideIdx || 0);
     return el;
   }
