@@ -8,6 +8,9 @@ out/
 # build del sitio para Pages (se genera en CI)
 site/
 
+# vínculo local de Vercel
+.vercel/
+
 # secretos y config local
 .env
 .env.local
@@ -20,3 +23,4 @@ Thumbs.db
 # logs
 *.log
 npm-debug.log*
+.vercel

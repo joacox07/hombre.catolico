@@ -32,6 +32,7 @@ jobs:
           else
             ARCHIVO=$(jq -r '.lotes[0].file' data/lotes/index.json)
           fi
+          ARCHIVO="${ARCHIVO#/}"
           npm run empaquetar -- "$ARCHIVO" --render
           echo "LOTE_ID=$(jq -r '.id // .semana' "$ARCHIVO")" >> "$GITHUB_ENV"
       - name: Publicar ZIPs del lote
