@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
-import { descargarObraPublica } from "../../pipeline/arte-descarga.ts";
+import { descargarObraPublica } from "../../pipeline/arte-descarga.js";
 import { dispararRenderArte, guardarArchivo, guardarJson, piezaVersionada } from "../_lib/github.js";
-import { artePendienteDeRender, portadaDe, validarSolicitudArte } from "../_lib/arte-editorial.ts";
+import { artePendienteDeRender, portadaDe, validarSolicitudArte } from "../_lib/arte-editorial.js";
 import { cuerpoJson, requiereSesion, responder } from "../_lib/http.js";
 
 function imagenIA(valor: unknown) {

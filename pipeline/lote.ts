@@ -13,8 +13,8 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve, join } from "node:path";
-import type { Backlog, Registro, RegistroPieza } from "./tipos.ts";
-import { archivoLote, idLote } from "./lote-id.ts";
+import type { Backlog, Registro, RegistroPieza } from "./tipos.js";
+import { archivoLote, idLote } from "./lote-id.js";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const leer = async <T>(rel: string): Promise<T> => JSON.parse(await readFile(join(ROOT, rel), "utf8")) as T;

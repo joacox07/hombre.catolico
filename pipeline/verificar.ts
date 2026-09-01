@@ -1,7 +1,7 @@
 /** Verificación determinista de citas: toda frase entre comillas en una pieza debe aparecer
  *  textual en el fragmento_textual de una ficha VERIFICADA. Es el candado anti-cita-falsa;
  *  corre además del concilio (que es criterio, no garantía). */
-import type { Ficha } from "./recuperacion.ts";
+import type { Ficha } from "./recuperacion.js";
 
 const norm = (s: string) =>
   s.toLowerCase().normalize("NFC").replace(/[«»“”"]/g, "").replace(/\s+/g, " ").trim();

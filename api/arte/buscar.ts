@@ -1,8 +1,8 @@
-import { buscarObrasPublicas } from "../../pipeline/arte-descarga.ts";
-import { consultaVisual } from "../../pipeline/openai.ts";
+import { buscarObrasPublicas } from "../../pipeline/arte-descarga.js";
+import { consultaVisual } from "../../pipeline/openai.js";
 import { piezaVersionada } from "../_lib/github.js";
 import { cuerpoJson, requiereSesion, responder } from "../_lib/http.js";
-import { validarSolicitudArte } from "../_lib/arte-editorial.ts";
+import { validarSolicitudArte } from "../_lib/arte-editorial.js";
 
 export default async function handler(req: any, res: any) {
   if (req.method !== "POST") return responder(res, 405, { error: "Método no permitido." });

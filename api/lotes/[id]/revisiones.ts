@@ -1,7 +1,7 @@
 import { lotePorId, revisionPorLote, guardarRevision } from "../../_lib/github.js";
 import { aplicarRevision, validarRevision } from "../../_lib/revisiones.js";
 import { cuerpoJson, requiereSesion, responder } from "../../_lib/http.js";
-import { piezaAprobable } from "../../../pipeline/calidad.ts";
+import { piezaAprobable } from "../../../pipeline/calidad.js";
 
 export default async function handler(req: any, res: any) {
   if (req.method !== "POST") return responder(res, 405, { error: "Método no permitido." });

@@ -1,5 +1,5 @@
 /** Dirección visual verificable para que la variedad no dependa sólo del prompt. */
-import type { RegistroPieza } from "./tipos.ts";
+import type { RegistroPieza } from "./tipos.js";
 
 export const PALETAS_VISUALES = ["color_obra", "piedra_fria", "vino_negro", "oliva_pergamino", "calida"] as const;
 export const COMPOSICIONES_DESARROLLO = [

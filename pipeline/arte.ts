@@ -6,8 +6,8 @@
 import { writeFile, mkdir, access } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve, join } from "node:path";
-import { imagen as generarImagenOpenAI } from "./openai.ts";
-import { descargarObra } from "./arte-descarga.ts";
+import { imagen as generarImagenOpenAI } from "./openai.js";
+import { descargarObra } from "./arte-descarga.js";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const ARTE = join(ROOT, "assets", "arte");

@@ -11,8 +11,8 @@ import { dirname, resolve, join } from "node:path";
 import {
   type Backlog, type Registro, type TemaBacklog,
   OBJETIVO_DISTRIBUCION, baldeDe, type Balde,
-} from "./tipos.ts";
-import { cuotasOrigenLote, restriccionesVisuales, type DireccionVisual, type OrigenVisual } from "./direccion-visual.ts";
+} from "./tipos.js";
+import { cuotasOrigenLote, restriccionesVisuales, type DireccionVisual, type OrigenVisual } from "./direccion-visual.js";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const leer = async <T>(p: string): Promise<T> => JSON.parse(await readFile(join(ROOT, p), "utf8")) as T;

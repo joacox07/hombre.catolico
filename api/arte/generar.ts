@@ -1,7 +1,7 @@
-import { imagenEditorial } from "../../pipeline/openai.ts";
+import { imagenEditorial } from "../../pipeline/openai.js";
 import { piezaVersionada } from "../_lib/github.js";
 import { cuerpoJson, requiereSesion, responder } from "../_lib/http.js";
-import { esSantoConcreto, promptEditorial, validarSolicitudArte } from "../_lib/arte-editorial.ts";
+import { esSantoConcreto, promptEditorial, validarSolicitudArte } from "../_lib/arte-editorial.js";
 
 export default async function handler(req: any, res: any) {
   if (req.method !== "POST") return responder(res, 405, { error: "Método no permitido." });

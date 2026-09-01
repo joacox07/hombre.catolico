@@ -1,7 +1,7 @@
 /** Tipos compartidos del pipeline del empleado IA. */
 
 export type Pilar = "Fe" | "Virtud" | "Deber" | "Familia";
-import type { DireccionVisual } from "./direccion-visual.ts";
+import type { DireccionVisual } from "./direccion-visual.js";
 
 export interface TemaBacklog {
   n: number;

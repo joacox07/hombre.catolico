@@ -7,7 +7,7 @@
 import { readFile, readdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve, join } from "node:path";
-import type { Backlog, TemaBacklog } from "./tipos.ts";
+import type { Backlog, TemaBacklog } from "./tipos.js";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const FUENTES = join(ROOT, "library", "fuentes");

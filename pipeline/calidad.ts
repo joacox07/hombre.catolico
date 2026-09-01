@@ -1,9 +1,9 @@
 /** Puerta de calidad editorial: evidencia, procedencia, voz y resultado del render.
  * Un modelo puede señalar riesgos; la aprobación continúa siendo una decisión humana. */
-import type { Ficha } from "./recuperacion.ts";
-import { verificarCitas } from "./verificar.ts";
-import { auditarVozHumana } from "./voz-humana.ts";
-import { chat } from "./texto.ts";
+import type { Ficha } from "./recuperacion.js";
+import { verificarCitas } from "./verificar.js";
+import { auditarVozHumana } from "./voz-humana.js";
+import { chat } from "./texto.js";
 
 export type RiesgoAfirmacion = "normal" | "alto";
 export type RespaldoAfirmacion = "claro" | "incierto";

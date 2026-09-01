@@ -1,5 +1,5 @@
 /** Revisión de voz: patrones editoriales de español rioplatense, no evasión de detectores. */
-import { chat } from "./texto.ts";
+import { chat } from "./texto.js";
 
 export interface HallazgoVoz {
   patron: string;
