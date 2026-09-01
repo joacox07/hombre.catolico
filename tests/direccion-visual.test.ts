@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import vm from "node:vm";
 import {
-  cuotasOrigenLote, normalizarDireccionVisual, validarComposiciones,
+  direccionAlternativa, cuotasOrigenLote, normalizarDireccionVisual, validarComposiciones,
 } from "../pipeline/direccion-visual.ts";
 
 const direccion = normalizarDireccionVisual({
@@ -36,6 +36,18 @@ test("las cuotas de un lote de tres siempre mezclan obra e IA", () => {
   const cuotas = cuotasOrigenLote([], 3);
   assert.ok(cuotas.includes("obra"));
   assert.ok(cuotas.includes("ia"));
+});
+
+test("repara una dirección repetida usando una composición ya presente", () => {
+  const alternativa = direccionAlternativa(slides, {
+    origen_arte: "obra", paleta: "calida", composicion_principal: "editorial_superior",
+  }, [
+    { origen_arte: "obra", paleta: "calida", composicion_principal: "editorial_superior" },
+    { origen_arte: "obra", paleta: "piedra_fria", composicion_principal: "contraste" },
+  ]);
+  assert.deepEqual(alternativa, {
+    origen_arte: "obra", paleta: "color_obra", composicion_principal: "mapa_conceptual",
+  });
 });
 
 test("el render oculta la fuente técnica en desarrollo y la conserva sólo en el cierre", () => {

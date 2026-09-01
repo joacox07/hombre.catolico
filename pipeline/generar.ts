@@ -19,7 +19,7 @@ import { ensamblarLote } from "./lote.ts";
 import { chat } from "./texto.ts";
 import { captionLista } from "./caption.ts";
 import { humanizarPieza } from "./voz-humana.ts";
-import { normalizarDireccionVisual, validarComposiciones, origenDesdeArte } from "./direccion-visual.ts";
+import { direccionAlternativa, normalizarDireccionVisual, validarComposiciones, origenDesdeArte } from "./direccion-visual.ts";
 import { crearControlCalidad, registrarRenderEnCalidad } from "./calidad.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -167,10 +167,14 @@ async function main() {
           if (/\b(?:CIC|nivel\s*\d)\b/i.test(candidato.caption)) {
             throw new Error("la caption no debe mostrar códigos ni niveles doctrinales");
           }
-          const direccion = normalizarDireccionVisual(candidato.direccion_visual);
+          let direccion = normalizarDireccionVisual(candidato.direccion_visual);
           if (direccion.origen_arte !== cuotaArte) throw new Error(`origen_arte debe ser ${cuotaArte}`);
           normalizarPlanArte(candidato.arte_plan, candidato.slides.length);
           if (origenDesdeArte(candidato.arte_plan) !== cuotaArte) throw new Error(`arte_plan debe materializar ${cuotaArte}`);
+          if (direccionesAExcluir.some((d) => d.paleta === direccion.paleta || d.composicion_principal === direccion.composicion_principal)) {
+            direccion = direccionAlternativa(candidato.slides, direccion, direccionesAExcluir) || direccion;
+            candidato.direccion_visual = direccion;
+          }
           if (direccionesAExcluir.some((d) => d.paleta === direccion.paleta || d.composicion_principal === direccion.composicion_principal)) {
             throw new Error("paleta o composición principal repetida respecto de los dos posts anteriores o de esta misma tanda");
           }

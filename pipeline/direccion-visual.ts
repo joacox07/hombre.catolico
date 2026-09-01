@@ -37,6 +37,21 @@ export function normalizarDireccionVisual(valor: unknown): DireccionVisual {
   return d as DireccionVisual;
 }
 
+/** Corrige sólo metadatos visuales repetidos; no altera texto, doctrina ni arte. */
+export function direccionAlternativa(
+  slides: any[],
+  direccion: DireccionVisual,
+  excluidas: DireccionVisual[],
+): DireccionVisual | null {
+  const paleta = PALETAS_VISUALES.find((opcion) => !excluidas.some((d) => d.paleta === opcion));
+  const composicion = slides
+    .filter((slide) => slide?.tipo === "contenido")
+    .map((slide) => slide.disposicion)
+    .find((opcion) => incluye(COMPOSICIONES_DESARROLLO, opcion) && !excluidas.some((d) => d.composicion_principal === opcion));
+  if (!paleta || !composicion) return null;
+  return { ...direccion, paleta, composicion_principal: composicion };
+}
+
 /** Valida composición sin romper las piezas creadas antes de este contrato. */
 export function validarComposiciones(slides: any[], direccion: DireccionVisual): void {
   const desarrollo = slides.filter((s) => s?.tipo === "contenido");
