@@ -1,0 +1,198 @@
+{
+  "id": "san-jose-fuerza-sin-espectaculo",
+  "tema": "San José: fuerza sin espectáculo",
+  "pilar": "Fe",
+  "tipo": "carrusel",
+  "santos": [
+    "San José"
+  ],
+  "nivel": "intro",
+  "titulo": "San José: la fuerza que no busca aplausos",
+  "slides": [
+    {
+      "tipo": "portada",
+      "kicker": "SAN JOSÉ",
+      "titulo": "San José: la fuerza que no busca aplausos",
+      "subtitulo": "La fe se reconoce en las obras",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/san-jose-fuerza-sin-espectaculo.orgutmcampaignimageinfoutmcontentthumbnail",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "verificado": false,
+        "posicion": "42% 48%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "UNA FUERZA DISTINTA",
+      "titulo": "No necesitó ocupar el centro",
+      "cuerpo": "San José no buscó protagonismo. La Escritura lo presenta respondiendo a Dios mediante sus obras: **escuchó y se hizo responsable**.",
+      "disposicion": "editorial_superior",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/san-jose-fuerza-sin-espectaculo.orgutmcampaignimageinfoutmcontentthumbnail",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "verificado": false,
+        "posicion": "63% 35%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "DOS CAMINOS",
+      "titulo": "Exhibirse o responder",
+      "cuerpo": "El espectáculo pregunta: «¿Quién me está mirando?». La responsabilidad pregunta: **«¿Qué me corresponde hacer?»**. José eligió cumplir la voluntad de Dios.",
+      "disposicion": "contraste",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/san-jose-fuerza-sin-espectaculo.orgutmcampaignimageinfoutmcontentthumbnail",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "verificado": false,
+        "posicion": "34% 52%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "OBEDIENCIA",
+      "titulo": "Su silencio no fue pasividad",
+      "cuerpo": "José escuchó el mandato recibido y actuó. **La obediencia creyente exige decisión**, incluso cuando el camino altera los propios planes.",
+      "disposicion": "manifiesto_central",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/san-jose-fuerza-sin-espectaculo.orgutmcampaignimageinfoutmcontentthumbnail",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "verificado": false,
+        "posicion": "70% 42%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "VIDA OCULTA",
+      "titulo": "Amó cumpliendo su deber cotidiano",
+      "cuerpo": "La Iglesia propone el trabajo y la paternidad ocultos de José como expresión de amor y camino de santidad. **Custodiar también es amar**.",
+      "disposicion": "bloque_inferior",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/san-jose-fuerza-sin-espectaculo.orgutmcampaignimageinfoutmcontentthumbnail",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "verificado": false,
+        "posicion": "48% 70%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "EL CAMINO DE JOSÉ",
+      "titulo": "Escuchar, obedecer, custodiar",
+      "cuerpo": "Su fortaleza siguió un movimiento concreto: recibir la voluntad de Dios, responder con obras y hacerse cargo de quienes le fueron confiados.",
+      "disposicion": "mapa_conceptual",
+      "mapa": {
+        "centro": "FE QUE ACTÚA",
+        "pasos": [
+          "Escuchar a Dios",
+          "Obedecer con decisión",
+          "Custodiar con amor"
+        ]
+      },
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/san-jose-fuerza-sin-espectaculo.orgutmcampaignimageinfoutmcontentthumbnail",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "verificado": false,
+        "posicion": "56% 45%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "PARA TU VIDA",
+      "titulo": "La fidelidad no siempre hace ruido",
+      "cuerpo": "Tu fe también se juega en lo escondido: una promesa cumplida, un trabajo bien hecho, una persona cuidada. **Dios ve la fidelidad que otros no ven**.",
+      "disposicion": "editorial_superior",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/san-jose-fuerza-sin-espectaculo.orgutmcampaignimageinfoutmcontentthumbnail",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "verificado": false,
+        "posicion": "30% 60%"
+      }
+    },
+    {
+      "tipo": "cierre",
+      "titulo": "La fuerza cristiana se vuelve servicio",
+      "cuerpo": "San José enseña una fortaleza silenciosa: escuchar a Dios, asumir la responsabilidad y amar mediante obras concretas.",
+      "fuentes": [
+        "Evangelio según San Mateo",
+        "Exhortación apostólica Redemptoris Custos"
+      ],
+      "cta": "Guardalo para recordar qué responsabilidad concreta te toca asumir hoy.",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/san-jose-fuerza-sin-espectaculo.orgutmcampaignimageinfoutmcontentthumbnail",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "verificado": false,
+        "posicion": "50% 50%"
+      }
+    }
+  ],
+  "caption": "La verdadera fuerza no necesita escenario.\n\nSan José respondió a Dios mediante obras concretas. Escuchó, obedeció y asumió la responsabilidad de custodiar a su familia. Su silencio no fue indiferencia: fue una fe decidida que se volvió servicio.\n\nLa Iglesia presenta también su trabajo y su paternidad ocultos como expresión de amor y camino de santidad. Tu fidelidad cotidiana puede seguir ese mismo camino: menos protagonismo, más responsabilidad.\n\nGuardalo para tu próximo examen de conciencia.\n\n#SanJosé #ObedienciaCristiana #FortalezaCristiana #VidaDeFe",
+  "fuentes": [
+    "escritura-mt-1-24",
+    "magisterio-redemptoris-custos"
+  ],
+  "clasificacion_doctrinal": [
+    {
+      "afirmacion": "San José obedece a Dios y recibe a María, respondiendo mediante sus obras.",
+      "nivel": 1,
+      "etiqueta": "Sagrada Escritura"
+    },
+    {
+      "afirmacion": "La fortaleza de San José es silenciosa, obediente y responsable, no orientada al protagonismo.",
+      "nivel": 1,
+      "etiqueta": "Sagrada Escritura"
+    },
+    {
+      "afirmacion": "El trabajo cotidiano, la paternidad y la custodia ocultas de San José expresan amor y constituyen un camino de santidad.",
+      "nivel": 2,
+      "etiqueta": "Magisterio (exhortación apostólica)"
+    }
+  ],
+  "revision_humana": true,
+  "direccion_visual": {
+    "origen_arte": "obra",
+    "paleta": "color_obra",
+    "composicion_principal": "contraste"
+  },
+  "arte_plan": {
+    "modo": "recorrida",
+    "principal": {
+      "fuente": "descarga",
+      "autor": "Georges de La Tour",
+      "obra": "Saint Joseph the Carpenter",
+      "query": "Georges de La Tour — Saint Joseph the Carpenter"
+    },
+    "recortes": [
+      "42% 48%",
+      "63% 35%",
+      "34% 52%",
+      "70% 42%",
+      "48% 70%",
+      "56% 45%",
+      "30% 60%",
+      "50% 50%"
+    ],
+    "slides": []
+  },
+  "arte": {
+    "fuente": "descarga",
+    "archivo": "descargado/san-jose-fuerza-sin-espectaculo.orgutmcampaignimageinfoutmcontentthumbnail",
+    "credito": "Saint Joseph charpentier",
+    "licencia": "Public domain",
+    "verificado": false
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "id": "2026-W36-33491319954",
+  "nombre": "Lote 2026-W36",
+  "semana": "2026-W36",
+  "generado": "2026-09-01",
+  "piezas": [
+    {
+      "ref": "/data/piezas/san-jose-fuerza-sin-espectaculo.json",
+      "fecha_propuesta": "2026-09-03 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "rechazado",
+        "citas_verificadas": false,
+        "requiere_revision_humana": true,
+        "nota": "El tono es sobrio, esperanzado y contrario al protagonismo; aterriza bien la fe en deberes cotidianos. No obstante, la publicación queda bloqueada porque ambas fuentes están sin verificar y dos interpretaciones fueron presentadas con un nivel doctrinal superior al que permiten las fichas actuales.",
+        "citas": [
+          {
+            "texto": "¿Quién me está mirando?",
+            "verificada": false
+          },
+          {
+            "texto": "¿Qué me corresponde hacer?",
+            "verificada": false
+          }
+        ]
+      }
+    },
+    {
+      "ref": "/data/piezas/cabeza-del-hogar.json",
+      "fecha_propuesta": "2026-09-05 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "rechazado",
+        "citas_verificadas": true,
+        "requiere_revision_humana": true,
+        "nota": "El tono es caritativo, concreto y contrario a la dominación, pero la fuente declarada no está verificada y la pieza eleva una interpretación a nivel escriturístico. No publicar hasta corregir ambos puntos y completar la revisión humana obligatoria.",
+        "citas": []
+      }
+    }
+  ]
+}

@@ -123,6 +123,47 @@
       "nivel": "intro",
       "fecha": "2026-09-01T01:09:19.321Z",
       "estado": "en_revision"
+    },
+    {
+      "id": "san-jose-fuerza-sin-espectaculo-2026-W36-33491319954",
+      "tema": "san-jose-fuerza-sin-espectaculo",
+      "pilar": "Fe",
+      "santos": [
+        "San José"
+      ],
+      "formato": "carrusel",
+      "fuentes": [
+        "escritura-mt-1-24",
+        "magisterio-redemptoris-custos"
+      ],
+      "gancho": "San José: la fuerza que no busca aplausos",
+      "nivel": "intro",
+      "direccion_visual": {
+        "origen_arte": "obra",
+        "paleta": "color_obra",
+        "composicion_principal": "contraste"
+      },
+      "fecha": "2026-09-01T09:20:40.212Z",
+      "estado": "en_revision"
+    },
+    {
+      "id": "cabeza-del-hogar-2026-W36-33491319954",
+      "tema": "cabeza-del-hogar",
+      "pilar": "Familia",
+      "santos": [],
+      "formato": "carrusel",
+      "fuentes": [
+        "escritura-ef-5-25"
+      ],
+      "gancho": "Ser cabeza del hogar significa entregarte, no dominar",
+      "nivel": "medio",
+      "direccion_visual": {
+        "origen_arte": "ia",
+        "paleta": "piedra_fria",
+        "composicion_principal": "editorial_superior"
+      },
+      "fecha": "2026-09-01T09:20:40.212Z",
+      "estado": "en_revision"
     }
   ]
 }
