@@ -76,7 +76,9 @@
     });
   }
   function etiquetaLote(resumen) {
-    return (resumen.generado ? fechaLinda(resumen.generado) + " · " : "") + (resumen.nombre || resumen.semana || resumen.id);
+    var identificador = String(resumen.id || "").replace(/^\d{4}-W\d{2}-?/, "");
+    var piezas = typeof resumen.piezas === "number" ? " · " + resumen.piezas + " piezas" : "";
+    return (resumen.generado ? fechaLinda(resumen.generado) + " · " : "") + (resumen.nombre || resumen.semana || "Lote") + piezas + (identificador ? " · #" + identificador : "");
   }
   function renderHistorial() {
     var select = document.getElementById("lote-select");

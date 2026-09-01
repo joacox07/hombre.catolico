@@ -74,11 +74,15 @@ async function cargarLote(resumen) {
 
 export async function listarLotes() {
   const indice = await contenidoJson("data/lotes/index.json");
-  return (indice.lotes || []).map((resumen) => ({
-    id: resumen.id || resumen.semana,
-    nombre: resumen.nombre,
-    semana: resumen.semana,
-    generado: resumen.generado,
+  return Promise.all((indice.lotes || []).map(async (resumen) => {
+    const lote = await contenidoJson(resumen.file);
+    return {
+      id: idDeResumen(resumen, lote),
+      nombre: resumen.nombre,
+      semana: resumen.semana,
+      generado: resumen.generado,
+      piezas: lote.piezas?.length || 0,
+    };
   }));
 }
 
