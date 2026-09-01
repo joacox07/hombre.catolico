@@ -17,7 +17,8 @@ import { startServer, ROOT } from "./server.ts";
 import { verificarCanvas, type InformeSlideRender } from "./qa-render.ts";
 
 const OUT = join(ROOT, "out");
-const CANVAS = { width: 1080, height: 1350 };
+const POST = { width: 1080, height: 1350 };
+const REEL = { width: 1080, height: 1920 };
 
 /** Resuelve el ejecutable de Chromium preinstalado en el entorno remoto (o deja que Playwright lo resuelva en local). */
 function chromiumExecutable(): string | undefined {
@@ -35,8 +36,8 @@ async function loadPieza(path: string): Promise<Pieza> {
   return JSON.parse(await readFile(path, "utf8")) as Pieza;
 }
 
-async function newPage(browser: Browser, baseUrl: string, template: string): Promise<Page> {
-  const page = await browser.newPage({ viewport: CANVAS, deviceScaleFactor: 1 });
+async function newPage(browser: Browser, baseUrl: string, template: string, canvas = POST): Promise<Page> {
+  const page = await browser.newPage({ viewport: canvas, deviceScaleFactor: 1 });
   await page.goto(`${baseUrl}/templates/${template}`, { waitUntil: "networkidle" });
   return page;
 }
@@ -57,7 +58,7 @@ async function renderCarrusel(browser: Browser, baseUrl: string, pieza: Pieza): 
     const file = join(outDir, `slide-${String(i + 1).padStart(2, "0")}.png`);
     await page.locator("#canvas").screenshot({ path: file });
     files.push(file);
-    informes.push(await verificarCanvas(page, i + 1));
+    informes.push(await verificarCanvas(page, i + 1, POST));
   }
   await page.close();
   const errores = informes.flatMap((informe) => informe.errores.map((error) => `slide ${informe.slide}: ${error}`));
@@ -73,7 +74,7 @@ async function renderCita(browser: Browser, baseUrl: string, pieza: Pieza): Prom
   await page.waitForTimeout(60);
   const file = join(outDir, "cita.png");
   await page.locator("#canvas").screenshot({ path: file });
-  const informe = await verificarCanvas(page, 1);
+  const informe = await verificarCanvas(page, 1, POST);
   await page.close();
   return { files: [file], informe: { pieza: pieza.id, ok: informe.ok, slides: [informe], errores: informe.errores.map((error) => `slide 1: ${error}`) } };
 }
@@ -82,6 +83,21 @@ async function renderPieza(browser: Browser, baseUrl: string, pieza: Pieza): Pro
   return pieza.tipo === "cita"
     ? renderCita(browser, baseUrl, pieza)
     : renderCarrusel(browser, baseUrl, pieza);
+}
+
+async function renderReel(browser: Browser, baseUrl: string, pieza: Pieza): Promise<{ file: string; informe: InformeSlideRender } | null> {
+  if (!pieza.reel_portada) return null;
+  const page = await newPage(browser, baseUrl, "reel.html", REEL);
+  const outDir = join(OUT, pieza.id);
+  await mkdir(outDir, { recursive: true });
+  await page.evaluate((p) => (window as any).renderReel(p), pieza);
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForTimeout(60);
+  const file = join(outDir, "reel-portada.png");
+  await page.locator("#canvas").screenshot({ path: file });
+  const informe = await verificarCanvas(page, 1, REEL);
+  await page.close();
+  return { file, informe };
 }
 
 async function main() {
@@ -108,6 +124,12 @@ async function main() {
     for (const p of paths) {
       const pieza = await loadPieza(p);
       const { files, informe } = await renderPieza(browser, url, pieza);
+      const reel = await renderReel(browser, url, pieza);
+      if (reel) {
+        files.push(reel.file);
+        informe.slides.push({ ...reel.informe, slide: informe.slides.length + 1 });
+        if (!reel.informe.ok) { informe.ok = false; informe.errores.push(...reel.informe.errores.map((error) => `portada Reel: ${error}`)); }
+      }
       const informeRuta = join(OUT, pieza.id, "qa.json");
       await writeFile(informeRuta, JSON.stringify(informe, null, 2) + "\n");
       console.log(`${informe.ok ? "✓" : "✗"} ${pieza.id} (${pieza.tipo}) → ${files.length} imagen(es)`);

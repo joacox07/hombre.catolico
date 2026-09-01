@@ -44,6 +44,17 @@ minutos. **Nada se publica en Instagram.**
 - Para verlos en el **panel** (el "clon de Instagram"), falta publicar la web en GitHub Pages
   — es el próximo paso. Mientras tanto, los archivos generados ya están en el repo.
 
+## Buscador y creador de arte en el panel
+
+En Vercel configurá `OPENAI_API_KEY`, opcionalmente `OPENAI_VISION_MODEL`, e
+`IMAGEN_MODEL=gpt-image-2`. El botón **Buscar / crear imagen** devuelve sólo obras de Wikimedia
+con dominio público, CC0, CC BY o CC BY-SA; guarda autor, licencia y URL al aplicarla.
+
+Podés subir hasta tres referencias para orientar una búsqueda o crear una imagen original. Esas
+referencias no se guardan. Para un santo concreto, el panel no genera una figura IA: pide elegir
+arte histórico verificable. Al aplicar, la pieza se bloquea hasta que GitHub Actions re-renderice
+el post o la portada Reel y actualice el ZIP.
+
 ## Notas honestas
 
 - **Imágenes IA**: OpenAI puede pedir **verificar la organización** para habilitar

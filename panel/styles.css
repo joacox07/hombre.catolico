@@ -150,7 +150,7 @@ button { cursor: pointer; }
 .quality-alerts, .revision-history { margin: 8px 0 0; padding-left: 18px; }
 .quality-alerts li { margin: 5px 0; color: var(--warn); }
 .quality-alerts li.bloqueo { color: var(--alto); }
-.revision-actions { margin: 14px 0 2px; padding-top: 12px; border-top: 1px solid var(--linea); }
+.revision-actions, .arte-actions { margin: 14px 0 2px; padding-top: 12px; border-top: 1px solid var(--linea); }
 .revision-actions textarea { width: 100%; min-height: 72px; resize: vertical; border: 1px solid var(--linea); border-radius: 9px; padding: 9px; color: var(--tinta); background: #faf8f4; font: 13px/1.4 "DM Sans", "Inter", sans-serif; }
 .revision-actions .acciones { margin: 8px 0 0; flex-wrap: wrap; }
 .revision-actions .secondary { color: var(--warn); }
@@ -159,6 +159,24 @@ button { cursor: pointer; }
 .revision-history { list-style: none; padding-left: 0; }
 .revision-history li { margin: 8px 0; }
 .revision-history small { display: block; color: var(--tenue); margin-top: 3px; }
+.arte-actions p { color: var(--tenue); font-size: 13px; line-height: 1.45; margin: 4px 0 10px; }
+.arte-ready { display: block; color: var(--ok); font-size: 12px; margin-top: 8px; }
+.arte-modal { position: fixed; z-index: 20; inset: 0; padding: 16px; overflow-y: auto; background: rgba(31, 26, 20, .62); display: grid; place-items: start center; }
+.arte-dialog { width: min(100%, 720px); margin: 30px 0; position: relative; background: var(--panel); border-radius: 16px; padding: 24px; box-shadow: 0 22px 60px rgba(20, 15, 10, .35); }
+.arte-dialog h2 { margin: 0 0 16px; font: 600 30px/1.05 "Cormorant Garamond", Georgia, serif; }
+.arte-dialog label { display: block; font-size: 12px; font-weight: 600; margin: 14px 0 6px; }
+.arte-dialog select, .arte-dialog textarea, .arte-dialog input[type=file] { display: block; width: 100%; margin-top: 6px; border: 1px solid var(--linea); background: #faf8f4; border-radius: 8px; padding: 9px; color: var(--tinta); font: inherit; }
+.arte-dialog textarea { min-height: 88px; resize: vertical; }
+.arte-dialog .arte-check { display: flex; align-items: flex-start; gap: 8px; font-weight: 400; line-height: 1.4; }
+.arte-dialog .arte-check input { margin-top: 2px; }
+.arte-close { position: absolute; top: 10px; right: 12px; width: 32px; height: 32px; border: 0; background: transparent; font-size: 24px; color: var(--tenue); }
+.arte-legal, .arte-status { color: var(--tenue); font-size: 12px; line-height: 1.45; }
+.arte-status { min-height: 18px; margin: 12px 0; color: var(--ok); }.arte-status.error { color: var(--alto); }
+.arte-results { display: grid; gap: 12px; }
+.arte-candidate, .arte-generated { display: grid; grid-template-columns: 112px 1fr; gap: 12px; padding: 10px; border: 1px solid var(--linea); border-radius: 10px; background: #faf8f4; }
+.arte-candidate img, .arte-generated img { width: 112px; height: 140px; object-fit: cover; border-radius: 6px; background: var(--carbon); }
+.arte-candidate strong, .arte-candidate small { display: block; }.arte-candidate small { color: var(--tenue); margin-top: 3px; }.arte-candidate p, .arte-generated p { margin: 7px 0; color: var(--tenue); font-size: 12px; line-height: 1.4; }.arte-candidate a { color: var(--acento); font-size: 12px; margin-right: 10px; }
+.arte-generated { grid-template-columns: minmax(0, 1fr); }.arte-generated img { width: min(100%, 300px); height: auto; max-height: 420px; }
 
 /* ---------- Desktop (≥900px): layout de columnas ---------- */
 @media (min-width: 900px) {

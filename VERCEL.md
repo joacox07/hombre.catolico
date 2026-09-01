@@ -13,7 +13,13 @@ en `.env` ni en el código: se cargan en Vercel como variables de Production.
 - `GITHUB_OWNER=joacox07`, `GITHUB_REPO=hombre.catolico` y
   `GITHUB_BRANCH=claude/hombre-catolico-instagram-ogg8ao`.
 
-`OPENAI_API_KEY` sigue sólo en GitHub Actions. El panel nunca la recibe.
+Para el buscador y generador de arte, cargar también en Vercel (Production) y nunca en el
+cliente: `OPENAI_API_KEY`, `OPENAI_VISION_MODEL` (opcional) e `IMAGEN_MODEL=gpt-image-2`.
+La key sigue sin exponerse al navegador. El token GitHub necesita **Contents: Read and write**
+para guardar el asset y la ficha de procedencia; Actions: Read and write para disparar el render.
+
+Las referencias subidas al panel se envían sólo durante la generación, no se guardan en Vercel
+ni GitHub. El panel guarda únicamente la imagen final y su procedencia.
 
 ## Descargas
 

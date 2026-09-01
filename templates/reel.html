@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="/templates/tokens.css" />
+<link rel="stylesheet" href="/templates/pieza.css" />
+<style>* { margin: 0; padding: 0; box-sizing: border-box; } html, body { background: #111; }</style>
+<script src="/templates/render.js"></script>
+</head>
+<body>
+  <div id="canvas" class="hc-canvas reel"></div>
+  <script>window.renderReel = function (pieza) { document.getElementById("canvas").innerHTML = window.HC.reelHTML(pieza); };</script>
+</body>
+</html>

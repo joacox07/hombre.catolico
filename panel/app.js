@@ -139,6 +139,101 @@
       '<button class="secondary changes" type="button">Pedir cambios</button><button class="secondary discard" type="button">Descartar</button></div>' +
       '<p class="revision-status" aria-live="polite"></p></div>';
   }
+  function arteEditorHTML(pieza) {
+    if (!API) return "";
+    return '<div class="arte-actions"><div class="k">Dirección de arte</div>' +
+      '<p>Buscá obras reutilizables o creá un fondo original desde una referencia.</p>' +
+      '<button class="secondary open-arte" type="button">Buscar / crear imagen</button>' +
+      (pieza.reel_portada ? '<span class="arte-ready">Portada Reel preparada</span>' : "") + "</div>";
+  }
+  function comprimirImagen(file) {
+    return new Promise(function (resolve, reject) {
+      if (!file || !/^image\/(png|jpeg|webp)$/.test(file.type)) { reject(new Error("Usá PNG, JPG o WebP.")); return; }
+      var reader = new FileReader();
+      reader.onerror = function () { reject(new Error("No se pudo leer la referencia.")); };
+      reader.onload = function () {
+        var imagen = new Image();
+        imagen.onerror = function () { reject(new Error("No se pudo abrir la referencia.")); };
+        imagen.onload = function () {
+          var escala = Math.min(1, 1400 / Math.max(imagen.width, imagen.height));
+          var canvas = document.createElement("canvas"); canvas.width = Math.round(imagen.width * escala); canvas.height = Math.round(imagen.height * escala);
+          canvas.getContext("2d").drawImage(imagen, 0, 0, canvas.width, canvas.height);
+          var data = canvas.toDataURL("image/jpeg", .82);
+          if (data.length > 2_100_000) { reject(new Error("Una referencia sigue siendo demasiado grande.")); return; }
+          resolve(data);
+        };
+        imagen.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  function abrirArte(pieza, item) {
+    var modal = document.createElement("div"); modal.className = "arte-modal";
+    modal.innerHTML = '<div class="arte-dialog" role="dialog" aria-modal="true" aria-labelledby="arte-title">' +
+      '<button class="arte-close" type="button" aria-label="Cerrar">×</button><p class="eyebrow">Dirección de arte</p><h2 id="arte-title">Buscar / crear imagen</h2>' +
+      '<label>Destino<select class="arte-destino"><option value="post">Post 4:5</option><option value="reel">Portada Reel 9:16</option></select></label>' +
+      '<label>Qué buscás<textarea class="arte-consulta" placeholder="Ej.: hombre trabajando madera a la luz de vela, sobrio y contemplativo"></textarea></label>' +
+      '<label>Hasta 3 referencias (opcionales)<input class="arte-referencias" type="file" accept="image/png,image/jpeg,image/webp" multiple /></label>' +
+      '<label class="arte-check"><input class="arte-derechos" type="checkbox" /> Tengo derecho a usar estas referencias para orientar una creación original.</label>' +
+      '<p class="arte-legal">Sólo se guardará la imagen final. Pinterest nunca se descarga ni se publica desde acá.</p>' +
+      '<div class="acciones"><button class="secondary arte-search" type="button">Buscar arte público</button><button class="primary arte-generate" type="button">Generar original</button></div>' +
+      '<p class="arte-status" aria-live="polite"></p><div class="arte-results"></div></div>';
+    document.body.appendChild(modal);
+    var refs = [], input = modal.querySelector(".arte-referencias"), status = modal.querySelector(".arte-status"), results = modal.querySelector(".arte-results");
+    function cerrar() { modal.remove(); }
+    function datos() {
+      var consulta = modal.querySelector(".arte-consulta").value.trim();
+      return { lote_id: lote.id, pieza_id: pieza.id, version: item.version, destino: modal.querySelector(".arte-destino").value, consulta: consulta, referencias: refs, derechos_referencias: modal.querySelector(".arte-derechos").checked };
+    }
+    function error(error) { status.textContent = error.message || "No se pudo completar la acción."; status.classList.add("error"); }
+    function esperando(texto) { status.classList.remove("error"); status.textContent = texto; }
+    function aplicar(candidato) {
+      esperando("Guardando imagen y preparando render…");
+      api("/arte/aplicar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.assign(datos(), { candidato: candidato })) })
+        .then(function (respuesta) { seguirRenderArte(respuesta.solicitud, status, cerrar); }).catch(error);
+    }
+    input.addEventListener("change", function () {
+      var archivos = Array.prototype.slice.call(input.files || []);
+      if (archivos.length > 3) { refs = []; input.value = ""; error(new Error("Elegí hasta tres referencias.")); return; }
+      esperando("Preparando referencias…");
+      Promise.all(archivos.map(comprimirImagen)).then(function (imagenes) { refs = imagenes; esperando(refs.length ? refs.length + " referencia(s) lista(s)." : ""); }).catch(function (e) { refs = []; error(e); });
+    });
+    modal.querySelector(".arte-close").addEventListener("click", cerrar);
+    modal.addEventListener("click", function (event) { if (event.target === modal) cerrar(); });
+    modal.querySelector(".arte-search").addEventListener("click", function () {
+      esperando("Buscando sólo obras con licencia reutilizable…"); results.innerHTML = "";
+      api("/arte/buscar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(datos()) }).then(function (respuesta) {
+        esperando(respuesta.aviso || respuesta.candidatos.length + " obras reutilizables encontradas" + (respuesta.perfil ? ". Perfil: " + respuesta.perfil : "."));
+        results.innerHTML = (respuesta.candidatos || []).map(function (candidato) {
+          return '<article class="arte-candidate"><img src="' + esc(candidato.thumbnail_url) + '" alt="' + esc(candidato.titulo) + '" /><div><strong>' + esc(candidato.titulo) + '</strong><small>' + esc(candidato.autor || "Autor no indicado") + " · " + esc(candidato.licencia) + '</small><p>' + esc(candidato.razon) + '</p><a href="' + esc(candidato.fuente_url) + '" target="_blank" rel="noopener">Ver procedencia</a><button class="secondary" type="button" data-obra="' + esc(candidato.id) + '">Usar esta obra</button></div></article>';
+        }).join("") || "";
+        Array.prototype.forEach.call(results.querySelectorAll("[data-obra]"), function (boton) { boton.addEventListener("click", function () { aplicar({ tipo: "wikimedia", id: this.getAttribute("data-obra") }); }); });
+      }).catch(error);
+    });
+    modal.querySelector(".arte-generate").addEventListener("click", function () {
+      esperando("Generando alternativa original…"); results.innerHTML = "";
+      api("/arte/generar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(datos()) }).then(function (respuesta) {
+        var candidato = respuesta.candidato; esperando("Alternativa lista. Revisala antes de aplicar.");
+        results.innerHTML = '<article class="arte-generated"><img src="' + candidato.image_data + '" alt="Alternativa original generada" /><p>Imagen propia; no es obra histórica.</p><button class="primary" type="button">Aplicar imagen</button></article>';
+        results.querySelector("button").addEventListener("click", function () { aplicar(candidato); });
+      }).catch(error);
+    });
+  }
+  function seguirRenderArte(solicitud, status, cerrar) {
+    clearInterval(polling);
+    function consultar() {
+      api("/arte/" + encodeURIComponent(solicitud)).then(function (estado) {
+        if (estado.estado === "completed") {
+          clearInterval(polling);
+          if (estado.resultado === "success") { status.textContent = "Render listo. Actualizando pieza…"; cargarLote(lote.id).then(function () { status.textContent = "Imagen aplicada."; cerrar(); }); }
+          else { status.textContent = "El render no terminó correctamente."; status.classList.add("error"); }
+          return;
+        }
+        status.classList.remove("error"); status.textContent = estado.estado === "queued" ? "Render en cola…" : "Renderizando y preparando descarga…";
+      }).catch(function (error) { clearInterval(polling); status.textContent = error.message; status.classList.add("error"); });
+    }
+    consultar(); polling = window.setInterval(consultar, 5000);
+  }
   function renderDetalle() {
     var it = items[sel]; if (!it) return;
     var pieza = it.pieza, meta = it.meta, total = slideCount(pieza), estadoActual = estadoDe(meta, pieza);
@@ -164,7 +259,7 @@
       '<div class="row"><div class="k">Revisor sacerdote</div><div class="v">' + badge(rev.veredicto) +
         (rev.requiere_revision_humana ? " " + badge("revision_humana") : "") + (rev.nota ? '<div class="v" style="margin-top:6px">' + esc(rev.nota) + "</div>" : "") + "</div></div>" +
       '<div class="row"><div class="k">Citas verificadas</div><div class="v">' + (rev.citas_verificadas ? "Sí" : '<span class="warn-line">No — verificar antes de publicar</span>') + "</div></div>" +
-      controlCalidadHTML(pieza.control_calidad) + accionesRevisionHTML(pieza) + historialRevisionHTML(pieza.id) +
+      controlCalidadHTML(pieza.control_calidad) + arteEditorHTML(pieza) + accionesRevisionHTML(pieza) + historialRevisionHTML(pieza.id) +
       (clasif ? '<div class="row"><div class="k">Clasificación doctrinal</div>' + clasif + "</div>" : "") +
       (fuentes ? '<div class="row"><div class="k">Fuentes</div><div class="v">' + fuentes + "</div></div>" : "");
     if (caption) {
@@ -192,6 +287,8 @@
       if (aprobar) aprobar.addEventListener("click", function () { decidir("aprobar"); });
       if (cambios) cambios.addEventListener("click", function () { decidir("cambios"); });
       if (descartar) descartar.addEventListener("click", function () { decidir("descartar"); });
+      var abrir = metaEl.querySelector(".open-arte");
+      if (abrir) abrir.addEventListener("click", function () { abrirArte(pieza, it); });
     }
     var cont = document.getElementById("detalle"); cont.innerHTML = ""; cont.appendChild(post); cont.appendChild(metaEl);
     pintarMedia(); pintarCaption();

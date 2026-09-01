@@ -7,13 +7,13 @@ export interface InformeSlideRender {
   errores: string[];
 }
 
-export async function verificarCanvas(page: Page, slide: number): Promise<InformeSlideRender> {
-  const resultado = await page.evaluate(async () => {
+export async function verificarCanvas(page: Page, slide: number, esperado = { width: 1080, height: 1350 }): Promise<InformeSlideRender> {
+  const resultado = await page.evaluate(async (dimensiones) => {
     const canvas = document.querySelector("#canvas") as HTMLElement | null;
     const errores: string[] = [];
     if (!canvas) return { errores: ["No existe #canvas."] };
     const canvasRect = canvas.getBoundingClientRect();
-    if (Math.round(canvasRect.width) !== 1080 || Math.round(canvasRect.height) !== 1350) {
+    if (Math.round(canvasRect.width) !== dimensiones.width || Math.round(canvasRect.height) !== dimensiones.height) {
       errores.push(`Canvas inválido: ${Math.round(canvasRect.width)}×${Math.round(canvasRect.height)}.`);
     }
     if (canvas.scrollWidth > canvas.clientWidth + 1 || canvas.scrollHeight > canvas.clientHeight + 1) {
@@ -43,6 +43,6 @@ export async function verificarCanvas(page: Page, slide: number): Promise<Inform
       }
     }
     return { errores };
-  });
+  }, esperado);
   return { slide, ok: resultado.errores.length === 0, errores: resultado.errores };
 }

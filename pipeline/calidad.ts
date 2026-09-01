@@ -150,14 +150,14 @@ export function registrarRenderEnCalidad(control: ControlCalidad | undefined, ok
     candados: { citas_literales: false, fuentes_verificadas: false, arte_procedencia: false, render_tecnico: "pendiente" },
     alertas: [], revision_humana_requerida: true, bloquea_aprobacion: true,
   };
-  const alertas = base.alertas.filter((alerta) => alerta.codigo !== "render_tecnico_fallido");
+  const alertas = base.alertas.filter((alerta) => alerta.codigo !== "render_tecnico_fallido" && alerta.codigo !== "render_pendiente");
   if (!ok) alertas.push({ codigo: "render_tecnico_fallido", nivel: "bloqueo", detalle: detalle || "El render técnico falló." });
   return {
     ...base,
     candados: { ...base.candados, render_tecnico: ok },
     alertas,
     revision_humana_requerida: base.revision_humana_requerida || !ok,
-    bloquea_aprobacion: base.bloquea_aprobacion || !ok,
+    bloquea_aprobacion: alertas.some((alerta) => alerta.nivel === "bloqueo"),
   };
 }
 

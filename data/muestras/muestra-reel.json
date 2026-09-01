@@ -1,0 +1,16 @@
+{
+  "id": "muestra-portada-reel",
+  "tipo": "carrusel",
+  "tema": "El deber se sostiene en silencio",
+  "titulo": "El deber se sostiene en silencio",
+  "direccion_visual": { "paleta": "calida" },
+  "slides": [
+    { "tipo": "portada", "kicker": "Hombre Católico", "titulo": "El deber se sostiene en silencio" }
+  ],
+  "reel_portada": {
+    "titulo": "El deber se sostiene en silencio",
+    "kicker": "Hombre Católico",
+    "subtitulo": "Una portada vertical de ejemplo",
+    "arte": { "fuente": "ia", "archivo": "", "verificado": true }
+  }
+}

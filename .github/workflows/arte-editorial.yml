@@ -1,0 +1,54 @@
+name: Renderizar arte editorial
+run-name: Arte editorial ${{ inputs.solicitud }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      solicitud:
+        required: true
+        type: string
+      lote:
+        required: true
+        type: string
+      pieza:
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  renderizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Renderizar pieza actualizada
+        run: |
+          PIEZA="data/piezas/${{ inputs.pieza }}.json"
+          npx tsx scripts/render.ts "$PIEZA"
+          npx tsx scripts/actualizar-calidad-render.ts "$PIEZA"
+      - name: Commitear control de calidad
+        run: |
+          git config user.name "hombre-catolico-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data/piezas/
+          if ! git diff --cached --quiet; then git commit -m "Mesa editorial: validar render de ${{ inputs.pieza }}"; git push; fi
+      - name: Empaquetar y publicar descarga
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          LOTE_FILE=$(jq -r --arg id "${{ inputs.lote }}" '.lotes[] | select((.id // .semana) == $id) | .file' data/lotes/index.json)
+          test -n "$LOTE_FILE" && test "$LOTE_FILE" != "null"
+          npm run empaquetar -- "$LOTE_FILE" --render
+          TAG="lote-${{ inputs.lote }}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" out/descargas/${{ inputs.lote }}/${{ inputs.pieza }}.zip --clobber
+          else
+            gh release create "$TAG" out/descargas/${{ inputs.lote }}/${{ inputs.pieza }}.zip --title "Lote ${{ inputs.lote }}" --notes "Descargas listas para Instagram."
+          fi

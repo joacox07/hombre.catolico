@@ -1,0 +1,14 @@
+import { estadoRenderArte } from "../_lib/github.js";
+import { requiereSesion, responder } from "../_lib/http.js";
+
+export default async function handler(req: any, res: any) {
+  if (req.method !== "GET") return responder(res, 405, { error: "Método no permitido." });
+  if (!requiereSesion(req, res)) return;
+  const solicitud = req.query?.solicitud;
+  if (typeof solicitud !== "string" || !/^arte-[\w-]+$/.test(solicitud)) return responder(res, 400, { error: "Solicitud inválida." });
+  try {
+    responder(res, 200, await estadoRenderArte(solicitud) || { estado: "queued", resultado: null });
+  } catch {
+    responder(res, 502, { error: "No se pudo consultar el render." });
+  }
+}

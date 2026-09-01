@@ -60,12 +60,31 @@ export async function guardarJson(path, contenido, version, mensaje) {
   return sha;
 }
 
+export async function guardarArchivo(path, buffer, mensaje) {
+  const cfg = configGitHub();
+  const cuerpo = { message: mensaje, content: Buffer.from(buffer).toString("base64"), branch: cfg.branch };
+  const response = await github(`/contents/${path.replace(/^\//, "")}`, {
+    method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(cuerpo),
+  });
+  const resultado = await response.json();
+  if (!resultado?.content?.sha) throw new Error("GitHub no confirmó el asset.");
+  return resultado.content.sha;
+}
+
 export async function dispararGeneracion(solicitud) {
   const cfg = configGitHub();
   await github("/actions/workflows/semanal.yml/dispatches", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ ref: cfg.branch, inputs: { cantidad: "3", solicitud } }),
+  });
+}
+
+export async function dispararRenderArte(solicitud, lote, pieza) {
+  const cfg = configGitHub();
+  await github("/actions/workflows/arte-editorial.yml/dispatches", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ref: cfg.branch, inputs: { solicitud, lote, pieza } }),
   });
 }
 
@@ -84,6 +103,13 @@ export async function estadoGeneracion(solicitud) {
   return buscarCorrida(solicitud, datos.workflow_runs || []);
 }
 
+export async function estadoRenderArte(solicitud) {
+  const response = await github("/actions/workflows/arte-editorial.yml/runs?event=workflow_dispatch&per_page=30");
+  const datos = await response.json();
+  const corrida = (datos.workflow_runs || []).find((item) => item.display_title === `Arte editorial ${solicitud}`);
+  return corrida ? { estado: corrida.status || "queued", resultado: corrida.conclusion || null, url: corrida.html_url || "" } : null;
+}
+
 function idDeResumen(resumen, lote) {
   return lote?.id || resumen.id || resumen.semana;
 }
@@ -95,10 +121,10 @@ export function esPiezaEditorial(pieza) {
 
 async function cargarLote(resumen) {
   const lote = await contenidoJson(resumen.file);
-  const piezas = await Promise.all(lote.piezas.map(async (meta) => ({
-    meta,
-    pieza: await contenidoJson(meta.ref),
-  })));
+  const piezas = await Promise.all(lote.piezas.map(async (meta) => {
+    const actual = await contenidoJsonConSha(meta.ref);
+    return { meta, pieza: actual.contenido, version: actual.version };
+  }));
   const id = idDeResumen(resumen, lote);
   return { lote: { ...lote, id }, piezas, revision: await revisionPorLote(id) };
 }
@@ -143,6 +169,13 @@ export async function lotePorId(loteId) {
   const resumen = (indice.lotes || []).find((item) => (item.id || item.semana) === loteId);
   if (!resumen) throw new Error("No existe ese lote.");
   return cargarLote(resumen);
+}
+
+export async function piezaVersionada(loteId, piezaId) {
+  const lote = await lotePorId(loteId);
+  const item = lote.piezas.find((entrada) => entrada.pieza?.id === piezaId);
+  if (!item?.meta?.ref) throw new Error("La pieza no pertenece al lote.");
+  return { lote, item, path: item.meta.ref.replace(/^\//, ""), pieza: item.pieza, version: item.version };
 }
 
 export async function ultimoLote() {

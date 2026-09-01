@@ -115,5 +115,16 @@
       '<div class="marca-c">@hombre.catolico</div></div>';
   }
 
-  global.HC = { esc: esc, emph: emph, slideHTML: slideHTML, citaHTML: citaHTML };
+  function reelHTML(pieza) {
+    var reel = pieza.reel_portada || {};
+    var arte = reel.arte || pieza.arte;
+    return '<div class="arq arq-a reel-portada paleta-' + claseSegura((pieza.direccion_visual || {}).paleta, ["color_obra", "piedra_fria", "vino_negro", "oliva_pergamino", "calida"], "calida") + '">' + layers(arte) +
+      '<div class="contenido"><div class="cruz">✠</div><div class="push"></div>' +
+      (reel.kicker ? '<div class="kicker">' + esc(reel.kicker) + "</div>" : "") +
+      '<h1 class="titulo-impacto">' + esc(reel.titulo || pieza.titulo || pieza.tema || "Hombre Católico") + "</h1>" +
+      (reel.subtitulo ? '<p class="subtitulo">' + esc(reel.subtitulo) + "</p>" : "") +
+      '<div class="pie fila"><span class="marca grow">@hombre.catolico</span></div></div></div>';
+  }
+
+  global.HC = { esc: esc, emph: emph, slideHTML: slideHTML, citaHTML: citaHTML, reelHTML: reelHTML };
 })(typeof window !== "undefined" ? window : globalThis);

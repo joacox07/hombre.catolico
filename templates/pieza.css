@@ -12,6 +12,7 @@
   color: var(--texto);
   font-family: var(--serif-texto);
 }
+.hc-canvas.reel { --pieza-w: 1080px; --pieza-h: 1920px; }
 .hc-canvas .arq { position: absolute; inset: 0; }
 .hc-canvas .capa { position: absolute; inset: 0; }
 
@@ -38,6 +39,8 @@
 }
 
 .hc-canvas .contenido { position: absolute; inset: 0; display: flex; flex-direction: column; }
+.hc-canvas.reel .arq-a .contenido { padding: 120px 86px 110px; }
+.hc-canvas.reel .arq-a .titulo-impacto { font-size: 128px; }
 .hc-canvas .push { margin-top: auto; }
 .hc-canvas .grow { flex: 1; }
 .hc-canvas .fila { display: flex; align-items: baseline; gap: 16px; }
