@@ -55,7 +55,8 @@
 }
 .arq-a .titulo-impacto {
   font-family: var(--impacto); text-transform: uppercase; font-weight: 400;
-  font-size: 118px; line-height: .95; letter-spacing: .004em; color: var(--crema);
+  /* Las mayúsculas acentuadas necesitan aire: con .95 la tilde puede invadir la línea previa. */
+  font-size: 118px; line-height: 1.02; letter-spacing: .004em; color: var(--crema);
 }
 .arq-a .titulo-impacto.q { font-size: 96px; }
 .arq-a .autor-impacto {

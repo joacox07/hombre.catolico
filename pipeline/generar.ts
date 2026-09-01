@@ -138,12 +138,9 @@ async function main() {
         citas: chequeo.citas,
       };
 
-      // 4. Arte (descarga PD o IA) — si falla (p. ej. org no verificada para imágenes), fondo procedural
-      try {
-        await resolverArte(pieza);
-      } catch (e) {
-        console.warn(`  ⚠ arte falló (${String(e).slice(0, 140)}); se usa fondo procedural.`);
-      }
+      // 4. Arte (descarga PD o IA) — una pieza final nunca se reemplaza por un gradiente.
+      // Si el arte falla, el catch externo omite la pieza y deja el error visible en la corrida.
+      await resolverArte(pieza);
 
       // 5. Guardar pieza
       const ref = `/data/piezas/${tema.id}.json`;

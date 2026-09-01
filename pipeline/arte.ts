@@ -26,7 +26,7 @@ export interface ArtePlan {
 /** Mutará pieza.arte y escribirá archivos. Devuelve la pieza. */
 export async function resolverArte(pieza: any): Promise<any> {
   const plan: ArtePlan | undefined = pieza.arte_plan;
-  if (!plan) return pieza; // sin plan → la plantilla usa fondo procedural
+  if (!plan) throw new Error(`Falta arte_plan en ${pieza.id}; una pieza final requiere imagen.`);
 
   if (plan.fuente === "curada" && plan.archivo) {
     pieza.arte = { fuente: "curada", archivo: plan.archivo, verificado: false };
