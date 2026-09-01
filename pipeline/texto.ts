@@ -55,18 +55,53 @@ export function configuracionTexto(env: NodeJS.ProcessEnv = process.env): Config
   };
 }
 
+const espera = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function headers(config: ConfiguracionTexto) {
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${config.apiKey}`,
+  };
+}
+
+async function detalleError(res: Response): Promise<string> {
+  return res.text().catch(() => "");
+}
+
+async function esperarTrabajoCodex(config: ConfiguracionTexto, id: string): Promise<any> {
+  const vence = Date.now() + 180_000;
+  while (Date.now() < vence) {
+    await espera(1_500);
+    const res = await fetch(`${config.baseUrl}/jobs/${encodeURIComponent(id)}`, {
+      headers: headers(config),
+      signal: AbortSignal.timeout(12_000),
+    });
+    if (res.status === 202) continue;
+    if (!res.ok) {
+      const detalle = await detalleError(res);
+      throw new Error(`Texto codex_gateway → ${res.status}: ${detalle.slice(0, 400)}`);
+    }
+    return res.json();
+  }
+  throw new Error("Texto codex_gateway → tiempo de espera agotado.");
+}
+
 async function post(config: ConfiguracionTexto, body: unknown): Promise<any> {
   const res = await fetch(`${config.baseUrl}/chat/completions`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${config.apiKey}`,
-    },
+    headers: headers(config),
     body: JSON.stringify(body),
-    signal: AbortSignal.timeout(180_000),
+    signal: AbortSignal.timeout(12_000),
   });
+  if (res.status === 202 && config.proveedor === "codex_gateway") {
+    const trabajo = await res.json();
+    if (typeof trabajo?.id !== "string" || !trabajo.id) {
+      throw new Error("Texto codex_gateway: el cerebro no devolvió un identificador de trabajo.");
+    }
+    return esperarTrabajoCodex(config, trabajo.id);
+  }
   if (!res.ok) {
-    const detalle = await res.text().catch(() => "");
+    const detalle = await detalleError(res);
     throw new Error(`Texto ${config.proveedor} → ${res.status}: ${detalle.slice(0, 400)}`);
   }
   return res.json();

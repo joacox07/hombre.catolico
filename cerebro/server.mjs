@@ -25,6 +25,8 @@ if (!token || token.length < 32) {
 }
 
 let ocupado = false;
+const trabajos = new Map();
+const retencionTrabajoMs = 10 * 60_000;
 
 function autorizado(cabecera) {
   const recibido = cabecera?.startsWith("Bearer ") ? cabecera.slice(7) : "";
@@ -102,15 +104,57 @@ async function ejecutarCodex(prompt) {
   }
 }
 
+function respuestaFinal(contenido) {
+  return {
+    id: `chatcmpl_${randomUUID()}`,
+    object: "chat.completion",
+    created: Math.floor(Date.now() / 1000),
+    model: "hombre-catolico-editorial",
+    choices: [{ index: 0, message: { role: "assistant", content: contenido }, finish_reason: "stop" }],
+  };
+}
+
+function iniciarTrabajo(prompt) {
+  const id = `job_${randomUUID()}`;
+  const trabajo = { estado: "queued", creado: Date.now(), respuesta: null, error: null };
+  trabajos.set(id, trabajo);
+  ocupado = true;
+
+  void ejecutarCodex(prompt).then((contenido) => {
+    if (!contenido) throw new Error("Codex no devolvió contenido final.");
+    trabajo.respuesta = respuestaFinal(contenido);
+    trabajo.estado = "completed";
+  }).catch((error) => {
+    console.error("Fallo del cerebro editorial:", String(error).slice(0, 800));
+    trabajo.error = "El cerebro editorial no está disponible. Revisá su sesión de Codex o reintentá más tarde.";
+    trabajo.estado = "failed";
+  }).finally(() => {
+    ocupado = false;
+    const limpieza = setTimeout(() => trabajos.delete(id), retencionTrabajoMs);
+    limpieza.unref();
+  });
+  return id;
+}
+
 const servidor = createServer(async (req, res) => {
   if (req.method === "GET" && req.url === "/healthz") {
     return responder(res, 200, { ok: true, ocupado });
   }
-  if (req.method !== "POST" || req.url !== "/v1/chat/completions") {
-    return responder(res, 404, { error: { message: "Ruta no encontrada." } });
-  }
   if (!autorizado(req.headers.authorization)) {
     return responder(res, 401, { error: { message: "No autorizado." } });
+  }
+
+  const rutaTrabajo = req.url?.match(/^\/v1\/jobs\/([^/?]+)$/);
+  if (req.method === "GET" && rutaTrabajo) {
+    const trabajo = trabajos.get(decodeURIComponent(rutaTrabajo[1]));
+    if (!trabajo) return responder(res, 404, { error: { message: "Trabajo no encontrado o vencido." } });
+    if (trabajo.estado === "completed") return responder(res, 200, trabajo.respuesta);
+    if (trabajo.estado === "failed") return responder(res, 503, { error: { message: trabajo.error } });
+    return responder(res, 202, { id: rutaTrabajo[1], status: trabajo.estado });
+  }
+
+  if (req.method !== "POST" || req.url !== "/v1/chat/completions") {
+    return responder(res, 404, { error: { message: "Ruta no encontrada." } });
   }
   if (ocupado) {
     return responder(res, 429, { error: { message: "El cerebro está ocupado; reintentá al finalizar la corrida actual." } });
@@ -119,21 +163,11 @@ const servidor = createServer(async (req, res) => {
   try {
     const body = await leerJson(req);
     const prompt = convertirPrompt(body);
-    ocupado = true;
-    const contenido = await ejecutarCodex(prompt);
-    if (!contenido) throw new Error("Codex no devolvió contenido final.");
-    return responder(res, 200, {
-      id: `chatcmpl_${randomUUID()}`,
-      object: "chat.completion",
-      created: Math.floor(Date.now() / 1000),
-      model: "hombre-catolico-editorial",
-      choices: [{ index: 0, message: { role: "assistant", content: contenido }, finish_reason: "stop" }],
-    });
+    const id = iniciarTrabajo(prompt);
+    return responder(res, 202, { id, object: "hombre.cerebro.job", status: "queued" });
   } catch (error) {
     console.error("Fallo del cerebro editorial:", String(error).slice(0, 800));
     return responder(res, 503, { error: { message: "El cerebro editorial no está disponible. Revisá su sesión de Codex o reintentá más tarde." } });
-  } finally {
-    ocupado = false;
   }
 });
 

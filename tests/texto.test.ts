@@ -31,3 +31,12 @@ test("el gateway exige una URL y un secreto propios", () => {
     /CODEX_GATEWAY_TOKEN/,
   );
 });
+
+test("el gateway conserva una ruta de trabajos compatible con su base URL", () => {
+  const config = configuracionTexto({
+    TEXT_PROVIDER: "codex_gateway",
+    CODEX_GATEWAY_URL: "https://cerebro.example.com/v1/",
+    CODEX_GATEWAY_TOKEN: "secreto-de-prueba",
+  });
+  assert.equal(`${config.baseUrl}/jobs/job_prueba`, "https://cerebro.example.com/v1/jobs/job_prueba");
+});
