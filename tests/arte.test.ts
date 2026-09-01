@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { normalizarPlanArte, resolverArte } from "../pipeline/arte.ts";
+import { origenDesdeArte } from "../pipeline/direccion-visual.ts";
 
 test("no permite renderizar una pieza final sin un plan de arte", async () => {
   await assert.rejects(
@@ -31,4 +32,21 @@ test("las imágenes distintas limitan el costo a una sola generación IA", () =>
     }, 2),
     /máximo una imagen IA/,
   );
+});
+
+test("una descarga exige autor y obra concretos", () => {
+  assert.throws(
+    () => normalizarPlanArte({
+      modo: "unica",
+      principal: { fuente: "descarga", query: "pintura religiosa" },
+    }, 1),
+    /autor y obra concretos/,
+  );
+});
+
+test("una dirección de obra no acepta mezclar arte público e IA en la misma pieza", () => {
+  assert.equal(origenDesdeArte({
+    modo: "por_slide",
+    slides: [{ fuente: "descarga", query: "obra" }, { fuente: "ia", prompt: "escena" }],
+  }), null);
 });

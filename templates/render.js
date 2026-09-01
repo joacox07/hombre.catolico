@@ -42,13 +42,29 @@
       '<span class="handle">@hombre.catolico</span></div>';
   }
 
+  function claseSegura(valor, permitidos, alternativa) {
+    return permitidos.indexOf(valor) >= 0 ? valor : alternativa;
+  }
+  function clasesVisuales(pieza, slide) {
+    var direccion = pieza.direccion_visual || {};
+    var paleta = claseSegura(direccion.paleta, ["color_obra", "piedra_fria", "vino_negro", "oliva_pergamino", "calida"], "calida");
+    var disposicion = claseSegura(slide && slide.disposicion, ["editorial_superior", "manifiesto_central", "bloque_inferior", "contraste", "mapa_conceptual"], "editorial_superior");
+    return " paleta-" + paleta + " compo-" + disposicion;
+  }
+  function mapaHTML(mapa) {
+    if (!mapa || !mapa.centro || !Array.isArray(mapa.pasos) || mapa.pasos.length < 2) return "";
+    return '<div class="mapa-conceptual"><div class="mapa-centro">' + esc(mapa.centro) + '</div><div class="mapa-pasos">' +
+      mapa.pasos.slice(0, 3).map(function (paso) { return '<div class="mapa-paso">' + esc(paso) + "</div>"; }).join("") +
+      "</div></div>";
+  }
+
   function slideHTML(pieza, index) {
     var slide = pieza.slides[index];
     var arte = slide.arte || pieza.arte;
 
     // Portada -> Arquetipo A (impacto)
     if (slide.tipo === "portada") {
-      return '<div class="arq arq-a">' + layers(arte) +
+      return '<div class="arq arq-a' + clasesVisuales(pieza, slide) + '">' + layers(arte) +
         '<div class="contenido">' +
           '<div class="cruz">✠</div><div class="push"></div>' +
           (slide.kicker ? '<div class="kicker">' + esc(slide.kicker) + "</div>" : "") +
@@ -64,7 +80,7 @@
     // Cierre -> Arquetipo B (variante fuentes + CTA)
     if (slide.tipo === "cierre") {
       var fuentes = (slide.fuentes || []).map(function (f) { return '<div class="fuente">' + esc(f) + "</div>"; }).join("");
-      return '<div class="arq arq-b">' + layers(arte) +
+      return '<div class="arq arq-b' + clasesVisuales(pieza, slide) + '">' + layers(arte) +
         '<div class="contenido">' + cabecera() +
           (slide.titulo ? '<h2 class="titulo">' + emph(slide.titulo) + "</h2>" : "") +
           (slide.cuerpo ? '<div class="cuerpo">' + paras(slide.cuerpo) + "</div>" : "") +
@@ -77,11 +93,11 @@
     }
 
     // Contenido -> Arquetipo B (texto largo)
-    return '<div class="arq arq-b">' + layers(arte) +
+    var mapa = slide.disposicion === "mapa_conceptual" ? mapaHTML(slide.mapa) : "";
+    return '<div class="arq arq-b' + clasesVisuales(pieza, slide) + '">' + layers(arte) +
       '<div class="contenido">' + cabecera() +
         (slide.titulo ? '<h2 class="titulo">' + emph(slide.titulo) + "</h2>" : "") +
-        '<div class="cuerpo">' + paras(slide.cuerpo) + "</div>" +
-        (slide.fuente ? '<div class="fuente">' + esc(slide.fuente) + "</div>" : "") +
+        (mapa || '<div class="cuerpo">' + paras(slide.cuerpo) + "</div>") +
         '<div class="pie fila"><span class="credito grow">' + esc((index + 1) + " · " + pieza.slides.length) + "</span>" +
           '<span class="marca" style="font-size:24px">@hombre.catolico</span></div>' +
       "</div></div>";
@@ -89,7 +105,7 @@
 
   // Cita -> Arquetipo C (devocional)
   function citaHTML(pieza) {
-    return '<div class="arq arq-c">' + layers(pieza.arte) +
+    return '<div class="arq arq-c paleta-' + claseSegura((pieza.direccion_visual || {}).paleta, ["color_obra", "piedra_fria", "vino_negro", "oliva_pergamino", "calida"], "calida") + '">' + layers(pieza.arte) +
       '<div class="contenido">' +
         '<div class="comilla">“</div>' +
         '<blockquote class="cita-texto">' + emph(pieza.cita) + "</blockquote>" +

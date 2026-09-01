@@ -39,6 +39,8 @@ export async function descargarObra(query: string, width = 1400): Promise<ArteDe
 
   const meta = info.extmetadata || {};
   const strip = (s?: string) => (s ? String(s).replace(/<[^>]+>/g, "").trim() : undefined);
+  const licencia = strip(meta.LicenseShortName?.value);
+  if (!licencia) throw new Error(`La obra encontrada para "${query}" no informa una licencia verificable.`);
   return {
     buffer,
     ext: ext || "jpg",
@@ -47,7 +49,7 @@ export async function descargarObra(query: string, width = 1400): Promise<ArteDe
       titulo: strip(meta.ObjectName?.value) || (pages[0] as any)?.title || query,
       autor: strip(meta.Artist?.value),
       fuente_url: info.descriptionurl || info.thumburl,
-      licencia: strip(meta.LicenseShortName?.value) || "Dominio público (verificar)",
+      licencia,
       query,
     },
   };

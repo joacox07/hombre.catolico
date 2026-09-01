@@ -1,6 +1,7 @@
 /** Tipos compartidos del pipeline del empleado IA. */
 
 export type Pilar = "Fe" | "Virtud" | "Deber" | "Familia";
+import type { DireccionVisual } from "./direccion-visual.ts";
 
 export interface TemaBacklog {
   n: number;
@@ -33,6 +34,7 @@ export interface RegistroPieza {
   fecha: string; // fecha de generación (ISO)
   estado: string;
   resultado?: string;
+  direccion_visual?: DireccionVisual;
 }
 
 export interface Registro {

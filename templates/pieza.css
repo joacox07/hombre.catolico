@@ -24,6 +24,11 @@
   background: linear-gradient(160deg, #4a3720 0%, #140f0a 100%);
   mix-blend-mode: soft-light; opacity: .5;
 }
+.hc-canvas .paleta-color_obra .grade { background: linear-gradient(160deg, rgba(24,20,16,.15), rgba(10,9,8,.45)); opacity: .32; }
+.hc-canvas .paleta-piedra_fria .grade { background: linear-gradient(160deg, #293541 0%, #0d1218 100%); opacity: .46; }
+.hc-canvas .paleta-vino_negro .grade { background: linear-gradient(160deg, #552d35 0%, #14090d 100%); opacity: .48; }
+.hc-canvas .paleta-oliva_pergamino .grade { background: linear-gradient(160deg, #53543a 0%, #17180f 100%); opacity: .42; }
+.hc-canvas .paleta-calida .grade { background: linear-gradient(160deg, #4a3720 0%, #140f0a 100%); opacity: .5; }
 .hc-canvas .vineta {
   background: radial-gradient(118% 88% at 50% 32%, rgba(0,0,0,0) 44%, rgba(0,0,0,.6) 100%);
 }
@@ -95,6 +100,36 @@
 .arq-b .lista-fuentes { display: flex; flex-direction: column; gap: 10px; }
 .arq-b .kicker { font-family: var(--sans); font-weight: 500; text-transform: uppercase; letter-spacing: .2em; font-size: 22px; color: var(--oro); }
 .arq-b .pie { margin-top: auto; padding-top: 34px; }
+
+/* Variantes de composición para slides formativos. */
+.arq-b.compo-manifiesto_central .contenido { justify-content: center; text-align: center; }
+.arq-b.compo-manifiesto_central .cabecera { position: absolute; top: 88px; left: 92px; right: 92px; }
+.arq-b.compo-manifiesto_central .titulo { font-size: 82px; max-width: 860px; }
+.arq-b.compo-manifiesto_central .cuerpo { max-width: 800px; font-size: 43px; }
+.arq-b.compo-manifiesto_central .pie { position: absolute; left: 92px; right: 92px; bottom: 54px; }
+
+.arq-b.compo-bloque_inferior .contenido { justify-content: flex-end; }
+.arq-b.compo-bloque_inferior .cabecera { position: absolute; top: 88px; left: 92px; right: 92px; }
+.arq-b.compo-bloque_inferior .titulo { max-width: 760px; }
+.arq-b.compo-bloque_inferior .cuerpo { max-width: 780px; }
+.arq-b.compo-bloque_inferior .pie { margin-top: 38px; }
+
+.arq-b.compo-contraste .titulo { max-width: 690px; font-size: 76px; }
+.arq-b.compo-contraste .cuerpo { margin-left: 150px; max-width: 720px; border-left: 3px solid var(--oro); padding-left: 34px; }
+.arq-b.compo-contraste .oro { display: block; margin-top: 16px; font-size: 1.12em; }
+
+.arq-b.compo-mapa_conceptual .titulo { font-size: 64px; margin-bottom: 22px; }
+.mapa-conceptual { display: flex; flex-direction: column; align-items: center; gap: 26px; margin: 8px auto 0; width: min(100%, 800px); }
+.mapa-centro { border: 2px solid var(--oro); color: var(--crema); padding: 22px 34px; font-family: var(--serif-display); font-size: 48px; line-height: 1.05; text-align: center; background: rgba(20,17,13,.45); }
+.mapa-pasos { display: flex; align-items: stretch; width: 100%; }
+.mapa-paso { flex: 1; position: relative; border-top: 2px solid var(--oro); padding: 28px 18px 0; color: var(--crema); font-family: var(--sans); font-size: 28px; line-height: 1.2; text-align: center; }
+.mapa-paso::before { content: ""; display: block; width: 13px; height: 13px; border-radius: 50%; background: var(--oro); position: absolute; top: -8px; left: calc(50% - 7px); }
+.mapa-paso + .mapa-paso { border-left: 1px solid rgba(201,162,75,.35); }
+
+.paleta-piedra_fria .arte { filter: brightness(.47) saturate(.72) hue-rotate(7deg); }
+.paleta-vino_negro .arte { filter: brightness(.44) saturate(.78); }
+.paleta-oliva_pergamino .arte { filter: brightness(.48) saturate(.68) sepia(.14); }
+.paleta-color_obra .arte { filter: brightness(.52) saturate(.94); }
 
 /* ============ Arquetipo C — Cita devocional cálida ============ */
 .arq-c .arte { filter: sepia(.45) brightness(.62) contrast(1.02) saturate(.9); }

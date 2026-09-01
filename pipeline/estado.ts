@@ -12,6 +12,7 @@ import {
   type Backlog, type Registro, type TemaBacklog,
   OBJETIVO_DISTRIBUCION, baldeDe, type Balde,
 } from "./tipos.ts";
+import { cuotasOrigenLote, restriccionesVisuales, type DireccionVisual, type OrigenVisual } from "./direccion-visual.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const leer = async <T>(p: string): Promise<T> => JSON.parse(await readFile(join(ROOT, p), "utf8")) as T;
@@ -27,6 +28,8 @@ export interface Contexto {
   temasUsados: string[];
   candidatos: TemaBacklog[];
   sugerencia: Array<{ tema: TemaBacklog; score: number; motivo: string }>;
+  cuotas_origen_arte: OrigenVisual[];
+  direcciones_recientes: DireccionVisual[];
 }
 
 export async function contextoSemanal(n = 3): Promise<Contexto> {
@@ -77,7 +80,11 @@ export async function contextoSemanal(n = 3): Promise<Contexto> {
     .sort((a, b) => b.score - a.score)
     .slice(0, n);
 
-  return { totalRegistrado: total, distribucionActual, deficitPorBalde, santosUsados, fuentesUsadas, temasUsados, candidatos, sugerencia };
+  return {
+    totalRegistrado: total, distribucionActual, deficitPorBalde, santosUsados, fuentesUsadas, temasUsados, candidatos, sugerencia,
+    cuotas_origen_arte: cuotasOrigenLote(registro.piezas, n),
+    direcciones_recientes: restriccionesVisuales(registro.piezas),
+  };
 }
 
 // CLI

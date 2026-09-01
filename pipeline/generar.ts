@@ -14,9 +14,11 @@ import { contextoSemanal } from "./estado.ts";
 import { recuperar } from "./recuperacion.ts";
 import { verificarCitas } from "./verificar.ts";
 import { resolverArte } from "./arte.ts";
+import { normalizarPlanArte } from "./arte.ts";
 import { ensamblarLote } from "./lote.ts";
 import { chat } from "./texto.ts";
 import { captionLista } from "./caption.ts";
+import { normalizarDireccionVisual, validarComposiciones, origenDesdeArte } from "./direccion-visual.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const leerTxt = (rel: string) => readFile(join(ROOT, rel), "utf8");
@@ -43,6 +45,11 @@ function jsonSeguro<T>(s: string, fallback: T): T {
   }
 }
 
+function fuentesLegibles(ids: unknown, fichas: Array<{ id: string; titulo_fuente: string }>): string[] {
+  if (!Array.isArray(ids)) return [];
+  return [...new Set(ids.map((id) => fichas.find((f) => f.id === id)?.titulo_fuente).filter(Boolean))] as string[];
+}
+
 async function systemRedaccion(): Promise<string> {
   const [voz, doctrina, formato, estetica] = await Promise.all([
     leerTxt("manual/01-voz.md"), leerTxt("manual/02-doctrina-y-opinion.md"),
@@ -61,18 +68,23 @@ async function systemRedaccion(): Promise<string> {
     "Devolvé SOLO un JSON con esta forma (carrusel):",
     `{ "titulo": "...", "slides": [
        {"tipo":"portada","kicker":"...","titulo":"7-11 palabras","subtitulo":"..."},
-       {"tipo":"contenido","kicker":"...","titulo":"...","cuerpo":"... **frase clave en dorado** ...","fuente":"Ref · Nivel"},
-       {"tipo":"cierre","titulo":"...","cuerpo":"...","fuentes":["Ref · Nivel"],"cta":"..."} ],
+       {"tipo":"contenido","kicker":"...","titulo":"...","cuerpo":"... **frase clave en dorado** ...","disposicion":"editorial_superior"|"manifiesto_central"|"bloque_inferior"|"contraste"|"mapa_conceptual","mapa":{"centro":"...","pasos":["...","..."]}},
+       {"tipo":"cierre","titulo":"...","cuerpo":"...","fuentes":["Nombre humano de la fuente"],"cta":"..."} ],
      "caption":"...", "fuentes":["idFicha"],
      "clasificacion_doctrinal":[{"afirmacion":"...","nivel":1,"etiqueta":"..."}],
      "revision_humana": false,
+     "direccion_visual":{"origen_arte":"obra"|"ia","paleta":"color_obra"|"piedra_fria"|"vino_negro"|"oliva_pergamino"|"calida","composicion_principal":"editorial_superior"|"manifiesto_central"|"bloque_inferior"|"contraste"|"mapa_conceptual"},
      "arte_plan": {
        "modo":"unica"|"recorrida"|"por_slide",
-       "principal":{"fuente":"descarga"|"ia"|"curada","query":"(si descarga)","prompt":"(si ia)","archivo":"(si curada)"},
+       "principal":{"fuente":"descarga"|"ia"|"curada","autor":"(si descarga)","obra":"(si descarga)","query":"Autor — Obra (si descarga)","prompt":"(si ia)","archivo":"(si curada)"},
        "recortes":["50% 50%"],
-       "slides":[{"fuente":"descarga"|"ia"|"curada","query":"...","prompt":"...","archivo":"...","posicion":"50% 50%"}]
+       "slides":[{"fuente":"descarga"|"ia"|"curada","autor":"...","obra":"...","query":"Autor — Obra","prompt":"...","archivo":"...","posicion":"50% 50%"}]
      } }`,
     "",
+    "REGLA DE COMPOSICIÓN — OBLIGATORIA: cada slide de desarrollo declara disposicion. En un carrusel de 6 desarrollos usá al menos tres disposiciones distintas y nunca repitas una en slides consecutivos.",
+    "- editorial_superior: explicación sobria arriba; manifiesto_central: frase/idea breve centrada; bloque_inferior: texto bajo o lateral sobre la obra; contraste: dos polos o una pregunta frente a una respuesta; mapa_conceptual: sólo para causa/consecuencia, proceso o dos caminos.",
+    "- mapa_conceptual exige mapa con centro y 2-3 pasos breves conectados. No lo uses sólo para decorar.",
+    "- No agregues fuente, número, 'CIC', ni nivel doctrinal a los slides de contenido. La fuente visible aparece SÓLO en el cierre, con nombre humano: 'Catecismo de la Iglesia Católica — castidad y dominio de sí'. Los ids exactos siguen en fuentes y clasificacion_doctrinal para revisión interna.",
     "REGLA DE IMAGEN (arte_plan) — OBLIGATORIA en cada pieza. La imagen debe reforzar el mensaje, no ser al azar.",
     "Elegí deliberadamente UNO de estos modos:",
     "- recorrida: UNA obra coherente recorrida con crops distintos. Entregá principal y EXACTAMENTE un recorte 'X% Y%' por slide; el último debe ser '50% 50%' para mostrar la obra completa.",
@@ -83,10 +95,12 @@ async function systemRedaccion(): Promise<string> {
     "  fuente:'descarga' con `query` en INGLÉS, con AUTOR + OBRA concretos (da mejores resultados):",
     "  ej. 'Georges de La Tour Saint Joseph the carpenter', 'Rembrandt apostle Paul', 'Caravaggio Saint Jerome writing',",
     "  'Guido Reni Saint Michael archangel', 'El Greco Christ'.",
+    "- Para descarga, declarás autor y obra concretos; query debe ser exactamente 'Autor — Obra'. La descarga se acepta sólo si devuelve procedencia, licencia, autor y título verificables.",
     "- Si el tema es una virtud o idea abstracta sin obra obvia → fuente:'ia' con `prompt` de una",
     "  ESCENA ATMOSFÉRICA simbólica y coherente con el tema (ej. trabajo: 'un carpintero trabajando la",
     "  madera a la luz de una vela'; oración: 'un hombre arrodillado en una capilla en penumbra';",
-    "  fortaleza: 'un soldado medieval en oración antes de la batalla'), SIN santos identificables y SIN texto.",
+    "  fortaleza: 'un soldado medieval en oración antes de la batalla'), SIN santos identificables y SIN texto. No uses por defecto un hombre solo, una vela, paleta tabaco/dorado ni claroscuro cálido.",
+    "- Elegí paleta según el arte: color_obra conserva la pintura; piedra_fria para claridad, examen o distancia; vino_negro para combate serio; oliva_pergamino para sabiduría y madurez; calida sólo cuando la luz del tema realmente lo pide.",
     "- El `titulo` de portada y el fondo tienen que 'conversar': elegí una imagen que haga sentido con el gancho.",
     "",
     "REGLA DE CAPTION — OBLIGATORIA en cada pieza:",
@@ -94,6 +108,7 @@ async function systemRedaccion(): Promise<string> {
     "- Abrí con un gancho breve; desarrollá la idea en 1-2 párrafos claros, fieles a las fichas.",
     "- Cerrá con UN CTA orgánico y variable: guardar, compartir o comentar. No prometas envíos, recursos, mensajes privados ni automatizaciones.",
     "- Terminá con una línea separada de 3 a 5 hashtags en español, específicos al tema y sin hashtags genéricos de relleno.",
+    "- Si nombrás una fuente en la caption, usá sólo su nombre humano ('Catecismo de la Iglesia Católica'), nunca código, número ni nivel doctrinal.",
     "- No agregues citas textuales, datos ni afirmaciones doctrinales que no estén respaldados por las fichas.",
   ].join("\n");
 }
@@ -110,9 +125,12 @@ async function main() {
   await mkdir(join(ROOT, "data", "piezas"), { recursive: true });
   const specPiezas: Array<{ ref: string; fecha_propuesta: string; estado: string; revisor: unknown }> = [];
   const rutas: string[] = [];
+  // Acumula las direcciones aceptadas en esta misma corrida: la regla de no
+  // repetir no puede depender sólo del historial ya escrito en el registro.
+  const direccionesDelLote: Array<{ paleta: string; composicion_principal: string }> = [];
   let dia = 2; // fechas propuestas escalonadas (mié/vie/dom orientativo)
 
-  for (const { tema } of ctx.sugerencia) {
+  for (const [indice, { tema }] of ctx.sugerencia.entries()) {
     try {
       console.log(`\n▶ ${tema.id} — ${tema.titulo}`);
       const fichas = (await recuperar([tema.id]))[tema.id];
@@ -120,17 +138,44 @@ async function main() {
       // 1. Redacción anclada
       const userRedaccion = `TEMA: ${tema.titulo} (pilar ${tema.pilar}, formato ${tema.formato}, ${tema.sensible ? "SENSIBLE" : "normal"}).\n` +
         `FICHAS DISPONIBLES (única fuente citable):\n${JSON.stringify(fichas, null, 2)}`;
+      const cuotaArte = ctx.cuotas_origen_arte[indice] || "obra";
+      const direccionesAExcluir = [...ctx.direcciones_recientes, ...direccionesDelLote];
+      const recientes = direccionesAExcluir.map((d) => `${d.paleta}/${d.composicion_principal}`).join(", ") || "ninguna";
+      const instruccionVisual = `\n\nCUOTA OBLIGATORIA DE ARTE PARA ESTA PIEZA: ${cuotaArte}. ` +
+        (cuotaArte === "obra" ? "arte_plan debe usar descarga o curada, no IA." : "arte_plan debe usar IA, no descarga/curada.") +
+        `\nDIRECCIONES RECIENTES A EVITAR: ${recientes}. No repitas su paleta ni su composicion_principal.`;
       let contenido: any = null;
-      for (let intento = 0; intento < 2; intento++) {
-        const pedido = intento === 0 ? userRedaccion : userRedaccion + "\n\nLa respuesta anterior no incluyó una caption válida. Reintentá y cumplí exactamente la regla de caption.";
+      let ultimoError = "";
+      for (let intento = 0; intento < 3; intento++) {
+        const pedido = intento === 0 ? userRedaccion + instruccionVisual : userRedaccion + instruccionVisual + `\n\nLa propuesta anterior falló esta validación: ${ultimoError}. Corregila y devolvé sólo JSON válido.`;
         const candidato = jsonSeguro<any>(await chat(sys, pedido, { json: true }), null);
-        if (candidato && Array.isArray(candidato.slides) && captionLista(candidato.caption)) {
+        try {
+          if (!candidato || !Array.isArray(candidato.slides) || !captionLista(candidato.caption)) {
+            throw new Error("faltan slides o caption válida");
+          }
+          if (/\b(?:CIC|nivel\s*\d)\b/i.test(candidato.caption)) {
+            throw new Error("la caption no debe mostrar códigos ni niveles doctrinales");
+          }
+          const direccion = normalizarDireccionVisual(candidato.direccion_visual);
+          if (direccion.origen_arte !== cuotaArte) throw new Error(`origen_arte debe ser ${cuotaArte}`);
+          normalizarPlanArte(candidato.arte_plan, candidato.slides.length);
+          if (origenDesdeArte(candidato.arte_plan) !== cuotaArte) throw new Error(`arte_plan debe materializar ${cuotaArte}`);
+          if (direccionesAExcluir.some((d) => d.paleta === direccion.paleta || d.composicion_principal === direccion.composicion_principal)) {
+            throw new Error("paleta o composición principal repetida respecto de los dos posts anteriores o de esta misma tanda");
+          }
+          validarComposiciones(candidato.slides, direccion);
           contenido = candidato;
           break;
+        } catch (error) {
+          ultimoError = String(error).replace(/^Error:\s*/, "").slice(0, 260);
         }
       }
-      if (!contenido) throw new Error("el modelo no devolvió una pieza con slides y caption válida");
+      if (!contenido) throw new Error(`el modelo no devolvió una pieza visual válida: ${ultimoError}`);
       const pieza: any = { id: tema.id, tema: tema.titulo, pilar: tema.pilar, tipo: tema.formato, santos: tema.santos, nivel: tema.nivel, ...contenido };
+      // Las referencias exactas quedan en la ficha y clasificación, no en el arte público.
+      pieza.slides.filter((slide: any) => slide.tipo === "contenido").forEach((slide: any) => delete slide.fuente);
+      const cierre = pieza.slides.find((slide: any) => slide.tipo === "cierre");
+      if (cierre) cierre.fuentes = fuentesLegibles(pieza.fuentes, fichas);
 
       // 2. Concilio (criterio) + 3. verificación de citas (determinista)
       const veredicto = jsonSeguro<any>(await chat(
@@ -150,6 +195,7 @@ async function main() {
       // 4. Arte (descarga PD o IA) — una pieza final nunca se reemplaza por un gradiente.
       // Si el arte falla, el catch externo omite la pieza y deja el error visible en la corrida.
       await resolverArte(pieza);
+      direccionesDelLote.push(pieza.direccion_visual);
 
       // 5. Guardar pieza
       const ref = `/data/piezas/${tema.id}.json`;

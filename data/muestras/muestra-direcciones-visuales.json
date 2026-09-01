@@ -1,0 +1,20 @@
+{
+  "id": "muestra-direcciones-visuales",
+  "tema": "Muestra interna de composiciones",
+  "tipo": "carrusel",
+  "direccion_visual": {
+    "origen_arte": "ia",
+    "paleta": "piedra_fria",
+    "composicion_principal": "mapa_conceptual"
+  },
+  "arte": { "archivo": "generado/castidad-de-hombres.png" },
+  "slides": [
+    { "tipo": "portada", "kicker": "MUESTRA INTERNA", "titulo": "Cinco formas de desarrollar una idea", "subtitulo": "Variedad al servicio de la lectura" },
+    { "tipo": "contenido", "disposicion": "editorial_superior", "kicker": "EDITORIAL", "titulo": "Una explicación clara", "cuerpo": "La idea se presenta con aire y una lectura ordenada. **El texto acompaña, no tapa la obra.**" },
+    { "tipo": "contenido", "disposicion": "manifiesto_central", "kicker": "MANIFIESTO", "titulo": "Una frase puede sostener todo el slide", "cuerpo": "Cuando la afirmación es breve, **el centro visual le da peso y pausa.**" },
+    { "tipo": "contenido", "disposicion": "bloque_inferior", "kicker": "BLOQUE INFERIOR", "titulo": "La imagen respira arriba", "cuerpo": "El desarrollo se apoya abajo o al costado. **Primero mirás; después leés.**" },
+    { "tipo": "contenido", "disposicion": "contraste", "kicker": "CONTRASTE", "titulo": "No todo impulso merece obediencia", "cuerpo": "La libertad no consiste en ceder siempre. **Elegir también es gobernarte.**" },
+    { "tipo": "contenido", "disposicion": "mapa_conceptual", "kicker": "MAPA", "titulo": "Una relación se muestra", "cuerpo": "", "mapa": { "centro": "Libertad formada", "pasos": ["Reconocer", "Elegir", "Perseverar"] } },
+    { "tipo": "cierre", "titulo": "La forma también educa la atención", "cuerpo": "Cada composición tiene un motivo; la variedad no es ruido.", "fuentes": ["Muestra interna de diseño"], "cta": "Revisar antes de publicar." }
+  ]
+}

@@ -5,7 +5,7 @@ Sale del factor común de las referencias del usuario (ver `referencias/`). Reem
 
 ## Principio
 
-**Imagen real y evocadora + tratamiento cálido/oscuro/fílmico + texto crema y dorado.**
+**Imagen real y evocadora + tratamiento editorial sobrio + texto crema y dorado.**
 La imagen carga el peso emocional; el texto va encima, sobrio. El dorado marca la frase clave.
 
 ## Paleta
@@ -32,8 +32,8 @@ Definida en `templates/tokens.css`.
 ## Capa de tratamiento (lo que unifica todo)
 
 Toda imagen —descargada o generada por IA— pasa por la misma capa en `templates/pieza.css`:
-**arte → gradación cálida (soft-light) → viñeta/oscurecido → grano fílmico**. Así una pintura
-de dominio público y un fondo generado terminan con el mismo look coherente.
+**arte → paleta elegida → viñeta/oscurecido → grano fílmico**. La identidad se sostiene con
+tipografía y tratamiento, sin teñir cada obra de dorado o ámbar.
 
 ## Tres arquetipos
 
@@ -57,6 +57,15 @@ Cada pieza declara `arte: { fuente: "descarga" | "ia", archivo, credito | prompt
   El texto va por encima después.
 - **Guardarraíl:** no representar a un **santo real concreto** con una imagen IA dudosa ni pasar
   una imagen IA por obra histórica auténtica. Para figuras canónicas, preferir arte real.
+
+## Variación obligatoria
+
+- Un lote de tres mezcla obra pública/curada e imagen IA; el historial compensa el origen menos
+  usado para no convertir ninguno en norma absoluta.
+- Cada pieza declara una paleta (`color_obra`, piedra fría, vino/negro, oliva/pergamino o cálida)
+  y una composición principal. No se repiten las de los dos posts previos.
+- Los desarrollos alternan entre editorial superior, manifiesto centrado, bloque inferior,
+  contraste y mapa conceptual. Un mapa sólo se usa cuando hay proceso, relación o dos caminos.
 
 ## Nota operativa
 

@@ -21,10 +21,10 @@
 
 1. **Portada** — gancho / título (7-11 palabras) sobre la obra.
 2. **Planteo** — la pregunta o el problema, en 1-2 frases.
-3-6. **Desarrollo** — una idea por diapositiva, cada afirmación fuerte con su fuente y nivel
-   doctrinal (ver `02-doctrina-y-opinion.md`).
+3-6. **Desarrollo** — una idea por diapositiva. Las referencias exactas y el nivel doctrinal
+   se guardan para revisión interna; no se muestran como etiqueta en la imagen.
 7. **Aplicación** — un paso concreto y practicable.
-8. **Cierre** — fuente(s), y CTA como invitación (guardar / compartir / pregunta).
+8. **Cierre** — fuente(s) con nombre humano y CTA como invitación (guardar / compartir / pregunta).
 
 ## Formato de dimensiones
 
@@ -34,7 +34,7 @@
 ## Caption
 
 - Abre reforzando el gancho (la primera línea es lo que se ve antes del "… más").
-- Desarrolla brevemente y **lista las fuentes** con su referencia exacta.
+- Desarrolla brevemente y, si nombra fuentes, usa sólo el nombre humano del documento.
 - Cierra con la invitación (CTA).
 - Sin hashtags de relleno; pocos y pertinentes.
 

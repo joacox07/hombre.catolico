@@ -55,6 +55,7 @@ export async function ensamblarLote(spec: Spec): Promise<string> {
       fuentes: pieza.fuentes || [],
       gancho: pieza.titulo || pieza.tema,
       nivel: pieza.nivel,
+      direccion_visual: pieza.direccion_visual,
       fecha: ahora,
       estado: sp.estado || "en_revision",
     };

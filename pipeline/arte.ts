@@ -14,9 +14,9 @@ const ARTE = join(ROOT, "assets", "arte");
 const RECORTES_POR_DEFECTO = ["50% 42%", "32% 32%", "68% 34%", "38% 62%", "64% 64%", "50% 52%", "50% 50%", "50% 50%"];
 
 const ESTILO_IA =
-  "pintura al óleo clásica, claroscuro cálido y tenebrismo, atmósfera sacra sobria y solemne, " +
-  "paleta parda y dorada, luz de vela; SIN texto, SIN palabras, SIN letras; " +
-  "sin rostros de santos identificables; composición vertical con espacio para texto abajo.";
+  "imagen editorial sobria y fílmica, con la paleta y la luz pedidas por la dirección visual; " +
+  "SIN texto, SIN palabras, SIN letras; sin rostros de santos identificables; " +
+  "composición vertical 4:5 con espacio negativo coherente con la composición del texto.";
 
 export type FuenteArte = "descarga" | "ia" | "curada";
 export type ModoArte = "unica" | "recorrida" | "por_slide";
@@ -24,6 +24,8 @@ export type ModoArte = "unica" | "recorrida" | "por_slide";
 export interface PlanBaseArte {
   fuente: FuenteArte;
   query?: string;
+  autor?: string;
+  obra?: string;
   prompt?: string;
   archivo?: string;
   posicion?: string;
@@ -52,7 +54,9 @@ function validarBase(plan: PlanBaseArte, etiqueta: string): void {
   if (!plan || !["descarga", "ia", "curada"].includes(plan.fuente)) {
     throw new Error(`${etiqueta} requiere fuente descarga, ia o curada.`);
   }
-  if (plan.fuente === "descarga" && !plan.query) throw new Error(`${etiqueta}.descarga sin query.`);
+  if (plan.fuente === "descarga" && (!plan.query || !plan.autor || !plan.obra)) {
+    throw new Error(`${etiqueta}.descarga requiere query, autor y obra concretos.`);
+  }
   if (plan.fuente === "ia" && !plan.prompt) throw new Error(`${etiqueta}.ia sin prompt.`);
   if (plan.fuente === "curada" && !plan.archivo) throw new Error(`${etiqueta}.curada sin archivo.`);
   if (plan.posicion && !esPosicionValida(plan.posicion)) {
@@ -108,6 +112,9 @@ async function materializarArte(plan: PlanBaseArte, piezaId: string, sufijo = ""
 
   if (plan.fuente === "descarga") {
     const obra = await descargarObra(plan.query!);
+    if (!obra.procedencia.autor || !obra.procedencia.titulo) {
+      throw new Error(`La obra encontrada para "${plan.autor} — ${plan.obra}" no conserva autor y título verificables.`);
+    }
     const rel = `descargado/${piezaId}${sufijo}.${obra.ext}`;
     await mkdir(join(ARTE, "descargado"), { recursive: true });
     await writeFile(join(ARTE, rel), obra.buffer);
