@@ -50,6 +50,15 @@ function esPosicionValida(valor: string): boolean {
   return !!match && Number(match[1]) <= 100 && Number(match[2]) <= 100;
 }
 
+/** Completa sólo decisiones de encuadre: no altera la obra, su licencia ni su procedencia. */
+function recortesCompletos(recortes: string[], cantidadSlides: number): string[] {
+  if (!recortes.every(esPosicionValida)) throw new Error("arte_plan.recorrida tiene un recorte inválido.");
+  return Array.from(
+    { length: cantidadSlides },
+    (_, index) => recortes[index] || RECORTES_POR_DEFECTO[index % RECORTES_POR_DEFECTO.length],
+  ).map((recorte, index) => index === cantidadSlides - 1 ? "50% 50%" : recorte);
+}
+
 function validarBase(plan: PlanBaseArte, etiqueta: string): void {
   if (!plan || !["descarga", "ia", "curada"].includes(plan.fuente)) {
     throw new Error(`${etiqueta} requiere fuente descarga, ia o curada.`);
@@ -84,21 +93,21 @@ export function normalizarPlanArte(plan: ArtePlan | undefined, cantidadSlides: n
     if (!plan.principal) throw new Error("arte_plan.recorrida requiere principal.");
     validarBase(plan.principal, "arte_plan.principal");
     const recortes = plan.recortes || [];
-    if (recortes.length !== cantidadSlides) {
-      throw new Error(`arte_plan.recorrida requiere ${cantidadSlides} recortes, uno por slide.`);
-    }
-    if (!recortes.every(esPosicionValida)) throw new Error("arte_plan.recorrida tiene un recorte inválido.");
-    return { modo: "recorrida", principal: plan.principal, recortes };
+    return { modo: "recorrida", principal: plan.principal, recortes: recortesCompletos(recortes, cantidadSlides) };
   }
 
   if (plan.modo === "por_slide") {
     const slides = plan.slides || [];
-    if (slides.length !== cantidadSlides) {
-      throw new Error(`arte_plan.por_slide requiere ${cantidadSlides} planes, uno por slide.`);
-    }
+    if (!slides.length) throw new Error("arte_plan.por_slide requiere al menos un plan verificable.");
     slides.forEach((slide, index) => validarBase(slide, `arte_plan.slides[${index}]`));
     const ia = slides.filter((slide) => slide.fuente === "ia").length;
     if (ia > 1) throw new Error("arte_plan.por_slide permite como máximo una imagen IA por pieza.");
+    // Cuando el modelo eligió arte por slide pero omitió alguna entrada, se conserva
+    // la primera fuente ya validada y se la recorre. Es una corrección estructural
+    // auditable, no una nueva obra ni una inferencia doctrinal.
+    if (slides.length !== cantidadSlides) {
+      return { modo: "recorrida", principal: slides[0], recortes: recortesCompletos([], cantidadSlides) };
+    }
     return { modo: "por_slide", recortes: [], slides };
   }
 

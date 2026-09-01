@@ -10,15 +10,23 @@ test("no permite renderizar una pieza final sin un plan de arte", async () => {
   );
 });
 
-test("una obra recorrida exige un crop válido por slide", () => {
-  assert.throws(
-    () => normalizarPlanArte({
-      modo: "recorrida",
-      principal: { fuente: "curada", archivo: "curada/obra.jpg" },
-      recortes: ["50% 50%"],
-    }, 2),
-    /2 recortes/,
-  );
+test("una obra recorrida completa crops faltantes sin alterar la obra", () => {
+  const plan = normalizarPlanArte({
+    modo: "recorrida",
+    principal: { fuente: "curada", archivo: "curada/obra.jpg" },
+    recortes: ["50% 50%"],
+  }, 2);
+  assert.deepEqual(plan.recortes, ["50% 50%", "50% 50%"]);
+});
+
+test("un plan por slide incompleto se vuelve una recorrida de su fuente verificada", () => {
+  const plan = normalizarPlanArte({
+    modo: "por_slide",
+    slides: [{ fuente: "curada", archivo: "curada/obra.jpg" }],
+  }, 3);
+  assert.equal(plan.modo, "recorrida");
+  assert.equal(plan.principal?.archivo, "curada/obra.jpg");
+  assert.equal(plan.recortes.length, 3);
 });
 
 test("las imágenes distintas limitan el costo a una sola generación IA", () => {
