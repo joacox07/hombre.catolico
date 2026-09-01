@@ -3,7 +3,9 @@
 Todo corre en **GitHub** (gratis). No hay que instalar ni alojar nada. La rama principal del
 repo ya es la de trabajo, así que el workflow está listo para dispararse.
 
-## Paso 1 — Cargar la API key de OpenAI (una sola vez)
+## Paso 1 — Elegir el cerebro de texto
+
+### Modo actual — OpenAI para texto e imágenes
 
 En el repo de GitHub:
 
@@ -15,6 +17,18 @@ código ni en la web.
 
 > Opcional (pestaña *Variables*, no *Secrets*): `IMAGEN_QUALITY` (`high` por defecto),
 > `OPENAI_TEXT_MODEL` (`gpt-4o`), `IMAGEN_MODEL` (`gpt-image-1`), `IMAGEN_SIZE` (`1024x1536`).
+
+### Modo Codex — texto incluido en tu suscripción de ChatGPT
+
+Cuando el servicio propio de `cerebro/` esté encendido y publicado por HTTPS, crear en GitHub Actions:
+
+- Variable `TEXT_PROVIDER=codex_gateway`.
+- Variable `CODEX_GATEWAY_URL=https://<tu-host>/v1`.
+- Secret `CODEX_GATEWAY_TOKEN`: secreto aleatorio del gateway, distinto de toda contraseña o key.
+
+En este modo, `OPENAI_API_KEY` se conserva exclusivamente para generar imágenes IA. El texto,
+los captions, el plan de arte y el revisor editorial viajan al runtime Codex autenticado con tu
+cuenta. Para volver al modo actual, quitar `TEXT_PROVIDER` o configurarlo como `openai`.
 
 ## Paso 2 — Disparar la generación
 

@@ -1,10 +1,10 @@
 /**
- * El empleado IA — orquestador semanal (OpenAI). Corre en GitHub Actions.
- *   estado → recuperar fichas → redactar (OpenAI) → concilio + verificación de citas →
+ * El empleado IA — orquestador semanal. Corre en GitHub Actions.
+ *   estado → recuperar fichas → redactar (OpenAI o cerebro Codex) → concilio + verificación de citas →
  *   arte (descarga/IA) → render → ensamblar lote → actualizar memoria.
  *
  * CLI:  tsx pipeline/generar.ts [n]   (n = cantidad de piezas, def. 3)
- * Requiere OPENAI_API_KEY y red abierta (Actions). Nada se publica: deja el lote en el panel.
+ * Requiere un cerebro de texto y, si se genera arte IA, OPENAI_API_KEY. Nada se publica.
  */
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
@@ -15,7 +15,7 @@ import { recuperar } from "./recuperacion.ts";
 import { verificarCitas } from "./verificar.ts";
 import { resolverArte } from "./arte.ts";
 import { ensamblarLote } from "./lote.ts";
-import { chat } from "./openai.ts";
+import { chat } from "./texto.ts";
 import { captionLista } from "./caption.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -157,7 +157,7 @@ async function main() {
     }
   }
 
-  if (specPiezas.length === 0) throw new Error("No se generó ninguna pieza (revisá OPENAI_API_KEY y los logs).");
+  if (specPiezas.length === 0) throw new Error("No se generó ninguna pieza (revisá el cerebro editorial y los logs).");
 
   // 6. Render de todas las piezas
   console.log("\n▶ render…");

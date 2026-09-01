@@ -1,8 +1,8 @@
 name: Lote semanal
 run-name: ${{ github.event.inputs.solicitud != '' && format('Lote móvil {0}', github.event.inputs.solicitud) || 'Lote semanal programado' }}
 
-# Corre el empleado IA una vez por semana (y a pedido). Genera el lote con OpenAI (texto +
-# imágenes) + arte de dominio público, renderiza y commitea el resultado para revisar en el panel.
+# Corre el empleado IA una vez por semana (y a pedido). Genera el lote con el cerebro de texto
+# configurado + imágenes OpenAI + arte de dominio público, renderiza y commitea el resultado.
 # NADA se publica en Instagram: el output es el lote a la espera de aprobación humana.
 
 on:
@@ -45,6 +45,9 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_TEXT_MODEL: ${{ vars.OPENAI_TEXT_MODEL }}
+          TEXT_PROVIDER: ${{ vars.TEXT_PROVIDER }}
+          CODEX_GATEWAY_URL: ${{ vars.CODEX_GATEWAY_URL }}
+          CODEX_GATEWAY_TOKEN: ${{ secrets.CODEX_GATEWAY_TOKEN }}
           IMAGEN_MODEL: ${{ vars.IMAGEN_MODEL }}
           IMAGEN_QUALITY: ${{ vars.IMAGEN_QUALITY }}
           IMAGEN_SIZE: ${{ vars.IMAGEN_SIZE }}
