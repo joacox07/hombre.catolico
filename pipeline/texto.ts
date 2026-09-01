@@ -107,9 +107,36 @@ async function post(config: ConfiguracionTexto, body: unknown): Promise<any> {
   return res.json();
 }
 
+/** Un relay efímero puede cambiar mientras una corrida larga está en curso. */
+export function esErrorDeRelay(error: unknown): boolean {
+  return /(?:Texto codex_gateway.*(?:503|502)|no tunnel here|fetch failed)/i.test(String(error));
+}
+
+async function refrescarGateway(config: ConfiguracionTexto): Promise<ConfiguracionTexto | null> {
+  const token = valor(process.env, "GITHUB_TOKEN");
+  const repo = valor(process.env, "GITHUB_REPOSITORY");
+  if (!token || !repo) return null;
+  try {
+    const res = await fetch(`https://api.github.com/repos/${repo}/actions/variables/CODEX_GATEWAY_URL`, {
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${token}`,
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+      signal: AbortSignal.timeout(8_000),
+    });
+    const data = await res.json();
+    const baseUrl = typeof data?.value === "string" ? sinBarraFinal(data.value) : "";
+    if (!res.ok || !/^https:\/\//.test(baseUrl) || baseUrl === config.baseUrl) return null;
+    return { ...config, baseUrl };
+  } catch {
+    return null;
+  }
+}
+
 /** Envía una instrucción editorial y devuelve sólo el contenido final del modelo. */
 export async function chat(system: string, user: string, opts: { json?: boolean; model?: string } = {}): Promise<string> {
-  const config = configuracionTexto();
+  let config = configuracionTexto();
   const body: Record<string, unknown> = {
     model: opts.model || config.modelo,
     messages: [
@@ -119,7 +146,17 @@ export async function chat(system: string, user: string, opts: { json?: boolean;
   };
   if (opts.json) body.response_format = { type: "json_object" };
 
-  const data = await post(config, body);
+  let data: any;
+  try {
+    data = await post(config, body);
+  } catch (error) {
+    const actualizada = config.proveedor === "codex_gateway" && esErrorDeRelay(error)
+      ? await refrescarGateway(config)
+      : null;
+    if (!actualizada) throw error;
+    config = actualizada;
+    data = await post(config, body);
+  }
   const contenido = data.choices?.[0]?.message?.content;
   if (typeof contenido !== "string" || !contenido.trim()) {
     throw new Error(`Texto ${config.proveedor}: respuesta sin contenido final.`);

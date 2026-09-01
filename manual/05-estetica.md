@@ -49,9 +49,10 @@ tipografía y tratamiento, sin teñir cada obra de dorado o ámbar.
 
 Cada pieza declara `arte: { fuente: "descarga" | "ia", archivo, credito | prompt, licencia }`.
 
-- **Descargar (dominio público)** cuando el sujeto es un santo real, una escena histórica o una
-  obra famosa: Met Open Access, Rijksmuseum, National Gallery (open), Getty Open Content, Web
-  Gallery of Art, Wikimedia Commons. Registrar procedencia y licencia (ver `assets/README.md`).
+- **Descargar (procedencia clara)** cuando el sujeto es un santo real, una escena histórica o una
+  obra famosa: Wikimedia Commons y colecciones abiertas de museos. Sólo se acepta dominio público,
+  CC0 o CC BY verificable, con autor, título, URL y licencia guardados junto al archivo. Se descarta
+  toda obra marcada como IA; no se intenta adivinar el origen de imágenes de la web general.
 - **Generar con IA** cuando se necesita una atmósfera/composición que no existe (escritorio a la
   luz de vela, manos trabajando la madera, capilla en penumbra) o para adaptar/extender un fondo.
   El texto va por encima después.
@@ -60,8 +61,8 @@ Cada pieza declara `arte: { fuente: "descarga" | "ia", archivo, credito | prompt
 
 ## Variación obligatoria
 
-- Un lote de tres mezcla obra pública/curada e imagen IA; el historial compensa el origen menos
-  usado para no convertir ninguno en norma absoluta.
+- Un lote de tres prioriza dos obras públicas/curadas y deja como máximo una escena IA propia;
+  el historial compensa el origen menos usado para no convertir ninguno en norma absoluta.
 - Cada pieza declara una paleta (`color_obra`, piedra fría, vino/negro, oliva/pergamino o cálida)
   y una composición principal. No se repiten las de los dos posts previos.
 - Los desarrollos alternan entre editorial superior, manifiesto centrado, bloque inferior,

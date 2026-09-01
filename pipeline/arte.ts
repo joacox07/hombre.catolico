@@ -118,8 +118,8 @@ async function materializarArte(plan: PlanBaseArte, piezaId: string, sufijo = ""
     const rel = `descargado/${piezaId}${sufijo}.${obra.ext}`;
     await mkdir(join(ARTE, "descargado"), { recursive: true });
     await writeFile(join(ARTE, rel), obra.buffer);
-    await writeFile(join(ARTE, rel + ".json"), JSON.stringify({ ...obra.procedencia, verificado: false }, null, 2) + "\n");
-    return { fuente: "descarga", archivo: rel, credito: obra.procedencia.titulo, licencia: obra.procedencia.licencia, verificado: false };
+    await writeFile(join(ARTE, rel + ".json"), JSON.stringify({ ...obra.procedencia, verificado: true }, null, 2) + "\n");
+    return { fuente: "descarga", archivo: rel, credito: obra.procedencia.titulo, licencia: obra.procedencia.licencia, procedencia: obra.procedencia, verificado: true };
   }
 
   const prompt = `${plan.prompt}. ${ESTILO_IA}`;
@@ -127,8 +127,8 @@ async function materializarArte(plan: PlanBaseArte, piezaId: string, sufijo = ""
   const rel = `generado/${piezaId}${sufijo}.png`;
   await mkdir(join(ARTE, "generado"), { recursive: true });
   await writeFile(join(ARTE, rel), png);
-  await writeFile(join(ARTE, rel + ".json"), JSON.stringify({ fuente: "ia", modelo: process.env.IMAGEN_MODEL || "gpt-image-1", prompt, licencia: "Generada por IA (no es obra histórica)", verificado: false }, null, 2) + "\n");
-  return { fuente: "ia", archivo: rel, prompt, verificado: false };
+  await writeFile(join(ARTE, rel + ".json"), JSON.stringify({ fuente: "ia", modelo: process.env.IMAGEN_MODEL || "gpt-image-1", prompt, licencia: "Generada por IA propia (no es obra histórica)", origen_visual: "ia_propia", verificado: true }, null, 2) + "\n");
+  return { fuente: "ia", archivo: rel, prompt, origen_visual: "ia_propia", verificado: true };
 }
 
 /** Mutará pieza.arte y/o slide.arte y escribirá los assets necesarios. */

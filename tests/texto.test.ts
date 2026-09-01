@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { configuracionTexto } from "../pipeline/texto.ts";
+import { configuracionTexto, esErrorDeRelay } from "../pipeline/texto.ts";
 
 test("mantiene OpenAI como respaldo por defecto", () => {
   assert.deepEqual(configuracionTexto({ OPENAI_API_KEY: "prueba" }), {
@@ -39,4 +39,9 @@ test("el gateway conserva una ruta de trabajos compatible con su base URL", () =
     CODEX_GATEWAY_TOKEN: "secreto-de-prueba",
   });
   assert.equal(`${config.baseUrl}/jobs/job_prueba`, "https://cerebro.example.com/v1/jobs/job_prueba");
+});
+
+test("reintenta el cerebro cuando el relay temporal ya no existe", () => {
+  assert.equal(esErrorDeRelay("Texto codex_gateway → 503: <h1>no tunnel here :(</h1>"), true);
+  assert.equal(esErrorDeRelay("Texto openai → 429"), false);
 });

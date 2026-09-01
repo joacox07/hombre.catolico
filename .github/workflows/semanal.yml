@@ -19,6 +19,7 @@ on:
         default: ""
 
 permissions:
+  actions: read
   contents: write
 
 concurrency:
@@ -48,6 +49,7 @@ jobs:
           TEXT_PROVIDER: ${{ vars.TEXT_PROVIDER }}
           CODEX_GATEWAY_URL: ${{ vars.CODEX_GATEWAY_URL }}
           CODEX_GATEWAY_TOKEN: ${{ secrets.CODEX_GATEWAY_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
           IMAGEN_MODEL: ${{ vars.IMAGEN_MODEL }}
           IMAGEN_QUALITY: ${{ vars.IMAGEN_QUALITY }}
           IMAGEN_SIZE: ${{ vars.IMAGEN_SIZE }}

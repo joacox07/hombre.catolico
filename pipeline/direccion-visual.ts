@@ -81,8 +81,10 @@ export function cuotasOrigenLote(registro: RegistroPieza[], cantidad: number): O
   const cuotas: OrigenVisual[] = [];
   for (let i = 0; i < cantidad; i++) {
     let siguiente: OrigenVisual;
-    if (i === 0) siguiente = obras <= ia ? "obra" : "ia";
-    else if (i === 1 && cantidad > 1) siguiente = cuotas[0] === "obra" ? "ia" : "obra";
+    // En cada tanda de tres se priorizan dos piezas con arte de procedencia clara.
+    // La escena IA propia queda como recurso expresivo, no como fondo por defecto.
+    if (cantidad >= 3 && i < 2) siguiente = "obra";
+    else if (cantidad >= 3 && i === 2) siguiente = "ia";
     else siguiente = obras <= ia ? "obra" : "ia";
     cuotas.push(siguiente);
     if (siguiente === "obra") obras++; else ia++;

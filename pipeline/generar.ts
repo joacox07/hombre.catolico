@@ -18,6 +18,7 @@ import { normalizarPlanArte } from "./arte.ts";
 import { ensamblarLote } from "./lote.ts";
 import { chat } from "./texto.ts";
 import { captionLista } from "./caption.ts";
+import { humanizarPieza } from "./voz-humana.ts";
 import { normalizarDireccionVisual, validarComposiciones, origenDesdeArte } from "./direccion-visual.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -51,9 +52,10 @@ function fuentesLegibles(ids: unknown, fichas: Array<{ id: string; titulo_fuente
 }
 
 async function systemRedaccion(): Promise<string> {
-  const [voz, doctrina, formato, estetica] = await Promise.all([
+  const [voz, doctrina, formato, estetica, vozHumana] = await Promise.all([
     leerTxt("manual/01-voz.md"), leerTxt("manual/02-doctrina-y-opinion.md"),
     leerTxt("manual/04-formato-piezas.md"), leerTxt("manual/05-estetica.md"),
+    leerTxt("manual/06-voz-humana.md"),
   ]);
   return [
     "Sos el redactor de @hombre.catolico, cuenta católica de formación masculina.",
@@ -64,6 +66,7 @@ async function systemRedaccion(): Promise<string> {
     "=== DOCTRINA/OPINIÓN ===\n" + doctrina,
     "=== FORMATO ===\n" + formato,
     "=== ESTÉTICA/ARQUETIPOS ===\n" + estetica,
+    "=== VOZ HUMANA (control editorial) ===\n" + vozHumana,
     "",
     "Devolvé SOLO un JSON con esta forma (carrusel):",
     `{ "titulo": "...", "slides": [
@@ -121,8 +124,9 @@ async function main() {
   }
   const semana = semanaISO();
   const corrida = process.env.LOTE_ID || undefined;
-  const sys = await systemRedaccion();
-  const concilio = await leerTxt(".claude/skills/revisor-sacerdote/SKILL.md");
+  const [sys, concilio, vozHumana] = await Promise.all([
+    systemRedaccion(), leerTxt(".claude/skills/revisor-sacerdote/SKILL.md"), leerTxt("manual/06-voz-humana.md"),
+  ]);
 
   await mkdir(join(ROOT, "data", "piezas"), { recursive: true });
   const specPiezas: Array<{ ref: string; fecha_propuesta: string; estado: string; revisor: unknown }> = [];
@@ -170,7 +174,8 @@ async function main() {
             throw new Error("paleta o composición principal repetida respecto de los dos posts anteriores o de esta misma tanda");
           }
           validarComposiciones(candidato.slides, direccion);
-          contenido = candidato;
+          contenido = await humanizarPieza(candidato, vozHumana);
+          if (!captionLista(contenido.caption)) throw new Error("la revisión de voz dejó una caption inválida");
           break;
         } catch (error) {
           ultimoError = String(error).replace(/^Error:\s*/, "").slice(0, 260);

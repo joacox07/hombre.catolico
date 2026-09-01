@@ -11,6 +11,7 @@ export interface Procedencia {
   fuente_url: string;
   licencia: string;
   query: string;
+  origen_visual: "obra_publica";
 }
 
 export interface ArteDescargado {
@@ -23,7 +24,7 @@ export interface ArteDescargado {
 export async function descargarObra(query: string, width = 1400): Promise<ArteDescargado> {
   const params = new URLSearchParams({
     action: "query", generator: "search", gsrsearch: query, gsrnamespace: "6", gsrlimit: "1",
-    prop: "imageinfo", iiprop: "url|extmetadata", iiurlwidth: String(width), format: "json",
+    prop: "imageinfo|categories", iiprop: "url|extmetadata", cllimit: "30", iiurlwidth: String(width), format: "json",
   });
   const res = await fetch(`${API}?${params}`, { headers: { "User-Agent": UA } });
   if (!res.ok) throw new Error(`Wikimedia API ${res.status}`);
@@ -32,25 +33,37 @@ export async function descargarObra(query: string, width = 1400): Promise<ArteDe
   const info = (pages[0] as any)?.imageinfo?.[0];
   if (!info?.thumburl) throw new Error(`Sin resultados de arte para: "${query}"`);
 
+  const categorias = ((pages[0] as any)?.categories || []).map((c: any) => String(c?.title || "")).join(" ");
+  const meta = info.extmetadata || {};
+  const strip = (s?: string) => (s ? String(s).replace(/<[^>]+>/g, "").trim() : undefined);
+  const titulo = strip(meta.ObjectName?.value) || (pages[0] as any)?.title || query;
+  const autor = strip(meta.Artist?.value);
+  const licencia = strip(meta.LicenseShortName?.value);
+  const identidad = `${titulo} ${autor || ""} ${categorias}`;
+  if (/\b(?:ai[ -]?generated|artificial intelligence|midjourney|stable diffusion|dall[·.-]?e)\b/i.test(identidad)) {
+    throw new Error(`La obra encontrada para "${query}" parece estar marcada como generada por IA.`);
+  }
+  const reutilizable = licencia && /(public domain|cc0|cc by(?:-sa)?)/i.test(licencia) && !/cc by-(?:nc|nd)/i.test(licencia);
+  if (!reutilizable) {
+    throw new Error(`La obra encontrada para "${query}" no tiene una licencia pública reutilizable.`);
+  }
+
   const img = await fetch(info.thumburl, { headers: { "User-Agent": UA } });
   if (!img.ok) throw new Error(`Descarga de imagen ${img.status}`);
   const buffer = Buffer.from(await img.arrayBuffer());
-  const ext = (info.thumburl.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
-
-  const meta = info.extmetadata || {};
-  const strip = (s?: string) => (s ? String(s).replace(/<[^>]+>/g, "").trim() : undefined);
-  const licencia = strip(meta.LicenseShortName?.value);
-  if (!licencia) throw new Error(`La obra encontrada para "${query}" no informa una licencia verificable.`);
+  const tipo = img.headers.get("content-type") || "";
+  const ext = tipo.includes("png") ? "png" : tipo.includes("webp") ? "webp" : "jpg";
   return {
     buffer,
     ext: ext || "jpg",
     procedencia: {
       fuente: "descarga",
-      titulo: strip(meta.ObjectName?.value) || (pages[0] as any)?.title || query,
-      autor: strip(meta.Artist?.value),
+      titulo,
+      autor,
       fuente_url: info.descriptionurl || info.thumburl,
       licencia,
       query,
+      origen_visual: "obra_publica",
     },
   };
 }

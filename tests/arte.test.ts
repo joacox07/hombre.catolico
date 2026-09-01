@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { normalizarPlanArte, resolverArte } from "../pipeline/arte.ts";
-import { origenDesdeArte } from "../pipeline/direccion-visual.ts";
+import { origenDesdeArte, cuotasOrigenLote } from "../pipeline/direccion-visual.ts";
 
 test("no permite renderizar una pieza final sin un plan de arte", async () => {
   await assert.rejects(
@@ -49,4 +49,8 @@ test("una dirección de obra no acepta mezclar arte público e IA en la misma pi
     modo: "por_slide",
     slides: [{ fuente: "descarga", query: "obra" }, { fuente: "ia", prompt: "escena" }],
   }), null);
+});
+
+test("una tanda de tres prioriza dos obras públicas antes que una escena IA propia", () => {
+  assert.deepEqual(cuotasOrigenLote([], 3), ["obra", "obra", "ia"]);
 });
