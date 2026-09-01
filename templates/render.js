@@ -23,10 +23,16 @@
   function arteBase() {
     return (typeof window !== "undefined" && window.HC_ARTE_BASE) || "/assets/arte/";
   }
-  // Capa de tratamiento común. arte = {archivo?} de la pieza.
+  function posicionSegura(posicion) {
+    var match = String(posicion || "").trim().match(/^(\d{1,3})%\s+(\d{1,3})%$/);
+    if (!match || Number(match[1]) > 100 || Number(match[2]) > 100) return "";
+    return "background-position:" + match[1] + "% " + match[2] + "%";
+  }
+  // Capa de tratamiento común. arte = {archivo?, posicion?} de la pieza.
   function layers(arte) {
+    var posicion = posicionSegura(arte && arte.posicion);
     var bg = arte && arte.archivo
-      ? '<div class="capa arte" style="background-image:url(\'' + arteBase() + esc(arte.archivo) + '\')"></div>'
+      ? '<div class="capa arte" style="background-image:url(\'' + arteBase() + esc(arte.archivo) + '\');' + posicion + '"></div>'
       : '<div class="capa arte proc"></div>';
     return bg + '<div class="capa grade"></div><div class="capa vineta"></div><div class="capa grano"></div>';
   }
