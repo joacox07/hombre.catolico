@@ -1,0 +1,44 @@
+{
+  "id": "2026-W36-33457311002",
+  "nombre": "Lote 2026-W36",
+  "semana": "2026-W36",
+  "generado": "2026-09-01",
+  "piezas": [
+    {
+      "ref": "/data/piezas/discernir-mujer-para-casarse.json",
+      "fecha_propuesta": "2026-09-03 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "corregir",
+        "citas_verificadas": true,
+        "requiere_revision_humana": true,
+        "nota": "No contiene citas ni afirmaciones doctrinales que verificar, pero tampoco es una pieza publicable: es un aviso interno de documentación pendiente. Conservar como borrador y revisar humanamente la futura versión desarrollada.",
+        "citas": []
+      }
+    },
+    {
+      "ref": "/data/piezas/noviazgo-que-se-discierne.json",
+      "fecha_propuesta": "2026-09-05 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "corregir",
+        "citas_verificadas": true,
+        "requiere_revision_humana": true,
+        "nota": "No contiene errores doctrinales ni citas apócrifas porque evita formular contenido sustantivo, pero es un marcador editorial interno y no una pieza publicable. Rehacer después de incorporar fuentes verificadas y mantener la revisión humana indicada.",
+        "citas": []
+      }
+    },
+    {
+      "ref": "/data/piezas/proposito-del-cortejo.json",
+      "fecha_propuesta": "2026-09-07 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "revision_humana",
+        "citas_verificadas": true,
+        "requiere_revision_humana": true,
+        "nota": "No publicar. No contiene citas falsas ni errores doctrinales comprobables, pero es un marcador editorial sin contenido formativo sobre el cortejo. Requiere fuentes verificadas, clasificación doctrinal y revisión humana antes de convertirse en una pieza pública.",
+        "citas": []
+      }
+    }
+  ]
+}

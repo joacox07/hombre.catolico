@@ -1,0 +1,50 @@
+{
+  "id": "proposito-del-cortejo",
+  "tema": "El propósito del cortejo",
+  "pilar": "Familia",
+  "tipo": "carrusel",
+  "santos": [],
+  "nivel": "intro",
+  "titulo": "El propósito del cortejo necesita fuentes antes de publicarse",
+  "slides": [
+    {
+      "tipo": "portada",
+      "kicker": "Familia",
+      "titulo": "El propósito del cortejo necesita fuentes antes de publicarse",
+      "subtitulo": "Faltan fichas doctrinales verificables"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Criterio editorial",
+      "titulo": "No alcanza con una opinión",
+      "cuerpo": "No se recibieron fichas para fundamentar esta pieza. **Sin fuentes verificables, no corresponde publicar afirmaciones sobre el cortejo.**",
+      "fuente": "Sin ficha disponible"
+    },
+    {
+      "tipo": "cierre",
+      "titulo": "Pieza pendiente de documentación",
+      "cuerpo": "Hace falta incorporar al menos una fuente verificable que permita desarrollar el tema y clasificar cada afirmación según su peso doctrinal.",
+      "fuentes": [],
+      "cta": "Revisar y completar las fichas antes de aprobar la publicación."
+    }
+  ],
+  "caption": "Esta pieza todavía no está lista para publicarse.\n\nNo se recibieron fichas que permitan desarrollar el propósito del cortejo con fundamento verificable. Para preservar la precisión doctrinal, el contenido queda pendiente de documentación y revisión humana.\n\nGuardalo como recordatorio del criterio editorial: primero las fuentes, después la publicación.\n\n#CortejoCatólico #NoviazgoCatólico #FamiliaCatólica",
+  "fuentes": [],
+  "clasificacion_doctrinal": [],
+  "revision_humana": true,
+  "arte_plan": {
+    "modo": "unica",
+    "principal": {
+      "fuente": "ia",
+      "prompt": "A respectful young Catholic couple walking in conversation along a quiet garden path near an old stone church at golden hour, modest clothing, deliberate distance, warm cinematic chiaroscuro, contemplative atmosphere, no identifiable saints, no text"
+    },
+    "recortes": [],
+    "slides": []
+  },
+  "arte": {
+    "fuente": "ia",
+    "archivo": "generado/proposito-del-cortejo.png",
+    "prompt": "A respectful young Catholic couple walking in conversation along a quiet garden path near an old stone church at golden hour, modest clothing, deliberate distance, warm cinematic chiaroscuro, contemplative atmosphere, no identifiable saints, no text. pintura al óleo clásica, claroscuro cálido y tenebrismo, atmósfera sacra sobria y solemne, paleta parda y dorada, luz de vela; SIN texto, SIN palabras, SIN letras; sin rostros de santos identificables; composición vertical con espacio para texto abajo.",
+    "verificado": false
+  }
+}

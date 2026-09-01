@@ -1,6 +1,13 @@
 {
   "lotes": [
     {
+      "id": "2026-W36-33457311002",
+      "file": "/data/lotes/lote-2026-W36-33457311002.json",
+      "nombre": "Lote 2026-W36",
+      "semana": "2026-W36",
+      "generado": "2026-09-01"
+    },
+    {
       "id": "2026-W36-33456482400",
       "file": "/data/lotes/lote-2026-W36-33456482400.json",
       "nombre": "Lote 2026-W36",

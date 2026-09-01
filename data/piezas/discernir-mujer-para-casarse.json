@@ -1,0 +1,46 @@
+{
+  "id": "discernir-mujer-para-casarse",
+  "tema": "Cómo discernir a la mujer con quien casarte",
+  "pilar": "Familia",
+  "tipo": "carrusel",
+  "santos": [],
+  "nivel": "medio",
+  "titulo": "Discernir el matrimonio exige fuentes antes de publicar",
+  "slides": [
+    {
+      "tipo": "portada",
+      "kicker": "MATRIMONIO",
+      "titulo": "Discernir el matrimonio exige fuentes antes de publicar",
+      "subtitulo": "Carrusel pendiente de documentación"
+    },
+    {
+      "tipo": "cierre",
+      "titulo": "Esta pieza todavía no puede redactarse",
+      "cuerpo": "No se proporcionaron fichas. Para evitar inventar doctrina, criterios prudenciales o citas sobre el discernimiento matrimonial, el contenido debe quedar pendiente.",
+      "fuentes": [],
+      "cta": "Incorporá fichas verificables para preparar una pieza fiel y publicable."
+    }
+  ],
+  "caption": "Contenido pendiente de fuentes verificables.\n\nNo se proporcionaron fichas para desarrollar criterios de discernimiento matrimonial sin inventar doctrina, citas u opiniones.\n\nGuardá el tema para retomarlo cuando esté documentado.\n\n#DiscernimientoMatrimonial #MatrimonioCatólico #NoviazgoCatólico",
+  "fuentes": [],
+  "clasificacion_doctrinal": [],
+  "revision_humana": true,
+  "arte_plan": {
+    "modo": "unica",
+    "principal": {
+      "fuente": "descarga",
+      "query": "William Holman Hunt The Betrothal of the Virgin",
+      "prompt": "",
+      "archivo": ""
+    },
+    "recortes": [],
+    "slides": []
+  },
+  "arte": {
+    "fuente": "descarga",
+    "archivo": "descargado/discernir-mujer-para-casarse.orgutmcampaignimageinfoutmcontentthumbnail",
+    "credito": "Angelus Domini, an anthology in art and verse in relation to the Blessed Virgin Mary",
+    "licencia": "Public domain",
+    "verificado": false
+  }
+}

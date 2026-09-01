@@ -1,0 +1,43 @@
+{
+  "id": "noviazgo-que-se-discierne",
+  "tema": "Noviazgo católico: ¿qué se está discerniendo?",
+  "pilar": "Familia",
+  "tipo": "carrusel",
+  "santos": [],
+  "nivel": "intro",
+  "titulo": "Noviazgo católico: faltan fuentes para desarrollar la pieza",
+  "slides": [
+    {
+      "tipo": "portada",
+      "kicker": "NOVIAZGO CATÓLICO",
+      "titulo": "¿Qué se está discerniendo durante el noviazgo católico?",
+      "subtitulo": "Pieza pendiente de fuentes verificables"
+    },
+    {
+      "tipo": "cierre",
+      "titulo": "Necesitamos una base confiable",
+      "cuerpo": "No hay fichas disponibles para desarrollar afirmaciones sobre el discernimiento en el noviazgo sin inventar doctrina o presentar opiniones como enseñanza de la Iglesia.",
+      "fuentes": [],
+      "cta": "Incorporá una ficha verificable para preparar el carrusel."
+    }
+  ],
+  "caption": "¿Qué se discierne en un noviazgo católico?\n\nLa pieza no puede desarrollarse todavía: no se proporcionaron fichas que permitan responder con precisión y distinguir la enseñanza de la Iglesia de las opiniones prudenciales. Hace falta una fuente verificable antes de publicar.\n\nGuardá el tema para retomarlo cuando esté disponible la documentación necesaria.\n\n#NoviazgoCatólico #Discernimiento #MatrimonioCatólico",
+  "fuentes": [],
+  "clasificacion_doctrinal": [],
+  "revision_humana": true,
+  "arte_plan": {
+    "modo": "unica",
+    "principal": {
+      "fuente": "ia",
+      "prompt": "una pareja joven vista de espaldas conversando respetuosamente en el atrio de una iglesia al atardecer, distancia prudente, atmósfera serena y contemplativa, luz cálida cinematográfica, tonos oscuros y dorados, composición vertical, sin santos identificables, sin texto"
+    },
+    "recortes": [],
+    "slides": []
+  },
+  "arte": {
+    "fuente": "ia",
+    "archivo": "generado/noviazgo-que-se-discierne.png",
+    "prompt": "una pareja joven vista de espaldas conversando respetuosamente en el atrio de una iglesia al atardecer, distancia prudente, atmósfera serena y contemplativa, luz cálida cinematográfica, tonos oscuros y dorados, composición vertical, sin santos identificables, sin texto. pintura al óleo clásica, claroscuro cálido y tenebrismo, atmósfera sacra sobria y solemne, paleta parda y dorada, luz de vela; SIN texto, SIN palabras, SIN letras; sin rostros de santos identificables; composición vertical con espacio para texto abajo.",
+    "verificado": false
+  }
+}

@@ -87,6 +87,42 @@
       "nivel": "medio",
       "fecha": "2026-09-01T00:57:26.631Z",
       "estado": "en_revision"
+    },
+    {
+      "id": "discernir-mujer-para-casarse-2026-W36-33457311002",
+      "tema": "discernir-mujer-para-casarse",
+      "pilar": "Familia",
+      "santos": [],
+      "formato": "carrusel",
+      "fuentes": [],
+      "gancho": "Discernir el matrimonio exige fuentes antes de publicar",
+      "nivel": "medio",
+      "fecha": "2026-09-01T01:09:19.321Z",
+      "estado": "en_revision"
+    },
+    {
+      "id": "noviazgo-que-se-discierne-2026-W36-33457311002",
+      "tema": "noviazgo-que-se-discierne",
+      "pilar": "Familia",
+      "santos": [],
+      "formato": "carrusel",
+      "fuentes": [],
+      "gancho": "Noviazgo católico: faltan fuentes para desarrollar la pieza",
+      "nivel": "intro",
+      "fecha": "2026-09-01T01:09:19.321Z",
+      "estado": "en_revision"
+    },
+    {
+      "id": "proposito-del-cortejo-2026-W36-33457311002",
+      "tema": "proposito-del-cortejo",
+      "pilar": "Familia",
+      "santos": [],
+      "formato": "carrusel",
+      "fuentes": [],
+      "gancho": "El propósito del cortejo necesita fuentes antes de publicarse",
+      "nivel": "intro",
+      "fecha": "2026-09-01T01:09:19.321Z",
+      "estado": "en_revision"
     }
   ]
 }
