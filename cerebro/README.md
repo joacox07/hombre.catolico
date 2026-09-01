@@ -26,6 +26,21 @@ en una PC se puede usar un túnel autenticado. Nunca exponer el puerto 8787 dire
 El `CODEX_HOME` de ese usuario contiene la sesión renovable: no se sube a GitHub, Vercel ni se
 copia como variable de entorno. Si venciera o se revocara, se repite únicamente el login oficial.
 
+## Host temporal de esta PC
+
+Mientras no haya una VM propia, se puede mantener el panel móvil operativo con esta PC encendida.
+El supervisor abre un relay SSH efímero, conserva el gateway en `localhost` y actualiza
+automáticamente **sólo** la variable `CODEX_GATEWAY_URL` de GitHub Actions si el relay cambia:
+
+```bash
+CONFIG_FILE=/ruta/absoluta/al/.env.local bash cerebro/host-temporal.sh
+```
+
+Requiere que esta PC tenga `codex` autenticado, `gh` autenticado para este repo y permanezca
+encendida. Es una solución temporal de prueba: una VM propia con un túnel nombrado o VPN es el
+reemplazo estable; ni el secreto del gateway ni la clave de imágenes se imprimen o se envían al
+navegador.
+
 ## Conexión del pipeline
 
 Cuando el host tenga una URL HTTPS privada, configurar en **GitHub Actions**:
