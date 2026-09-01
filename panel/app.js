@@ -12,7 +12,7 @@
     share: '<svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>',
     save: '<svg viewBox="0 0 24 24"><path d="M19 21 12 16 5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>'
   };
-  var lote = null, items = [], sel = 0, slide = 0, polling = null;
+  var lote = null, items = [], historial = [], sel = 0, slide = 0, polling = null;
 
   function esc(s) { return window.HC.esc(s); }
   function url(p) { return BASE + String(p).replace(/^\//, ""); }
@@ -73,6 +73,20 @@
       card.appendChild(thumb); card.appendChild(info);
       card.addEventListener("click", function () { sel = i; slide = 0; render(); });
       cont.appendChild(card);
+    });
+  }
+  function etiquetaLote(resumen) {
+    return (resumen.generado ? fechaLinda(resumen.generado) + " · " : "") + (resumen.nombre || resumen.semana || resumen.id);
+  }
+  function renderHistorial() {
+    var select = document.getElementById("lote-select");
+    select.innerHTML = "";
+    historial.forEach(function (resumen) {
+      var option = document.createElement("option");
+      option.value = resumen.id;
+      option.textContent = etiquetaLote(resumen);
+      option.selected = !!lote && resumen.id === lote.id;
+      select.appendChild(option);
     });
   }
   function badge(texto) {
@@ -154,13 +168,22 @@
     cap.innerHTML = '<span class="u">hombre.catolico</span><span class="txt">' + esc(corto) + '</span><span class="fecha">' + esc(fechaLinda(it.meta.fecha_propuesta)) + "</span>";
   }
   function render() { renderLista(); renderDetalle(); }
-  function resolverLoteLocal() {
-    var qs = new URLSearchParams(location.search).get("lote");
-    if (qs) return Promise.resolve(qs.indexOf("/") === 0 ? qs : "/data/lotes/" + qs);
-    return fetch(url(INDICE)).then(function (r) { return r.ok ? r.json() : null; }).then(function (idx) { return idx && idx.lotes && idx.lotes[0] ? idx.lotes[0].file : LOTE_FALLBACK; });
+  function cargarHistorial() {
+    if (API) return api("/lotes").then(function (datos) { historial = datos.lotes || []; renderHistorial(); });
+    return fetch(url(INDICE)).then(function (r) { return r.ok ? r.json() : null; }).then(function (idx) {
+      historial = (idx && idx.lotes || []).map(function (resumen) { return { id: resumen.id || resumen.semana, nombre: resumen.nombre, semana: resumen.semana, generado: resumen.generado, file: resumen.file }; });
+      renderHistorial();
+    });
   }
-  function cargarLote() {
-    var carga = API ? api("/lotes/latest") : resolverLoteLocal().then(function (loteUrl) {
+  function resolverLoteLocal(loteId) {
+    return fetch(url(INDICE)).then(function (r) { return r.ok ? r.json() : null; }).then(function (idx) {
+      var resumenes = idx && idx.lotes || [];
+      var seleccionado = loteId && resumenes.find(function (item) { return (item.id || item.semana) === loteId; });
+      return seleccionado ? seleccionado.file : (resumenes[0] ? resumenes[0].file : LOTE_FALLBACK);
+    });
+  }
+  function cargarLote(loteId) {
+    var carga = API ? api(loteId ? "/lotes/" + encodeURIComponent(loteId) : "/lotes/latest") : resolverLoteLocal(loteId).then(function (loteUrl) {
       return fetch(url(loteUrl)).then(function (r) { return r.json(); }).then(function (l) {
         return Promise.all(l.piezas.map(function (meta) { return fetch(url(meta.ref)).then(function (r) { return r.json(); }).then(function (pieza) { return { meta: meta, pieza: pieza }; }); })).then(function (piezas) { return { lote: l, piezas: piezas }; });
       });
@@ -168,6 +191,7 @@
     return carga.then(function (datos) {
       lote = datos.lote; items = datos.piezas; sel = 0; slide = 0; mostrarPanel();
       document.getElementById("lote-info").textContent = lote.nombre + " · " + lote.semana + " · " + items.length + " piezas";
+      renderHistorial();
       render();
     }).catch(function (error) {
       if (API && error.status === 401) { mostrarLogin(); return; }
@@ -180,7 +204,7 @@
       api("/generations/" + encodeURIComponent(solicitud)).then(function (estado) {
         if (estado.estado === "completed") {
           clearInterval(polling); document.getElementById("generar").disabled = false;
-          if (estado.resultado === "success") { estadoGeneracion("Lote listo. Actualizando…"); cargarLote().then(function () { estadoGeneracion("Lote nuevo listo para revisar y descargar."); }); }
+          if (estado.resultado === "success") { estadoGeneracion("Lote listo. Actualizando…"); cargarHistorial().then(function () { return cargarLote(); }).then(function () { estadoGeneracion("Lote nuevo listo para revisar y descargar."); }); }
           else estadoGeneracion("La generación no terminó correctamente. Intentá de nuevo.", true);
           return;
         }
@@ -199,16 +223,20 @@
     });
     document.getElementById("login-form").addEventListener("submit", function (event) {
       event.preventDefault(); var password = document.getElementById("password").value;
-      api("/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: password }) }).then(function () { document.getElementById("password").value = ""; cargarLote(); }).catch(function (error) { document.getElementById("login-error").textContent = error.message; });
+      api("/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: password }) }).then(function () {
+        document.getElementById("password").value = "";
+        return cargarHistorial();
+      }).then(function () { return cargarLote(); }).catch(function (error) { document.getElementById("login-error").textContent = error.message; });
     });
     document.getElementById("logout").addEventListener("click", function () { if (API) api("/session", { method: "DELETE" }).finally(function () { clearInterval(polling); mostrarLogin(); }); });
     document.getElementById("generar").addEventListener("click", function () {
       var boton = this; boton.disabled = true; estadoGeneracion("Iniciando generación…");
       api("/generations", { method: "POST" }).then(function (data) { seguirGeneracion(data.solicitud); }).catch(function (error) { boton.disabled = false; estadoGeneracion(error.message, true); });
     });
+    document.getElementById("lote-select").addEventListener("change", function () { cargarLote(this.value); });
     window.addEventListener("resize", escalarMedia);
     if (!API) { document.getElementById("logout").hidden = true; document.getElementById("generar").hidden = true; }
-    cargarLote();
+    cargarHistorial().catch(function () {}).then(function () { return cargarLote(); });
   }
   init();
 })();

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { buscarCorrida } from "../api/_lib/github.js";
+import { buscarCorrida, esPiezaEditorial } from "../api/_lib/github.js";
 
 test("encuentra sólo la corrida móvil solicitada", () => {
   const corrida = buscarCorrida("movil-abc", [
@@ -19,4 +19,9 @@ test("no confunde una solicitud con otra que comparte prefijo", () => {
   assert.equal(buscarCorrida("movil-abc", [
     { display_title: "Lote móvil movil-abc-extra", status: "completed", conclusion: "success", html_url: "otra" },
   ]), null);
+});
+
+test("un aviso sin fuentes no desplaza al último lote editorial", () => {
+  assert.equal(esPiezaEditorial({ fuentes: [] }), false);
+  assert.equal(esPiezaEditorial({ fuentes: ["catecismo-2339"] }), true);
 });

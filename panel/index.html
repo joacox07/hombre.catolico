@@ -38,7 +38,11 @@
     <p class="generation-status" id="generation-status" aria-live="polite"></p>
     <div class="layout">
       <aside class="sidebar">
-        <h2>Lote actual</h2>
+        <div class="selector-lote">
+          <label for="lote-select">Lotes guardados</label>
+          <select id="lote-select" aria-label="Elegir un lote guardado"></select>
+        </div>
+        <h2>Piezas del lote</h2>
         <div id="lista"></div>
       </aside>
       <main class="main">

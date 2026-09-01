@@ -54,16 +54,50 @@ export async function estadoGeneracion(solicitud) {
   return buscarCorrida(solicitud, datos.workflow_runs || []);
 }
 
-export async function ultimoLote() {
-  const indice = await contenidoJson("data/lotes/index.json");
-  const resumen = indice.lotes[0];
-  if (!resumen) throw new Error("Todavía no hay lotes generados.");
+function idDeResumen(resumen, lote) {
+  return lote?.id || resumen.id || resumen.semana;
+}
+
+/** Un aviso de documentación no es una pieza editorial que deba abrir el panel. */
+export function esPiezaEditorial(pieza) {
+  return Array.isArray(pieza?.fuentes) && pieza.fuentes.length > 0;
+}
+
+async function cargarLote(resumen) {
   const lote = await contenidoJson(resumen.file);
   const piezas = await Promise.all(lote.piezas.map(async (meta) => ({
     meta,
     pieza: await contenidoJson(meta.ref),
   })));
-  return { lote: { ...lote, id: lote.id || resumen.id || lote.semana }, piezas };
+  return { lote: { ...lote, id: idDeResumen(resumen, lote) }, piezas };
+}
+
+export async function listarLotes() {
+  const indice = await contenidoJson("data/lotes/index.json");
+  return (indice.lotes || []).map((resumen) => ({
+    id: resumen.id || resumen.semana,
+    nombre: resumen.nombre,
+    semana: resumen.semana,
+    generado: resumen.generado,
+  }));
+}
+
+export async function lotePorId(loteId) {
+  const indice = await contenidoJson("data/lotes/index.json");
+  const resumen = (indice.lotes || []).find((item) => (item.id || item.semana) === loteId);
+  if (!resumen) throw new Error("No existe ese lote.");
+  return cargarLote(resumen);
+}
+
+export async function ultimoLote() {
+  const indice = await contenidoJson("data/lotes/index.json");
+  const resumenes = indice.lotes || [];
+  if (!resumenes.length) throw new Error("Todavía no hay lotes generados.");
+  for (const resumen of resumenes) {
+    const lote = await cargarLote(resumen);
+    if (lote.piezas.some(({ pieza }) => esPiezaEditorial(pieza))) return lote;
+  }
+  return cargarLote(resumenes[0]);
 }
 
 export async function descarga(loteId, piezaId) {

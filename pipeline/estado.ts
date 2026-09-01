@@ -61,8 +61,11 @@ export async function contextoSemanal(n = 3): Promise<Contexto> {
     (Object.keys(conteoBalde) as Balde[]).map((b) => [b, OBJETIVO_DISTRIBUCION[b] - distribucionActual[b]]),
   ) as Record<Balde, number>;
 
-  // Candidatos = temas no usados aún.
-  const candidatos = backlog.temas.filter((t) => t.estado === "backlog" && !temasUsados.includes(t.id));
+  // Una generación sólo puede arrancar con una fuente prevista. Sin este filtro
+  // el modelo termina produciendo un aviso interno en lugar de una publicación.
+  const candidatos = backlog.temas.filter((t) =>
+    t.estado === "backlog" && !temasUsados.includes(t.id) && (t.fuentes_sugeridas || []).length > 0,
+  );
 
   // Puntaje: prioriza baldes en déficit, santos frescos y fuentes poco citadas.
   const sugerencia = candidatos

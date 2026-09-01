@@ -134,6 +134,10 @@ async function main() {
     try {
       console.log(`\n▶ ${tema.id} — ${tema.titulo}`);
       const fichas = (await recuperar([tema.id]))[tema.id];
+      if (!fichas.length) {
+        console.warn(`  ↷ ${tema.id} se omite: no hay fichas verificables asociadas (no se genera arte ni borrador).`);
+        continue;
+      }
 
       // 1. Redacción anclada
       const userRedaccion = `TEMA: ${tema.titulo} (pilar ${tema.pilar}, formato ${tema.formato}, ${tema.sensible ? "SENSIBLE" : "normal"}).\n` +
