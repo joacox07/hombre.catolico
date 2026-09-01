@@ -1,0 +1,326 @@
+{
+  "id": "templanza-gobernar-apetitos",
+  "tema": "Templanza: aprender a gobernar los apetitos",
+  "pilar": "Virtud",
+  "tipo": "carrusel",
+  "santos": [],
+  "nivel": "medio",
+  "titulo": "Templanza: el arte de gobernar tus apetitos",
+  "slides": [
+    {
+      "tipo": "portada",
+      "kicker": "",
+      "titulo": "Templanza: el arte de gobernar tus apetitos",
+      "subtitulo": "Aprender a vivir en verdadera libertad",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/templanza-gobernar-apetitos.jpg",
+        "credito": "Saint Joseph and the Christ Child",
+        "licencia": "Public domain",
+        "procedencia": {
+          "fuente": "descarga",
+          "titulo": "Saint Joseph and the Christ Child",
+          "autor": "Guido Reni",
+          "fuente_url": "https://commons.wikimedia.org/wiki/File:Guido_Reni_-_Saint_Joseph_and_the_Christ_Child_-_Google_Art_Project.jpg",
+          "licencia": "Public domain",
+          "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+          "origen_visual": "obra_publica"
+        },
+        "verificado": true,
+        "posicion": "25% 50%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "",
+      "titulo": "El dominio de sí como proceso",
+      "cuerpo": "«La castidad supone el **aprendizaje del dominio de sí**, que es una **pedagogía de la libertad humana**» (Catecismo de la Iglesia Católica). Elegir gobernar tus pasiones te conduce a la paz.",
+      "disposicion": "bloque_inferior",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/templanza-gobernar-apetitos.jpg",
+        "credito": "Saint Joseph and the Christ Child",
+        "licencia": "Public domain",
+        "procedencia": {
+          "fuente": "descarga",
+          "titulo": "Saint Joseph and the Christ Child",
+          "autor": "Guido Reni",
+          "fuente_url": "https://commons.wikimedia.org/wiki/File:Guido_Reni_-_Saint_Joseph_and_the_Christ_Child_-_Google_Art_Project.jpg",
+          "licencia": "Public domain",
+          "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+          "origen_visual": "obra_publica"
+        },
+        "verificado": true,
+        "posicion": "50% 25%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Gobernar vs ser gobernado",
+      "titulo": "La alternativa es clara",
+      "cuerpo": "O **gobernás tus pasiones** y encontrás la paz, o **te dejás gobernar** por ellas y te hacés desdichado. La elección es tuya.",
+      "disposicion": "contraste",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/templanza-gobernar-apetitos.jpg",
+        "credito": "Saint Joseph and the Christ Child",
+        "licencia": "Public domain",
+        "procedencia": {
+          "fuente": "descarga",
+          "titulo": "Saint Joseph and the Christ Child",
+          "autor": "Guido Reni",
+          "fuente_url": "https://commons.wikimedia.org/wiki/File:Guido_Reni_-_Saint_Joseph_and_the_Christ_Child_-_Google_Art_Project.jpg",
+          "licencia": "Public domain",
+          "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+          "origen_visual": "obra_publica"
+        },
+        "verificado": true,
+        "posicion": "75% 50%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "",
+      "titulo": "Templanza y libertad",
+      "cuerpo": "Contrario a la creencia popular, la verdadera libertad surge cuando no estás atado a tus apetitos. **Gobernarlos** es liberador.",
+      "disposicion": "manifiesto_central",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/templanza-gobernar-apetitos.jpg",
+        "credito": "Saint Joseph and the Christ Child",
+        "licencia": "Public domain",
+        "procedencia": {
+          "fuente": "descarga",
+          "titulo": "Saint Joseph and the Christ Child",
+          "autor": "Guido Reni",
+          "fuente_url": "https://commons.wikimedia.org/wiki/File:Guido_Reni_-_Saint_Joseph_and_the_Christ_Child_-_Google_Art_Project.jpg",
+          "licencia": "Public domain",
+          "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+          "origen_visual": "obra_publica"
+        },
+        "verificado": true,
+        "posicion": "50% 75%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "",
+      "titulo": "Un camino de práctica constante",
+      "cuerpo": "No es fácil, pero cada oportunidad de **dominio propio** refuerza tu libertad. La *templanza* es un camino de constancia.",
+      "disposicion": "editorial_superior",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/templanza-gobernar-apetitos.jpg",
+        "credito": "Saint Joseph and the Christ Child",
+        "licencia": "Public domain",
+        "procedencia": {
+          "fuente": "descarga",
+          "titulo": "Saint Joseph and the Christ Child",
+          "autor": "Guido Reni",
+          "fuente_url": "https://commons.wikimedia.org/wiki/File:Guido_Reni_-_Saint_Joseph_and_the_Christ_Child_-_Google_Art_Project.jpg",
+          "licencia": "Public domain",
+          "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+          "origen_visual": "obra_publica"
+        },
+        "verificado": true,
+        "posicion": "25% 25%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "",
+      "titulo": "Los frutos de la práctica",
+      "cuerpo": "Con el tiempo, verás los frutos de tu esfuerzo: una vida más serena y una voluntad fortalecida. **Elegí la paz** en lugar del caos.",
+      "disposicion": "bloque_inferior",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/templanza-gobernar-apetitos.jpg",
+        "credito": "Saint Joseph and the Christ Child",
+        "licencia": "Public domain",
+        "procedencia": {
+          "fuente": "descarga",
+          "titulo": "Saint Joseph and the Christ Child",
+          "autor": "Guido Reni",
+          "fuente_url": "https://commons.wikimedia.org/wiki/File:Guido_Reni_-_Saint_Joseph_and_the_Christ_Child_-_Google_Art_Project.jpg",
+          "licencia": "Public domain",
+          "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+          "origen_visual": "obra_publica"
+        },
+        "verificado": true,
+        "posicion": "50% 50%"
+      }
+    },
+    {
+      "tipo": "cierre",
+      "titulo": "Tu elección, tu libertad",
+      "cuerpo": "Recordá siempre que **gobernar tus apetitos es un acto de libertad** y paz. La Iglesia enseña que este camino no es fácil, pero sí profundamente liberador.",
+      "fuentes": [
+        "Catecismo de la Iglesia Católica"
+      ],
+      "cta": "Guardalo para tu meditación personal.",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/templanza-gobernar-apetitos.jpg",
+        "credito": "Saint Joseph and the Christ Child",
+        "licencia": "Public domain",
+        "procedencia": {
+          "fuente": "descarga",
+          "titulo": "Saint Joseph and the Christ Child",
+          "autor": "Guido Reni",
+          "fuente_url": "https://commons.wikimedia.org/wiki/File:Guido_Reni_-_Saint_Joseph_and_the_Christ_Child_-_Google_Art_Project.jpg",
+          "licencia": "Public domain",
+          "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+          "origen_visual": "obra_publica"
+        },
+        "verificado": true,
+        "posicion": "50% 50%"
+      }
+    }
+  ],
+  "caption": "¿Quién gobierna? La respuesta define tu camino. El dominio de uno mismo no es represión: es libertad. La castidad y la templanza te enseñan a vivir en paz con vos mismo. Aprender a gobernar tus apetitos es elegir tu propia libertad. Guardá esto para reflexionar y compartilo con un amigo que lo necesite.\n\n#Templanza #DominioPropio #LibertadInterior #CrecimientoEspiritual #VirtudesCristianas",
+  "fuentes": [
+    "catecismo-2339-dominio-de-si"
+  ],
+  "clasificacion_doctrinal": [
+    {
+      "afirmacion": "El dominio de sí es una pedagogía de la libertad: gobernar las pasiones libera; ser gobernado por ellas esclaviza.",
+      "nivel": 2,
+      "etiqueta": "Catecismo / Magisterio"
+    }
+  ],
+  "revision_humana": false,
+  "direccion_visual": {
+    "origen_arte": "obra",
+    "paleta": "oliva_pergamino",
+    "composicion_principal": "bloque_inferior"
+  },
+  "arte_plan": {
+    "modo": "recorrida",
+    "principal": {
+      "fuente": "descarga",
+      "autor": "Guido Reni",
+      "obra": "Saint Joseph with the Infant Jesus",
+      "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+      "archivo": ""
+    },
+    "recortes": [
+      "25% 50%",
+      "50% 25%",
+      "75% 50%",
+      "50% 75%",
+      "25% 25%",
+      "50% 50%"
+    ],
+    "slides": [
+      {
+        "fuente": "descarga",
+        "autor": "Guido Reni",
+        "obra": "Saint Joseph with the Infant Jesus",
+        "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+        "archivo": "",
+        "posicion": "25% 50%"
+      },
+      {
+        "fuente": "descarga",
+        "autor": "Guido Reni",
+        "obra": "Saint Joseph with the Infant Jesus",
+        "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+        "archivo": "",
+        "posicion": "50% 25%"
+      },
+      {
+        "fuente": "descarga",
+        "autor": "Guido Reni",
+        "obra": "Saint Joseph with the Infant Jesus",
+        "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+        "archivo": "",
+        "posicion": "75% 50%"
+      },
+      {
+        "fuente": "descarga",
+        "autor": "Guido Reni",
+        "obra": "Saint Joseph with the Infant Jesus",
+        "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+        "archivo": "",
+        "posicion": "50% 75%"
+      },
+      {
+        "fuente": "descarga",
+        "autor": "Guido Reni",
+        "obra": "Saint Joseph with the Infant Jesus",
+        "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+        "archivo": "",
+        "posicion": "25% 25%"
+      },
+      {
+        "fuente": "descarga",
+        "autor": "Guido Reni",
+        "obra": "Saint Joseph with the Infant Jesus",
+        "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+        "archivo": "",
+        "posicion": "50% 50%"
+      }
+    ]
+  },
+  "arte": {
+    "fuente": "descarga",
+    "archivo": "descargado/templanza-gobernar-apetitos.jpg",
+    "credito": "Saint Joseph and the Christ Child",
+    "licencia": "Public domain",
+    "procedencia": {
+      "fuente": "descarga",
+      "titulo": "Saint Joseph and the Christ Child",
+      "autor": "Guido Reni",
+      "fuente_url": "https://commons.wikimedia.org/wiki/File:Guido_Reni_-_Saint_Joseph_and_the_Christ_Child_-_Google_Art_Project.jpg",
+      "licencia": "Public domain",
+      "query": "Guido Reni — Saint Joseph with the Infant Jesus",
+      "origen_visual": "obra_publica"
+    },
+    "verificado": true
+  },
+  "control_calidad": {
+    "version": 1,
+    "generado_en": "2026-09-01T19:00:53.619Z",
+    "afirmaciones": [
+      {
+        "texto": "La castidad supone el aprendizaje del dominio de sí, que es una pedagogía de la libertad humana.",
+        "fichas": [],
+        "riesgo": "normal",
+        "respaldo": "incierto",
+        "nota": "Sin respaldo específico, pero se alinea con enseñanzas generales del Catecismo sobre la castidad y el dominio propio."
+      },
+      {
+        "texto": "La Iglesia enseña que gobernar tus apetitos no es fácil, pero es profundamente liberador.",
+        "fichas": [],
+        "riesgo": "normal",
+        "respaldo": "incierto",
+        "nota": "El concepto de libertad a través del control de pasiones es común en la enseñanza de virtudes, pero carece de respaldo específico aquí."
+      }
+    ],
+    "candados": {
+      "citas_literales": false,
+      "fuentes_verificadas": false,
+      "arte_procedencia": true,
+      "render_tecnico": true
+    },
+    "alertas": [
+      {
+        "codigo": "citas_no_verificadas",
+        "nivel": "bloqueo",
+        "detalle": "Hay citas textuales sin ficha verificada."
+      },
+      {
+        "codigo": "fuentes_no_verificadas",
+        "nivel": "bloqueo",
+        "detalle": "La pieza no referencia exclusivamente fichas verificadas."
+      },
+      {
+        "codigo": "afirmaciones_sin_respaldo_claro",
+        "nivel": "bloqueo",
+        "detalle": "Hay afirmaciones doctrinales o factuales que requieren contraste humano."
+      }
+    ],
+    "revision_humana_requerida": true,
+    "bloquea_aprobacion": true
+  }
+}

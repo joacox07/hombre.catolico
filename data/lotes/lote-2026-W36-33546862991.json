@@ -1,0 +1,59 @@
+{
+  "id": "2026-W36-33546862991",
+  "nombre": "Lote 2026-W36",
+  "semana": "2026-W36",
+  "generado": "2026-09-01",
+  "piezas": [
+    {
+      "ref": "/data/piezas/fortaleza-no-es-dureza.json",
+      "fecha_propuesta": "2026-09-03 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "corregir",
+        "citas_verificadas": false,
+        "requiere_revision_humana": true,
+        "nota": "La pieza tiene un problema con la falta de verificación de la fuente bíblica citada. Antes de aprobar, asegurar que la citación de 1 Corintios 16,13 esté confirmada en una fuente verificada para garantizar la precisión y fidelidad doctrinal.",
+        "citas": [
+          {
+            "texto": "Velad, estad firmes en la fe, portaos varonilmente y sed fuertes",
+            "verificada": false
+          }
+        ]
+      }
+    },
+    {
+      "ref": "/data/piezas/templanza-gobernar-apetitos.json",
+      "fecha_propuesta": "2026-09-05 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "revision_humana",
+        "citas_verificadas": false,
+        "requiere_revision_humana": true,
+        "nota": "La pieza requiere revisión humana debido a la ausencia de verificación de la cita clave del Catecismo citada en el contenido. La cita es crucial para la validez doctrinal de la pieza, y debe confirmarse antes de proceder.",
+        "citas": [
+          {
+            "texto": "La castidad supone el **aprendizaje del dominio de sí**, que es una **pedagogía de la libertad humana**",
+            "verificada": false
+          }
+        ]
+      }
+    },
+    {
+      "ref": "/data/piezas/autoridad-servir-primero.json",
+      "fecha_propuesta": "2026-09-07 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "rechazado",
+        "citas_verificadas": false,
+        "requiere_revision_humana": true,
+        "nota": "La cita principal no está verificada, lo cual es bloqueante. Además, el tema de autoridad masculina es sensible y necesita ajuste y revisión humana en cuanto al enfoque y encuadre.",
+        "citas": [
+          {
+            "texto": "Maridos, amad a vuestras mujeres, así como Cristo amó a la Iglesia y **se entregó a sí mismo** por ella.",
+            "verificada": false
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "id": "autoridad-servir-primero",
+  "tema": "Autoridad cristiana: servir primero",
+  "pilar": "Virtud",
+  "tipo": "carrusel",
+  "santos": [],
+  "nivel": "medio",
+  "titulo": "La verdadera autoridad se vive sirviendo",
+  "slides": [
+    {
+      "tipo": "portada",
+      "kicker": "Autoridad como servicio",
+      "titulo": "La verdadera autoridad se vive sirviendo",
+      "subtitulo": "Inspirados por el ejemplo de Cristo"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "La Escritura dice",
+      "titulo": "El modelo es Cristo",
+      "cuerpo": "«Maridos, amad a vuestras mujeres, así como Cristo amó a la Iglesia y **se entregó a sí mismo** por ella.»",
+      "disposicion": "bloque_inferior"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Esposo como cabeza",
+      "titulo": "Cabeza del hogar, no tirano",
+      "cuerpo": "Ser cabeza del hogar es **una llamada al sacrificio** y al servicio, no a imponer voluntad.",
+      "disposicion": "contraste"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Seguir a Cristo",
+      "titulo": "El camino de la entrega",
+      "cuerpo": "El amor verdadero se demuestra en la entrega **diaria y silenciosa** por el bien de la familia.",
+      "disposicion": "mapa_conceptual",
+      "mapa": {
+        "centro": "Entregar la vida",
+        "pasos": [
+          "Orar por la familia",
+          "Servir en lo cotidiano",
+          "Sacrificio personal"
+        ]
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Ejemplo práctico",
+      "titulo": "Pequeños gestos, gran amor",
+      "cuerpo": "Ningún acto de servicio es pequeño cuando se hace **con amor verdadero**.",
+      "disposicion": "editorial_superior"
+    },
+    {
+      "tipo": "cierre",
+      "titulo": "Amá como Cristo amó",
+      "cuerpo": "Reflexioná sobre cómo estás amando y sirviendo a tu familia. La verdadera autoridad se ejerce con amor sacrificial, siguiendo el ejemplo de Cristo.",
+      "fuentes": [
+        "Carta a los Efesios"
+      ],
+      "cta": "Guardalo para tu examen de conciencia diario."
+    }
+  ],
+  "caption": "La verdadera autoridad en el hogar se funda en el amor y el servicio. Inspirate en Cristo, que se entregó por amor a la Iglesia. Reflexioná sobre cómo estás actuando en tu familia. ¿Estás amando y sirviendo como Cristo?\n\nGuardalo para tu examen de conciencia.\n\n#AmorVerdadero #ServicioCristiano #FamiliaCristiana",
+  "fuentes": [
+    "escritura-ef-5-25"
+  ],
+  "clasificacion_doctrinal": [
+    {
+      "afirmacion": "La 'cabeza' del hogar se define por la entrega sacrificial de Cristo, no por el mando.",
+      "nivel": 1,
+      "etiqueta": "Sagrada Escritura"
+    }
+  ],
+  "revision_humana": true,
+  "direccion_visual": {
+    "origen_arte": "ia",
+    "paleta": "calida",
+    "composicion_principal": "mapa_conceptual"
+  },
+  "arte_plan": {
+    "modo": "unica",
+    "principal": {
+      "fuente": "ia",
+      "prompt": "un esposo católico antes de llevar a cabo una acción de amor sacrificial, iluminado por un cálido haz de luz divina, en un hogar sereno",
+      "archivo": ""
+    },
+    "recortes": [
+      "50% 50%"
+    ],
+    "slides": [
+      {
+        "fuente": "ia",
+        "prompt": "un esposo católico antes de llevar a cabo una acción de amor sacrificial, iluminado por un cálido haz de luz divina, en un hogar sereno",
+        "archivo": "",
+        "posicion": "50% 50%"
+      }
+    ]
+  },
+  "arte": {
+    "fuente": "ia",
+    "archivo": "generado/autoridad-servir-primero.png",
+    "prompt": "un esposo católico antes de llevar a cabo una acción de amor sacrificial, iluminado por un cálido haz de luz divina, en un hogar sereno. imagen editorial sobria y fílmica, con la paleta y la luz pedidas por la dirección visual; SIN texto, SIN palabras, SIN letras; sin rostros de santos identificables; composición vertical 4:5 con espacio negativo coherente con la composición del texto.",
+    "origen_visual": "ia_propia",
+    "verificado": true
+  },
+  "control_calidad": {
+    "version": 1,
+    "generado_en": "2026-09-01T19:03:09.071Z",
+    "afirmaciones": [
+      {
+        "texto": "La verdadera autoridad en el hogar se funda en el amor y el servicio.",
+        "fichas": [],
+        "riesgo": "normal",
+        "respaldo": "incierto",
+        "nota": "Afirmación general sobre el ideal cristiano de autoridad en el hogar, pero carece de referencia específica para verificación."
+      },
+      {
+        "texto": "«Maridos, amad a vuestras mujeres, así como Cristo amó a la Iglesia y se entregó a sí mismo por ella.»",
+        "fichas": [],
+        "riesgo": "normal",
+        "respaldo": "incierto",
+        "nota": "Referencia a Efesios 5:25 aunque no validada por fichas en esta revisión."
+      },
+      {
+        "texto": "Ser cabeza del hogar es una llamada al sacrificio y al servicio, no a imponer voluntad.",
+        "fichas": [],
+        "riesgo": "normal",
+        "respaldo": "incierto",
+        "nota": "Interpretación frecuente en el contexto católico, pero la especificidad doctrinal no se respalda claramente."
+      },
+      {
+        "texto": "El amor verdadero se demuestra en la entrega diaria y silenciosa por el bien de la familia.",
+        "fichas": [],
+        "riesgo": "normal",
+        "respaldo": "incierto",
+        "nota": "Afirmación inspirada en enseñanzas cristianas sobre el amor, sin una fuente específica verificada."
+      },
+      {
+        "texto": "Ningún acto de servicio es pequeño cuando se hace con amor verdadero.",
+        "fichas": [],
+        "riesgo": "normal",
+        "respaldo": "incierto",
+        "nota": "Afirmación motivacional frecuentemente relacionada con las enseñanzas de Cristo, sin referencia específica proporcionada."
+      }
+    ],
+    "candados": {
+      "citas_literales": false,
+      "fuentes_verificadas": false,
+      "arte_procedencia": true,
+      "render_tecnico": true
+    },
+    "alertas": [
+      {
+        "codigo": "citas_no_verificadas",
+        "nivel": "bloqueo",
+        "detalle": "Hay citas textuales sin ficha verificada."
+      },
+      {
+        "codigo": "fuentes_no_verificadas",
+        "nivel": "bloqueo",
+        "detalle": "La pieza no referencia exclusivamente fichas verificadas."
+      },
+      {
+        "codigo": "afirmaciones_sin_respaldo_claro",
+        "nivel": "bloqueo",
+        "detalle": "Hay afirmaciones doctrinales o factuales que requieren contraste humano."
+      },
+      {
+        "codigo": "tema_sensible",
+        "nivel": "aviso",
+        "detalle": "El tema exige revisión humana explícita."
+      }
+    ],
+    "revision_humana_requerida": true,
+    "bloquea_aprobacion": true
+  }
+}

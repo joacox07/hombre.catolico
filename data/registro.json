@@ -164,6 +164,63 @@
       },
       "fecha": "2026-09-01T09:20:40.212Z",
       "estado": "en_revision"
+    },
+    {
+      "id": "fortaleza-no-es-dureza-2026-W36-33546862991",
+      "tema": "fortaleza-no-es-dureza",
+      "pilar": "Virtud",
+      "santos": [],
+      "formato": "carrusel",
+      "fuentes": [
+        "escritura-1cor-16-13"
+      ],
+      "gancho": "Fortaleza verdadera no es dureza externa",
+      "nivel": "intro",
+      "direccion_visual": {
+        "origen_arte": "obra",
+        "paleta": "vino_negro",
+        "composicion_principal": "manifiesto_central"
+      },
+      "fecha": "2026-09-01T19:03:23.388Z",
+      "estado": "en_revision"
+    },
+    {
+      "id": "templanza-gobernar-apetitos-2026-W36-33546862991",
+      "tema": "templanza-gobernar-apetitos",
+      "pilar": "Virtud",
+      "santos": [],
+      "formato": "carrusel",
+      "fuentes": [
+        "catecismo-2339-dominio-de-si"
+      ],
+      "gancho": "Templanza: el arte de gobernar tus apetitos",
+      "nivel": "medio",
+      "direccion_visual": {
+        "origen_arte": "obra",
+        "paleta": "oliva_pergamino",
+        "composicion_principal": "bloque_inferior"
+      },
+      "fecha": "2026-09-01T19:03:23.388Z",
+      "estado": "en_revision"
+    },
+    {
+      "id": "autoridad-servir-primero-2026-W36-33546862991",
+      "tema": "autoridad-servir-primero",
+      "pilar": "Virtud",
+      "santos": [],
+      "formato": "carrusel",
+      "fuentes": [
+        "escritura-ef-5-25"
+      ],
+      "gancho": "La verdadera autoridad se vive sirviendo",
+      "nivel": "medio",
+      "direccion_visual": {
+        "origen_arte": "ia",
+        "paleta": "calida",
+        "composicion_principal": "mapa_conceptual"
+      },
+      "fecha": "2026-09-01T19:03:23.388Z",
+      "estado": "en_revision"
     }
   ]
 }

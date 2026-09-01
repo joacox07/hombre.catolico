@@ -1,0 +1,356 @@
+{
+  "id": "fortaleza-no-es-dureza",
+  "tema": "Fortaleza no es dureza",
+  "pilar": "Virtud",
+  "tipo": "carrusel",
+  "santos": [],
+  "nivel": "intro",
+  "titulo": "Fortaleza verdadera no es dureza externa",
+  "slides": [
+    {
+      "tipo": "portada",
+      "kicker": "Virtud de la fortaleza",
+      "titulo": "Fortaleza verdadera no es dureza externa",
+      "subtitulo": "Entendé la verdadera fuerza",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/fortaleza-no-es-dureza.jpg",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "procedencia": {
+          "fuente": "descarga",
+          "titulo": "Saint Joseph charpentier",
+          "autor": "Georges de La Tour",
+          "fuente_url": "https://commons.wikimedia.org/wiki/File:Georges_de_La_Tour._St._Joseph,_the_Carpenter.JPG",
+          "licencia": "Public domain",
+          "query": "Georges de La Tour — Saint Joseph the carpenter",
+          "origen_visual": "obra_publica"
+        },
+        "verificado": true,
+        "posicion": "20% 40%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Idea inicial",
+      "titulo": "¿Qué es la fortaleza?",
+      "cuerpo": "La **fortaleza** no se mide por la dureza aparente, sino por la capacidad de **actuar con valentía** y **constancia ante las dificultades**. Ser fuerte es distinto de parecer fuerte.",
+      "disposicion": "bloque_inferior",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/fortaleza-no-es-dureza.jpg",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "procedencia": {
+          "fuente": "descarga",
+          "titulo": "Saint Joseph charpentier",
+          "autor": "Georges de La Tour",
+          "fuente_url": "https://commons.wikimedia.org/wiki/File:Georges_de_La_Tour._St._Joseph,_the_Carpenter.JPG",
+          "licencia": "Public domain",
+          "query": "Georges de La Tour — Saint Joseph the carpenter",
+          "origen_visual": "obra_publica"
+        },
+        "verificado": true,
+        "posicion": "30% 50%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Sagrada Escritura",
+      "titulo": "Mensaje de San Pablo",
+      "cuerpo": "San Pablo exhorta: «Velad, estad firmes en la fe, portaos varonilmente y sed fuertes». La **firmeza en la fe** es una invitación a la auténtica fortaleza, alejada de la mera dureza.",
+      "disposicion": "manifiesto_central",
+      "mapa": {},
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/fortaleza-no-es-dureza.jpg",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "procedencia": {
+          "fuente": "descarga",
+          "titulo": "Saint Joseph charpentier",
+          "autor": "Georges de La Tour",
+          "fuente_url": "https://commons.wikimedia.org/wiki/File:Georges_de_La_Tour._St._Joseph,_the_Carpenter.JPG",
+          "licencia": "Public domain",
+          "query": "Georges de La Tour — Saint Joseph the carpenter",
+          "origen_visual": "obra_publica"
+        },
+        "verificado": true,
+        "posicion": "40% 30%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Virtud y valentía",
+      "titulo": "La valentía interna",
+      "cuerpo": "La verdadera fortaleza cristiana está en **perseverar en la fe**, incluso cuando todo invita a abandonar. Es tener **coraje interno** y **soportar las pruebas** con paciencia.",
+      "disposicion": "contraste",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/fortaleza-no-es-dureza.jpg",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "procedencia": {
+          "fuente": "descarga",
+          "titulo": "Saint Joseph charpentier",
+          "autor": "Georges de La Tour",
+          "fuente_url": "https://commons.wikimedia.org/wiki/File:Georges_de_La_Tour._St._Joseph,_the_Carpenter.JPG",
+          "licencia": "Public domain",
+          "query": "Georges de La Tour — Saint Joseph the carpenter",
+          "origen_visual": "obra_publica"
+        },
+        "verificado": true,
+        "posicion": "50% 70%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Aplicación práctica",
+      "titulo": "Vivir la verdadera fortaleza",
+      "cuerpo": "Cultivá la fortaleza en tu vida diaria: enfrentá con valentía tus desafíos espirituales y cotidianos. Recordá que salir victorioso no siempre significa ganar, sino perseverar.",
+      "disposicion": "mapa_conceptual",
+      "mapa": {
+        "centro": "Vivir la fortaleza",
+        "pasos": [
+          "Identificar desafíos",
+          "Fortalecer la fe",
+          "Actuar con constancia"
+        ]
+      },
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/fortaleza-no-es-dureza.jpg",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "procedencia": {
+          "fuente": "descarga",
+          "titulo": "Saint Joseph charpentier",
+          "autor": "Georges de La Tour",
+          "fuente_url": "https://commons.wikimedia.org/wiki/File:Georges_de_La_Tour._St._Joseph,_the_Carpenter.JPG",
+          "licencia": "Public domain",
+          "query": "Georges de La Tour — Saint Joseph the carpenter",
+          "origen_visual": "obra_publica"
+        },
+        "verificado": true,
+        "posicion": "60% 50%"
+      }
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "Inspiración",
+      "titulo": "Ejemplo de fortaleza",
+      "cuerpo": "Los santos son ejemplos vivos de cómo la verdadera fortaleza es perseverar en la fe y el amor. Mirá a los santos como modelos para **inspirarte y no desfallecer**.",
+      "disposicion": "bloque_inferior",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/fortaleza-no-es-dureza.jpg",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "procedencia": {
+          "fuente": "descarga",
+          "titulo": "Saint Joseph charpentier",
+          "autor": "Georges de La Tour",
+          "fuente_url": "https://commons.wikimedia.org/wiki/File:Georges_de_La_Tour._St._Joseph,_the_Carpenter.JPG",
+          "licencia": "Public domain",
+          "query": "Georges de La Tour — Saint Joseph the carpenter",
+          "origen_visual": "obra_publica"
+        },
+        "verificado": true,
+        "posicion": "50% 50%"
+      }
+    },
+    {
+      "tipo": "cierre",
+      "titulo": "Reflexionemos juntos",
+      "cuerpo": "La fortaleza no es una dureza exterior sino una firmeza interior en la fe. Siguiendo el consejo de San Pablo, seamos fuertes en la fe y actuemos con verdadero valor.",
+      "fuentes": [
+        "Primera carta a los Corintios"
+      ],
+      "cta": "Guardá este post para reflexionar sobre qué significa ser realmente fuerte.",
+      "arte": {
+        "fuente": "descarga",
+        "archivo": "descargado/fortaleza-no-es-dureza.jpg",
+        "credito": "Saint Joseph charpentier",
+        "licencia": "Public domain",
+        "procedencia": {
+          "fuente": "descarga",
+          "titulo": "Saint Joseph charpentier",
+          "autor": "Georges de La Tour",
+          "fuente_url": "https://commons.wikimedia.org/wiki/File:Georges_de_La_Tour._St._Joseph,_the_Carpenter.JPG",
+          "licencia": "Public domain",
+          "query": "Georges de La Tour — Saint Joseph the carpenter",
+          "origen_visual": "obra_publica"
+        },
+        "verificado": true,
+        "posicion": "50% 50%"
+      }
+    }
+  ],
+  "caption": "La auténtica fortaleza no se encuentra en la dureza externa, sino en la valentía y constancia ante las pruebas. Siguiendo a San Pablo, seamos firmes en nuestra fe, actuando con verdadero coraje. ¿Cómo cultivás la fortaleza en tu vida?\n\n#FortalezaCristiana #SanPablo #VirtudCristiana",
+  "fuentes": [
+    "escritura-1cor-16-13"
+  ],
+  "clasificacion_doctrinal": [
+    {
+      "afirmacion": "La firmeza en la fe y la fortaleza viril son un mandato apostólico, no una estética.",
+      "nivel": 1,
+      "etiqueta": "Sagrada Escritura"
+    }
+  ],
+  "revision_humana": false,
+  "direccion_visual": {
+    "origen_arte": "obra",
+    "paleta": "vino_negro",
+    "composicion_principal": "manifiesto_central"
+  },
+  "arte_plan": {
+    "modo": "recorrida",
+    "principal": {
+      "fuente": "descarga",
+      "autor": "Georges de La Tour",
+      "obra": "Saint Joseph the carpenter",
+      "query": "Georges de La Tour — Saint Joseph the carpenter",
+      "prompt": "",
+      "archivo": ""
+    },
+    "recortes": [
+      "20% 40%",
+      "30% 50%",
+      "40% 30%",
+      "50% 70%",
+      "60% 50%",
+      "50% 50%"
+    ],
+    "slides": [
+      {
+        "fuente": "descarga",
+        "autor": "Georges de La Tour",
+        "obra": "Saint Joseph the carpenter",
+        "query": "Georges de La Tour — Saint Joseph the carpenter",
+        "prompt": "",
+        "archivo": "",
+        "posicion": "20% 40%"
+      },
+      {
+        "fuente": "descarga",
+        "autor": "Georges de La Tour",
+        "obra": "Saint Joseph the carpenter",
+        "query": "Georges de La Tour — Saint Joseph the carpenter",
+        "prompt": "",
+        "archivo": "",
+        "posicion": "30% 50%"
+      },
+      {
+        "fuente": "descarga",
+        "autor": "Georges de La Tour",
+        "obra": "Saint Joseph the carpenter",
+        "query": "Georges de La Tour — Saint Joseph the carpenter",
+        "prompt": "",
+        "archivo": "",
+        "posicion": "40% 30%"
+      },
+      {
+        "fuente": "descarga",
+        "autor": "Georges de La Tour",
+        "obra": "Saint Joseph the carpenter",
+        "query": "Georges de La Tour — Saint Joseph the carpenter",
+        "prompt": "",
+        "archivo": "",
+        "posicion": "50% 70%"
+      },
+      {
+        "fuente": "descarga",
+        "autor": "Georges de La Tour",
+        "obra": "Saint Joseph the carpenter",
+        "query": "Georges de La Tour — Saint Joseph the carpenter",
+        "prompt": "",
+        "archivo": "",
+        "posicion": "60% 50%"
+      },
+      {
+        "fuente": "descarga",
+        "autor": "Georges de La Tour",
+        "obra": "Saint Joseph the carpenter",
+        "query": "Georges de La Tour — Saint Joseph the carpenter",
+        "prompt": "",
+        "archivo": "",
+        "posicion": "50% 50%"
+      }
+    ]
+  },
+  "arte": {
+    "fuente": "descarga",
+    "archivo": "descargado/fortaleza-no-es-dureza.jpg",
+    "credito": "Saint Joseph charpentier",
+    "licencia": "Public domain",
+    "procedencia": {
+      "fuente": "descarga",
+      "titulo": "Saint Joseph charpentier",
+      "autor": "Georges de La Tour",
+      "fuente_url": "https://commons.wikimedia.org/wiki/File:Georges_de_La_Tour._St._Joseph,_the_Carpenter.JPG",
+      "licencia": "Public domain",
+      "query": "Georges de La Tour — Saint Joseph the carpenter",
+      "origen_visual": "obra_publica"
+    },
+    "verificado": true
+  },
+  "control_calidad": {
+    "version": 1,
+    "generado_en": "2026-09-01T19:00:30.455Z",
+    "afirmaciones": [
+      {
+        "texto": "La auténtica fortaleza no se encuentra en la dureza externa, sino en la valentía y constancia ante las pruebas.",
+        "fichas": [],
+        "riesgo": "normal",
+        "respaldo": "incierto",
+        "nota": "La afirmación está en línea con la enseñanza común sobre la virtud de la fortaleza, pero no hay fuentes verificadas en las fichas proporcionadas."
+      },
+      {
+        "texto": "San Pablo exhorta: «Velad, estad firmes en la fe, portaos varonilmente y sed fuertes».",
+        "fichas": [],
+        "riesgo": "normal",
+        "respaldo": "incierto",
+        "nota": "Aunque esta cita refleja un mensaje similar encontrado en las epístolas de San Pablo, carece de referencia directa a una fuente verificada en las fichas."
+      },
+      {
+        "texto": "La verdadera fortaleza cristiana está en perseverar en la fe, incluso cuando todo invita a abandonar.",
+        "fichas": [],
+        "riesgo": "normal",
+        "respaldo": "incierto",
+        "nota": "Esta idea es común en enseñanzas sobre fortaleza, pero no está respaldada claramente por fichas específicas."
+      },
+      {
+        "texto": "Los santos son ejemplos vivos de cómo la verdadera fortaleza es perseverar en la fe y el amor.",
+        "fichas": [],
+        "riesgo": "normal",
+        "respaldo": "incierto",
+        "nota": "Es una afirmación general sobre los santos como modelos en la fe, pero carece de soporte específico en las fichas verificadas."
+      }
+    ],
+    "candados": {
+      "citas_literales": false,
+      "fuentes_verificadas": false,
+      "arte_procedencia": true,
+      "render_tecnico": true
+    },
+    "alertas": [
+      {
+        "codigo": "citas_no_verificadas",
+        "nivel": "bloqueo",
+        "detalle": "Hay citas textuales sin ficha verificada."
+      },
+      {
+        "codigo": "fuentes_no_verificadas",
+        "nivel": "bloqueo",
+        "detalle": "La pieza no referencia exclusivamente fichas verificadas."
+      },
+      {
+        "codigo": "afirmaciones_sin_respaldo_claro",
+        "nivel": "bloqueo",
+        "detalle": "Hay afirmaciones doctrinales o factuales que requieren contraste humano."
+      }
+    ],
+    "revision_humana_requerida": true,
+    "bloquea_aprobacion": true
+  }
+}
