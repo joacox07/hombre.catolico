@@ -1,0 +1,100 @@
+{
+  "id": "castidad-de-hombres",
+  "tema": "La castidad también es cosa de hombres",
+  "pilar": "Virtud",
+  "tipo": "carrusel",
+  "santos": [],
+  "nivel": "intro",
+  "titulo": "La castidad también es cosa de hombres",
+  "slides": [
+    {
+      "tipo": "portada",
+      "kicker": "VIRTUD Y LIBERTAD",
+      "titulo": "La castidad también es cosa de hombres",
+      "subtitulo": "Gobernar tus pasiones para vivir en libertad"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "UNA VIRTUD MASCULINA",
+      "titulo": "No es un tema ajeno",
+      "cuerpo": "La castidad exige aprender a gobernarte. No consiste en negar que tenés pasiones, sino en evitar que ellas decidan por vos. **También tu libertad se juega en este combate.**",
+      "fuente": "CIC 2339 · Nivel 2: Catecismo / Magisterio"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "DOMINIO DE SÍ",
+      "titulo": "La libertad necesita aprendizaje",
+      "cuerpo": "La Iglesia enseña: «La castidad supone el aprendizaje del dominio de sí, que es una pedagogía de la libertad humana». **El dominio propio se aprende y se ejercita.**",
+      "fuente": "CIC 2339 · Nivel 2: Catecismo / Magisterio"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "DOS CAMINOS",
+      "titulo": "¿Quién gobierna tu vida?",
+      "cuerpo": "El Catecismo presenta una alternativa clara: gobernar las pasiones o dejarse dominar por ellas. **La cuestión no es si tenés deseos, sino quién conduce.**",
+      "fuente": "CIC 2339 · Nivel 2: Catecismo / Magisterio"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "NO ES REPRESIÓN",
+      "titulo": "Gobernarte te hace más libre",
+      "cuerpo": "La castidad no aparece acá como desprecio del cuerpo ni como culpa aplastante. Es un camino para ordenar las pasiones y encontrar paz. **La libertad no consiste en obedecer cada impulso.**",
+      "fuente": "CIC 2339 · Nivel 2: Catecismo / Magisterio"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "FORTALEZA CONCRETA",
+      "titulo": "El combate empieza en lo pequeño",
+      "cuerpo": "Prestá atención a aquello que alimenta o debilita tu dominio propio. Ante una tentación concreta, elegí una respuesta concreta: apartarte, cortar el estímulo y recuperar el gobierno de tus actos. **La virtud crece mediante decisiones reales.**",
+      "fuente": "CIC 2339 · Nivel 2: Catecismo / Magisterio"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "EXAMEN PERSONAL",
+      "titulo": "Reconocé dónde perdés libertad",
+      "cuerpo": "Preguntate con serenidad: ¿qué pasión está decidiendo por mí? Nombrarla evita excusas y te permite comenzar a gobernarla. **El combate cristiano no elimina la esperanza: abre un camino.**",
+      "fuente": "CIC 2339 · Nivel 2: Catecismo / Magisterio"
+    },
+    {
+      "tipo": "cierre",
+      "titulo": "La castidad es una escuela de libertad",
+      "cuerpo": "No estás llamado a ser esclavo de tus impulsos. Aprender el dominio de vos mismo es parte del camino hacia la paz.",
+      "fuentes": [
+        "CIC 2339 · Nivel 2: Catecismo / Magisterio"
+      ],
+      "cta": "Guardalo para tu próximo examen de conciencia. ✠"
+    }
+  ],
+  "caption": "La castidad también es cosa de hombres.\n\nEl Catecismo presenta el dominio de sí como una pedagogía de la libertad. No se trata de negar tus pasiones, sino de aprender a gobernarlas para que no gobiernen tu vida. Ese aprendizaje exige decisiones concretas y abre un camino hacia la paz.\n\nFuente: Catecismo de la Iglesia Católica, CIC 2339.\n\nGuardalo para volver a esta pregunta en tu examen de conciencia: ¿qué está gobernando hoy mis decisiones?\n\n#Castidad #DominioDeSí #VirtudCristiana #LibertadInterior",
+  "fuentes": [
+    "catecismo-2339-dominio-de-si"
+  ],
+  "clasificacion_doctrinal": [
+    {
+      "afirmacion": "La castidad supone el aprendizaje del dominio de sí como pedagogía de la libertad humana.",
+      "nivel": 2,
+      "etiqueta": "Catecismo / Magisterio"
+    },
+    {
+      "afirmacion": "Gobernar las pasiones conduce a la paz; dejarse dominar por ellas hace desdichado al hombre.",
+      "nivel": 2,
+      "etiqueta": "Catecismo / Magisterio"
+    }
+  ],
+  "revision_humana": true,
+  "arte_plan": {
+    "modo": "unica",
+    "principal": {
+      "fuente": "ia",
+      "prompt": "Escena fílmica y realista de un hombre adulto anónimo arrodillado en oración dentro de una capilla oscura, visto de espaldas y ligeramente de perfil, postura serena y firme, un rayo cálido entrando desde una ventana e iluminando sus manos juntas, atmósfera de combate interior, dominio propio y esperanza, paleta carbón tabaco crema y dorado, claroscuro, composición vertical 4:5 con espacio negativo en el tercio inferior para texto, sin santos identificables, sin símbolos ambiguos, sin texto"
+    },
+    "recortes": [],
+    "slides": []
+  },
+  "arte": {
+    "fuente": "ia",
+    "archivo": "generado/castidad-de-hombres.png",
+    "prompt": "Escena fílmica y realista de un hombre adulto anónimo arrodillado en oración dentro de una capilla oscura, visto de espaldas y ligeramente de perfil, postura serena y firme, un rayo cálido entrando desde una ventana e iluminando sus manos juntas, atmósfera de combate interior, dominio propio y esperanza, paleta carbón tabaco crema y dorado, claroscuro, composición vertical 4:5 con espacio negativo en el tercio inferior para texto, sin santos identificables, sin símbolos ambiguos, sin texto. pintura al óleo clásica, claroscuro cálido y tenebrismo, atmósfera sacra sobria y solemne, paleta parda y dorada, luz de vela; SIN texto, SIN palabras, SIN letras; sin rostros de santos identificables; composición vertical con espacio para texto abajo.",
+    "verificado": false
+  }
+}

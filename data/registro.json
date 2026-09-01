@@ -45,6 +45,48 @@
       "nivel": "medio",
       "fecha": "2026-08-31T18:16:17.024Z",
       "estado": "en_revision"
+    },
+    {
+      "id": "castidad-de-hombres-2026-W36-33456482400",
+      "tema": "castidad-de-hombres",
+      "pilar": "Virtud",
+      "santos": [],
+      "formato": "carrusel",
+      "fuentes": [
+        "catecismo-2339-dominio-de-si"
+      ],
+      "gancho": "La castidad también es cosa de hombres",
+      "nivel": "intro",
+      "fecha": "2026-09-01T00:57:26.631Z",
+      "estado": "en_revision"
+    },
+    {
+      "id": "gobernarse-a-si-mismo-2026-W36-33456482400",
+      "tema": "gobernarse-a-si-mismo",
+      "pilar": "Virtud",
+      "santos": [],
+      "formato": "carrusel",
+      "fuentes": [
+        "catecismo-2339-dominio-de-si"
+      ],
+      "gancho": "Si no te gobernás, tus pasiones te gobiernan",
+      "nivel": "medio",
+      "fecha": "2026-09-01T00:57:26.631Z",
+      "estado": "en_revision"
+    },
+    {
+      "id": "pornografia-deforma-mirada-2026-W36-33456482400",
+      "tema": "pornografia-deforma-mirada",
+      "pilar": "Virtud",
+      "santos": [],
+      "formato": "carrusel",
+      "fuentes": [
+        "catecismo-2339-dominio-de-si"
+      ],
+      "gancho": "La pornografía deforma tu mirada y debilita tu libertad",
+      "nivel": "medio",
+      "fecha": "2026-09-01T00:57:26.631Z",
+      "estado": "en_revision"
     }
   ]
 }

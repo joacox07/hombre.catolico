@@ -1,0 +1,111 @@
+{
+  "id": "pornografia-deforma-mirada",
+  "tema": "Pornografía: por qué deforma la mirada",
+  "pilar": "Virtud",
+  "tipo": "carrusel",
+  "santos": [],
+  "nivel": "medio",
+  "titulo": "La pornografía deforma tu mirada y debilita tu libertad",
+  "slides": [
+    {
+      "tipo": "portada",
+      "kicker": "CASTIDAD Y DOMINIO DE SÍ",
+      "titulo": "La pornografía deforma tu mirada y debilita tu libertad",
+      "subtitulo": "La pureza es una pedagogía de la libertad"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "EL PROBLEMA",
+      "titulo": "No es solamente lo que mirás",
+      "cuerpo": "La pornografía acostumbra tu mirada a seguir el impulso. **Lo repetido termina debilitando tu capacidad de elegir.**",
+      "fuente": "Aplicación prudencial del CIC 2339 · Nivel 7"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "DOS CAMINOS",
+      "titulo": "¿Gobernás tus pasiones o te gobiernan?",
+      "cuerpo": "La Iglesia enseña que la alternativa es clara: gobernar las pasiones o dejarse dominar por ellas. **La libertad exige dominio de sí.**",
+      "fuente": "CIC 2339 · Nivel 2"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "CASTIDAD",
+      "titulo": "No se trata de una simple prohibición",
+      "cuerpo": "«La castidad supone el aprendizaje del dominio de sí, que es una pedagogía de la libertad humana». **La castidad educa tu libertad.**",
+      "fuente": "CIC 2339 · Nivel 2"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "LA MIRADA",
+      "titulo": "Cada elección educa tu modo de mirar",
+      "cuerpo": "Cuando cedés deliberadamente al impulso, ejercitás la pasividad frente a la pasión. **Tu mirada necesita ser formada para elegir el bien.**",
+      "fuente": "Aplicación prudencial del CIC 2339 · Nivel 7"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "LIBERTAD",
+      "titulo": "La pasión promete alivio, pero puede dominarte",
+      "cuerpo": "El Catecismo advierte que quien se deja dominar por sus pasiones se hace desdichado. **Ceder siempre no te libera: te vuelve dependiente del impulso.**",
+      "fuente": "CIC 2339 · Nivel 2"
+    },
+    {
+      "tipo": "contenido",
+      "kicker": "PASO CONCRETO",
+      "titulo": "Interrumpí hoy una ocasión concreta de caída",
+      "cuerpo": "Reconocé una situación que favorece el consumo y poné un límite concreto antes de que aparezca el impulso. **El dominio de sí se aprende mediante decisiones reales.**",
+      "fuente": "Aplicación práctica del CIC 2339 · Nivel 7"
+    },
+    {
+      "tipo": "cierre",
+      "titulo": "Tu libertad puede volver a ser educada",
+      "cuerpo": "La caída no tiene por qué decidir tu camino. La castidad se aprende: comenzá nuevamente con una elección concreta.",
+      "fuentes": [
+        "CIC 2339 · Nivel 2",
+        "Aplicaciones prudenciales · Nivel 7"
+      ],
+      "cta": "Guardalo para recordar qué libertad querés ejercitar cuando llegue la tentación."
+    }
+  ],
+  "caption": "La pornografía no fortalece tu libertad: acostumbra tu mirada a obedecer el impulso.\n\nEl Catecismo presenta la castidad como un aprendizaje del dominio de sí y una pedagogía de la libertad. No se trata de negar que existen pasiones, sino de aprender a gobernarlas para no quedar gobernado por ellas. Cada límite concreto puede convertirse en un ejercicio de libertad.\n\nFuente: Catecismo de la Iglesia Católica, CIC 2339.\n\nGuardalo para volver a esta verdad cuando llegue la tentación.\n\n#Castidad #DominioDeSi #Pureza #LibertadCristiana",
+  "fuentes": [
+    "catecismo-2339-dominio-de-si"
+  ],
+  "clasificacion_doctrinal": [
+    {
+      "afirmacion": "La castidad supone el aprendizaje del dominio de sí y es una pedagogía de la libertad humana.",
+      "nivel": 2,
+      "etiqueta": "Catecismo / Magisterio"
+    },
+    {
+      "afirmacion": "Gobernar las pasiones conduce a la paz; dejarse dominar por ellas hace desdichado al hombre.",
+      "nivel": 2,
+      "etiqueta": "Catecismo / Magisterio"
+    },
+    {
+      "afirmacion": "El consumo de pornografía acostumbra la mirada a seguir el impulso y debilita la capacidad de elegir.",
+      "nivel": 7,
+      "etiqueta": "Aplicación prudencial"
+    },
+    {
+      "afirmacion": "Interrumpir una ocasión concreta de consumo es un ejercicio práctico de dominio de sí.",
+      "nivel": 7,
+      "etiqueta": "Aplicación prudencial"
+    }
+  ],
+  "revision_humana": true,
+  "arte_plan": {
+    "modo": "unica",
+    "principal": {
+      "fuente": "ia",
+      "prompt": "Cinematic chiaroscuro scene of an adult man seated alone at a wooden desk in a dark modest room, turning his face away from the cold glow of a closed laptop toward a warm candle and a small plain wooden cross, posture reflective and resolute, symbolic struggle between impulse and freedom, warm tobacco brown and deep charcoal palette, subtle film grain, realistic classical composition, respectful Catholic atmosphere, no identifiable saint, no nudity, no sexual imagery, no text"
+    },
+    "recortes": [],
+    "slides": []
+  },
+  "arte": {
+    "fuente": "ia",
+    "archivo": "generado/pornografia-deforma-mirada.png",
+    "prompt": "Cinematic chiaroscuro scene of an adult man seated alone at a wooden desk in a dark modest room, turning his face away from the cold glow of a closed laptop toward a warm candle and a small plain wooden cross, posture reflective and resolute, symbolic struggle between impulse and freedom, warm tobacco brown and deep charcoal palette, subtle film grain, realistic classical composition, respectful Catholic atmosphere, no identifiable saint, no nudity, no sexual imagery, no text. pintura al óleo clásica, claroscuro cálido y tenebrismo, atmósfera sacra sobria y solemne, paleta parda y dorada, luz de vela; SIN texto, SIN palabras, SIN letras; sin rostros de santos identificables; composición vertical con espacio para texto abajo.",
+    "verificado": false
+  }
+}

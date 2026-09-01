@@ -1,0 +1,59 @@
+{
+  "id": "2026-W36-33456482400",
+  "nombre": "Lote 2026-W36",
+  "semana": "2026-W36",
+  "generado": "2026-09-01",
+  "piezas": [
+    {
+      "ref": "/data/piezas/castidad-de-hombres.json",
+      "fecha_propuesta": "2026-09-03 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "rechazado",
+        "citas_verificadas": false,
+        "requiere_revision_humana": true,
+        "nota": "El tono evita la culpa aplastante y presenta el dominio propio como libertad, pero la cita es bloqueante porque su ficha no está verificada. Tras verificarla, conviene distinguir con claridad el contenido textual de CIC 2339 de las aplicaciones pastorales y someter la pieza a aprobación humana.",
+        "citas": [
+          {
+            "texto": "La castidad supone el aprendizaje del dominio de sí, que es una pedagogía de la libertad humana",
+            "verificada": false
+          }
+        ]
+      }
+    },
+    {
+      "ref": "/data/piezas/gobernarse-a-si-mismo.json",
+      "fecha_propuesta": "2026-09-05 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "rechazado",
+        "citas_verificadas": false,
+        "requiere_revision_humana": true,
+        "nota": "No publicar hasta verificar la ficha del CIC 2339. Después, distinguir las paráfrasis pastorales de la doctrina citada e integrar la primacía de la gracia. Mantener revisión humana porque la pieza ya fue marcada para ella y su contexto doctrinal inmediato es la castidad.",
+        "citas": [
+          {
+            "texto": "La alternativa es clara: o el hombre gobierna sus pasiones y encuentra la paz, o se deja dominar por ellas y se hace desdichado",
+            "verificada": false
+          }
+        ]
+      }
+    },
+    {
+      "ref": "/data/piezas/pornografia-deforma-mirada.json",
+      "fecha_propuesta": "2026-09-07 20:00",
+      "estado": "en_revision",
+      "revisor": {
+        "veredicto": "rechazado",
+        "citas_verificadas": false,
+        "requiere_revision_humana": true,
+        "nota": "La estructura distingue correctamente las afirmaciones catequéticas de las aplicaciones prudenciales y evita un tono condenatorio. Sin embargo, la cita y todas las atribuciones a CIC 2339 quedan bloqueadas porque la ficha no está verificada. Tras verificarla, incorporar brevemente la primacía de la gracia y someter la pieza a aprobación humana por tratar sexualidad.",
+        "citas": [
+          {
+            "texto": "La castidad supone el aprendizaje del dominio de sí, que es una pedagogía de la libertad humana",
+            "verificada": false
+          }
+        ]
+      }
+    }
+  ]
+}
