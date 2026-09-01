@@ -8,7 +8,8 @@ en `.env` ni en el código: se cargan en Vercel como variables de Production.
 - `PANEL_PASSWORD` — clave de acceso al panel.
 - `SESSION_SECRET` — texto aleatorio largo, distinto de la contraseña.
 - `GITHUB_TOKEN` — fine-grained token restringido a `joacox07/hombre.catolico`, con
-  **Actions: Read and write** y **Contents: Read**.
+  **Actions: Read and write** y **Contents: Read and write**. La Mesa editorial usa
+  Contents para persistir aprobaciones, cambios y descartes.
 - `GITHUB_OWNER=joacox07`, `GITHUB_REPO=hombre.catolico` y
   `GITHUB_BRANCH=claude/hombre-catolico-instagram-ogg8ao`.
 

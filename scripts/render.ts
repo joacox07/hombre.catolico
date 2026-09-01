@@ -10,10 +10,11 @@
  * Playwright ya instalado en el entorno (no descarga navegadores).
  */
 import { chromium, type Browser, type Page } from "playwright";
-import { readFile, mkdir, readdir } from "node:fs/promises";
+import { readFile, writeFile, mkdir, readdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { resolve, join } from "node:path";
 import { startServer, ROOT } from "./server.ts";
+import { verificarCanvas, type InformeSlideRender } from "./qa-render.ts";
 
 const OUT = join(ROOT, "out");
 const CANVAS = { width: 1080, height: 1350 };
@@ -40,36 +41,44 @@ async function newPage(browser: Browser, baseUrl: string, template: string): Pro
   return page;
 }
 
-async function renderCarrusel(browser: Browser, baseUrl: string, pieza: Pieza): Promise<string[]> {
+interface InformePiezaRender { pieza: string; ok: boolean; slides: InformeSlideRender[]; errores: string[]; }
+
+async function renderCarrusel(browser: Browser, baseUrl: string, pieza: Pieza): Promise<{ files: string[]; informe: InformePiezaRender }> {
   const page = await newPage(browser, baseUrl, "carrusel.html");
   const outDir = join(OUT, pieza.id);
   await mkdir(outDir, { recursive: true });
   const files: string[] = [];
+  const informes: InformeSlideRender[] = [];
   const n = (pieza.slides ?? []).length;
   for (let i = 0; i < n; i++) {
     await page.evaluate(([p, idx]) => (window as any).renderSlide(p, idx), [pieza, i] as const);
+    await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(60);
     const file = join(outDir, `slide-${String(i + 1).padStart(2, "0")}.png`);
     await page.locator("#canvas").screenshot({ path: file });
     files.push(file);
+    informes.push(await verificarCanvas(page, i + 1));
   }
   await page.close();
-  return files;
+  const errores = informes.flatMap((informe) => informe.errores.map((error) => `slide ${informe.slide}: ${error}`));
+  return { files, informe: { pieza: pieza.id, ok: errores.length === 0, slides: informes, errores } };
 }
 
-async function renderCita(browser: Browser, baseUrl: string, pieza: Pieza): Promise<string[]> {
+async function renderCita(browser: Browser, baseUrl: string, pieza: Pieza): Promise<{ files: string[]; informe: InformePiezaRender }> {
   const page = await newPage(browser, baseUrl, "cita.html");
   const outDir = join(OUT, pieza.id);
   await mkdir(outDir, { recursive: true });
   await page.evaluate((p) => (window as any).renderCita(p), pieza);
+  await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(60);
   const file = join(outDir, "cita.png");
   await page.locator("#canvas").screenshot({ path: file });
+  const informe = await verificarCanvas(page, 1);
   await page.close();
-  return [file];
+  return { files: [file], informe: { pieza: pieza.id, ok: informe.ok, slides: [informe], errores: informe.errores.map((error) => `slide 1: ${error}`) } };
 }
 
-async function renderPieza(browser: Browser, baseUrl: string, pieza: Pieza): Promise<string[]> {
+async function renderPieza(browser: Browser, baseUrl: string, pieza: Pieza): Promise<{ files: string[]; informe: InformePiezaRender }> {
   return pieza.tipo === "cita"
     ? renderCita(browser, baseUrl, pieza)
     : renderCarrusel(browser, baseUrl, pieza);
@@ -95,12 +104,18 @@ async function main() {
   const executablePath = chromiumExecutable();
   const browser = await chromium.launch(executablePath ? { executablePath } : {});
   try {
+    let fallo = false;
     for (const p of paths) {
       const pieza = await loadPieza(p);
-      const files = await renderPieza(browser, url, pieza);
-      console.log(`✓ ${pieza.id} (${pieza.tipo}) → ${files.length} imagen(es)`);
+      const { files, informe } = await renderPieza(browser, url, pieza);
+      const informeRuta = join(OUT, pieza.id, "qa.json");
+      await writeFile(informeRuta, JSON.stringify(informe, null, 2) + "\n");
+      console.log(`${informe.ok ? "✓" : "✗"} ${pieza.id} (${pieza.tipo}) → ${files.length} imagen(es)`);
       for (const f of files) console.log(`    ${f.replace(ROOT + "/", "")}`);
+      console.log(`    QA: ${informe.ok ? "ok" : informe.errores.join(" | ")}`);
+      if (!informe.ok) fallo = true;
     }
+    if (fallo) throw new Error("El QA técnico detectó errores de render.");
   } finally {
     await browser.close();
     server.close();

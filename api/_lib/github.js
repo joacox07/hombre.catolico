@@ -18,16 +18,46 @@ async function github(path, init = {}) {
       ...(init.headers || {}),
     },
   });
-  if (!response.ok) throw new Error(`GitHub respondió ${response.status}.`);
+  if (!response.ok) {
+    const error = new Error(`GitHub respondió ${response.status}.`);
+    error.status = response.status;
+    throw error;
+  }
   return response;
 }
 
 export async function contenidoJson(path) {
+  return (await contenidoJsonConSha(path)).contenido;
+}
+
+export async function contenidoJsonConSha(path) {
   const cfg = configGitHub();
   const response = await github(`/contents/${path.replace(/^\//, "")}?ref=${encodeURIComponent(cfg.branch)}`);
-  const contenido = await response.json();
-  if (contenido.encoding !== "base64" || !contenido.content) throw new Error("GitHub devolvió un archivo inválido.");
-  return JSON.parse(Buffer.from(contenido.content.replace(/\n/g, ""), "base64").toString("utf8"));
+  const archivo = await response.json();
+  if (archivo.encoding !== "base64" || !archivo.content || !archivo.sha) throw new Error("GitHub devolvió un archivo inválido.");
+  return {
+    contenido: JSON.parse(Buffer.from(archivo.content.replace(/\n/g, ""), "base64").toString("utf8")),
+    version: archivo.sha,
+  };
+}
+
+export async function guardarJson(path, contenido, version, mensaje) {
+  const cfg = configGitHub();
+  const cuerpo = {
+    message: mensaje,
+    content: Buffer.from(JSON.stringify(contenido, null, 2) + "\n").toString("base64"),
+    branch: cfg.branch,
+    ...(version ? { sha: version } : {}),
+  };
+  const response = await github(`/contents/${path.replace(/^\//, "")}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(cuerpo),
+  });
+  const resultado = await response.json();
+  const sha = resultado?.content?.sha;
+  if (typeof sha !== "string" || !sha) throw new Error("GitHub no confirmó la versión guardada.");
+  return sha;
 }
 
 export async function dispararGeneracion(solicitud) {
@@ -69,7 +99,29 @@ async function cargarLote(resumen) {
     meta,
     pieza: await contenidoJson(meta.ref),
   })));
-  return { lote: { ...lote, id: idDeResumen(resumen, lote) }, piezas };
+  const id = idDeResumen(resumen, lote);
+  return { lote: { ...lote, id }, piezas, revision: await revisionPorLote(id) };
+}
+
+function archivoRevision(loteId) {
+  return `data/revisiones/${loteId}.json`;
+}
+
+export async function revisionPorLote(loteId) {
+  try {
+    return await contenidoJsonConSha(archivoRevision(loteId));
+  } catch (error) {
+    if (error?.status === 404) return { contenido: { schema: 1, lote_id: loteId, actualizado_en: null, revisiones: {}, eventos: [] }, version: null };
+    throw error;
+  }
+}
+
+export async function guardarRevision(loteId, contenido, version) {
+  const nuevaVersion = await guardarJson(
+    archivoRevision(loteId), contenido, version,
+    `Mesa editorial: registrar revisión del lote ${loteId}`,
+  );
+  return { contenido, version: nuevaVersion };
 }
 
 export async function listarLotes() {

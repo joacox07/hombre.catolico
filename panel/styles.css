@@ -143,6 +143,22 @@ button { cursor: pointer; }
 .chip { display: inline-block; background: #f2ede3; border: 1px solid var(--linea); border-radius: 8px; padding: 2px 8px; font-size: 12px; margin: 0 4px 4px 0; }
 .nivel { color: var(--acento); font-weight: 600; }
 .warn-line { color: var(--warn); }
+.ok-chip { color: var(--ok); background: #edf5ea; }
+.warn-chip { color: var(--warn); background: #f7eee1; }
+.quality-note { margin-top: 8px; color: var(--warn); font-size: 12px; }
+.quality-note.ok { color: var(--ok); }
+.quality-alerts, .revision-history { margin: 8px 0 0; padding-left: 18px; }
+.quality-alerts li { margin: 5px 0; color: var(--warn); }
+.quality-alerts li.bloqueo { color: var(--alto); }
+.revision-actions { margin: 14px 0 2px; padding-top: 12px; border-top: 1px solid var(--linea); }
+.revision-actions textarea { width: 100%; min-height: 72px; resize: vertical; border: 1px solid var(--linea); border-radius: 9px; padding: 9px; color: var(--tinta); background: #faf8f4; font: 13px/1.4 "DM Sans", "Inter", sans-serif; }
+.revision-actions .acciones { margin: 8px 0 0; flex-wrap: wrap; }
+.revision-actions .secondary { color: var(--warn); }
+.revision-status { min-height: 18px; margin: 7px 0 0; color: var(--ok); font-size: 12px; }
+.revision-status.error { color: var(--alto); }
+.revision-history { list-style: none; padding-left: 0; }
+.revision-history li { margin: 8px 0; }
+.revision-history small { display: block; color: var(--tenue); margin-top: 3px; }
 
 /* ---------- Desktop (≥900px): layout de columnas ---------- */
 @media (min-width: 900px) {

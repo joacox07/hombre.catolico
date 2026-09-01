@@ -3,7 +3,7 @@
  * Una pieza final siempre tiene arte real: una obra pública, una imagen IA o un
  * asset curado. Soporta una imagen única, una obra recorrida por crops y una
  * imagen distinta por slide. */
-import { writeFile, mkdir } from "node:fs/promises";
+import { writeFile, mkdir, access } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve, join } from "node:path";
 import { imagen as generarImagenOpenAI } from "./openai.ts";
@@ -107,7 +107,12 @@ export function normalizarPlanArte(plan: ArtePlan | undefined, cantidadSlides: n
 
 async function materializarArte(plan: PlanBaseArte, piezaId: string, sufijo = ""): Promise<any> {
   if (plan.fuente === "curada") {
-    return { fuente: "curada", archivo: plan.archivo, verificado: false };
+    try {
+      await access(join(ARTE, plan.archivo!));
+    } catch {
+      throw new Error(`No existe el asset curado: ${plan.archivo}`);
+    }
+    return { fuente: "curada", archivo: plan.archivo, verificado: true, origen_visual: "curada" };
   }
 
   if (plan.fuente === "descarga") {

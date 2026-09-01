@@ -20,6 +20,7 @@ import { chat } from "./texto.ts";
 import { captionLista } from "./caption.ts";
 import { humanizarPieza } from "./voz-humana.ts";
 import { normalizarDireccionVisual, validarComposiciones, origenDesdeArte } from "./direccion-visual.ts";
+import { crearControlCalidad, registrarRenderEnCalidad } from "./calidad.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const leerTxt = (rel: string) => readFile(join(ROOT, rel), "utf8");
@@ -206,6 +207,7 @@ async function main() {
       // 4. Arte (descarga PD o IA) — una pieza final nunca se reemplaza por un gradiente.
       // Si el arte falla, el catch externo omite la pieza y deja el error visible en la corrida.
       await resolverArte(pieza);
+      pieza.control_calidad = await crearControlCalidad(pieza, fichas, { sensible: tema.sensible });
       direccionesDelLote.push(pieza.direccion_visual);
 
       // 5. Guardar pieza
@@ -227,6 +229,20 @@ async function main() {
   // 6. Render de todas las piezas
   console.log("\n▶ render…");
   execFileSync("npx", ["tsx", "scripts/render.ts", ...rutas], { cwd: ROOT, stdio: "inherit" });
+
+  // El renderer escribe un informe por pieza. Sin informe verde no se ensambla el lote.
+  for (const ruta of rutas) {
+    const pieza = JSON.parse(await readFile(ruta, "utf8"));
+    const informeRuta = join(ROOT, "out", pieza.id, "qa.json");
+    const informe = JSON.parse(await readFile(informeRuta, "utf8"));
+    pieza.control_calidad = registrarRenderEnCalidad(
+      pieza.control_calidad,
+      informe.ok === true,
+      Array.isArray(informe.errores) ? informe.errores.join(" ") : undefined,
+    );
+    if (!informe.ok) throw new Error(`El render técnico falló para ${pieza.id}.`);
+    await writeFile(ruta, JSON.stringify(pieza, null, 2) + "\n");
+  }
 
   // 7. Ensamblar lote + memoria
   const file = await ensamblarLote({ semana, id: corrida, nombre: `Lote ${semana}`, piezas: specPiezas as any });

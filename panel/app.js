@@ -12,7 +12,7 @@
     share: '<svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>',
     save: '<svg viewBox="0 0 24 24"><path d="M19 21 12 16 5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>'
   };
-  var lote = null, items = [], historial = [], sel = 0, slide = 0, polling = null;
+  var lote = null, items = [], historial = [], revision = null, sel = 0, slide = 0, polling = null;
 
   function esc(s) { return window.HC.esc(s); }
   function url(p) { return BASE + String(p).replace(/^\//, ""); }
@@ -59,6 +59,18 @@
     el.textContent = texto || "";
     el.classList.toggle("error", !!error);
   }
+  function revisionDe(piezaId) {
+    return revision && revision.contenido && revision.contenido.revisiones ? revision.contenido.revisiones[piezaId] || null : null;
+  }
+  function estadoDe(meta, pieza) {
+    var decision = revisionDe(pieza.id);
+    if (!decision) return meta.estado || "en_revision";
+    return decision.decision === "aprobar" ? "aprobado" : decision.decision === "cambios" ? "cambios" : "descartado";
+  }
+  function aprobable(control) {
+    var c = control && control.candados;
+    return !!(c && c.citas_literales && c.fuentes_verificadas && c.arte_procedencia && c.render_tecnico === true && !control.bloquea_aprobacion);
+  }
   function renderLista() {
     var cont = document.getElementById("lista");
     cont.innerHTML = "";
@@ -69,7 +81,7 @@
       var thumb = document.createElement("div"); thumb.className = "thumb"; thumb.appendChild(canvasFor(it.pieza, 0));
       var info = document.createElement("div"); info.className = "info";
       info.innerHTML = '<div class="tit">' + esc(it.pieza.tema || it.pieza.titulo || it.pieza.id) + "</div>" +
-        '<div class="meta-min">' + esc((it.pieza.tipo === "cita" ? "Cita" : "Carrusel") + " · " + (it.meta.estado || "en revisión")) + "</div>";
+        '<div class="meta-min">' + esc((it.pieza.tipo === "cita" ? "Cita" : "Carrusel") + " · " + estadoDe(it.meta, it.pieza).replace(/_/g, " ")) + "</div>";
       card.appendChild(thumb); card.appendChild(info);
       card.addEventListener("click", function () { sel = i; slide = 0; render(); });
       cont.appendChild(card);
@@ -95,9 +107,41 @@
     var text = texto || "estado";
     return '<span class="badge ' + esc(text.toLowerCase().replace(/\s+/g, "_")) + '">' + esc(text) + "</span>";
   }
+  function controlCalidadHTML(control) {
+    if (!control) return '<div class="row"><div class="k">Control de calidad</div><div class="v"><span class="warn-line">No existe informe de calidad para esta pieza.</span></div></div>';
+    var c = control.candados || {};
+    var candados = [
+      ["Citas", c.citas_literales], ["Fuentes", c.fuentes_verificadas], ["Arte", c.arte_procedencia],
+      ["Render", c.render_tecnico === true],
+    ].map(function (entrada) { return '<span class="chip ' + (entrada[1] ? "ok-chip" : "warn-chip") + '">' + esc(entrada[0]) + ': ' + (entrada[1] ? "ok" : "pendiente") + "</span>"; }).join("");
+    var alertas = (control.alertas || []).map(function (alerta) {
+      return '<li class="' + (alerta.nivel === "bloqueo" ? "bloqueo" : "") + '">' + esc(alerta.detalle) + "</li>";
+    }).join("");
+    var afirmaciones = (control.afirmaciones || []).filter(function (a) { return a.respaldo === "incierto"; }).length;
+    return '<div class="row calidad"><div class="k">Control de calidad</div><div class="v">' + candados +
+      (control.revision_humana_requerida ? '<div class="quality-note">Revisión humana requerida.</div>' : "") +
+      (afirmaciones ? '<div class="quality-note">Afirmaciones a contrastar: ' + afirmaciones + ".</div>" : "") +
+      (alertas ? '<ul class="quality-alerts">' + alertas + "</ul>" : '<div class="quality-note ok">Sin alertas.</div>') + "</div></div>";
+  }
+  function historialRevisionHTML(piezaId) {
+    var eventos = revision && revision.contenido && Array.isArray(revision.contenido.eventos) ? revision.contenido.eventos.filter(function (evento) { return evento.pieza_id === piezaId; }) : [];
+    if (!eventos.length) return "";
+    return '<div class="row"><div class="k">Historial editorial</div><div class="v"><ul class="revision-history">' + eventos.slice().reverse().map(function (evento) {
+      return "<li>" + badge(evento.decision) + " " + esc(evento.comentario || "Sin comentario.") + '<small>' + esc(fechaLinda(evento.fecha)) + "</small></li>";
+    }).join("") + "</ul></div></div>";
+  }
+  function accionesRevisionHTML(pieza) {
+    if (!API || !lote || !lote.id) return "";
+    var control = pieza.control_calidad;
+    return '<div class="revision-actions"><div class="k">Decisión editorial</div>' +
+      '<textarea class="revision-comment" aria-label="Comentario editorial" placeholder="Comentario obligatorio para cambios o descarte"></textarea>' +
+      '<div class="acciones"><button class="primary approve" type="button"' + (aprobable(control) ? "" : " disabled") + '>Aprobar</button>' +
+      '<button class="secondary changes" type="button">Pedir cambios</button><button class="secondary discard" type="button">Descartar</button></div>' +
+      '<p class="revision-status" aria-live="polite"></p></div>';
+  }
   function renderDetalle() {
     var it = items[sel]; if (!it) return;
-    var pieza = it.pieza, meta = it.meta, total = slideCount(pieza);
+    var pieza = it.pieza, meta = it.meta, total = slideCount(pieza), estadoActual = estadoDe(meta, pieza);
     if (slide >= total) slide = 0;
     var post = document.createElement("div"); post.className = "ig-post";
     post.innerHTML = '<div class="ig-head"><div class="ig-avatar">H</div><div class="u">hombre.catolico<small>Publicación sugerida</small></div><div class="dots">•••</div></div>' +
@@ -115,16 +159,39 @@
     var metaEl = document.createElement("div"); metaEl.className = "meta";
     metaEl.innerHTML = "<h3>" + esc(pieza.titulo || pieza.tema || pieza.id) + "</h3>" +
       '<div class="tema">' + esc((pieza.pilar ? pieza.pilar + " · " : "") + (pieza.tema || "")) + "</div>" + descarga + editorCaption +
-      '<div class="row"><div class="k">Estado</div><div class="v">' + badge(meta.estado) + "</div></div>" +
+      '<div class="row"><div class="k">Estado</div><div class="v">' + badge(estadoActual) + "</div></div>" +
       '<div class="row"><div class="k">Fecha propuesta</div><div class="v">' + esc(fechaLinda(meta.fecha_propuesta)) + "</div></div>" +
       '<div class="row"><div class="k">Revisor sacerdote</div><div class="v">' + badge(rev.veredicto) +
         (rev.requiere_revision_humana ? " " + badge("revision_humana") : "") + (rev.nota ? '<div class="v" style="margin-top:6px">' + esc(rev.nota) + "</div>" : "") + "</div></div>" +
       '<div class="row"><div class="k">Citas verificadas</div><div class="v">' + (rev.citas_verificadas ? "Sí" : '<span class="warn-line">No — verificar antes de publicar</span>') + "</div></div>" +
+      controlCalidadHTML(pieza.control_calidad) + accionesRevisionHTML(pieza) + historialRevisionHTML(pieza.id) +
       (clasif ? '<div class="row"><div class="k">Clasificación doctrinal</div>' + clasif + "</div>" : "") +
       (fuentes ? '<div class="row"><div class="k">Fuentes</div><div class="v">' + fuentes + "</div></div>" : "");
     if (caption) {
       var areaCaption = metaEl.querySelector("textarea"), botonCopiar = metaEl.querySelector(".caption-editor button"), estadoCopiado = metaEl.querySelector(".copy-status");
       botonCopiar.addEventListener("click", function () { copiarDescripcion(caption, areaCaption, estadoCopiado); });
+    }
+    if (API) {
+      var comentario = metaEl.querySelector(".revision-comment"), estadoRevision = metaEl.querySelector(".revision-status");
+      function decidir(decision) {
+        var texto = comentario ? comentario.value.trim() : "";
+        if ((decision === "cambios" || decision === "descartar") && !texto) {
+          estadoRevision.textContent = "Escribí el motivo antes de guardar."; estadoRevision.classList.add("error"); return;
+        }
+        estadoRevision.classList.remove("error"); estadoRevision.textContent = "Guardando decisión…";
+        api("/lotes/" + encodeURIComponent(lote.id) + "/revisiones", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ pieza_id: pieza.id, decision: decision, comentario: texto, version: revision && revision.version || null }),
+        }).then(function (nuevaRevision) {
+          revision = nuevaRevision; render();
+        }).catch(function (error) {
+          estadoRevision.textContent = error.message; estadoRevision.classList.add("error");
+        });
+      }
+      var aprobar = metaEl.querySelector(".approve"), cambios = metaEl.querySelector(".changes"), descartar = metaEl.querySelector(".discard");
+      if (aprobar) aprobar.addEventListener("click", function () { decidir("aprobar"); });
+      if (cambios) cambios.addEventListener("click", function () { decidir("cambios"); });
+      if (descartar) descartar.addEventListener("click", function () { decidir("descartar"); });
     }
     var cont = document.getElementById("detalle"); cont.innerHTML = ""; cont.appendChild(post); cont.appendChild(metaEl);
     pintarMedia(); pintarCaption();
@@ -191,7 +258,7 @@
       });
     });
     return carga.then(function (datos) {
-      lote = datos.lote; items = datos.piezas; sel = 0; slide = 0; mostrarPanel();
+      lote = datos.lote; items = datos.piezas; revision = datos.revision || null; sel = 0; slide = 0; mostrarPanel();
       document.getElementById("lote-info").textContent = lote.nombre + " · " + lote.semana + " · " + items.length + " piezas";
       renderHistorial();
       render();
