@@ -116,7 +116,9 @@ async function systemRedaccion(): Promise<string> {
 async function main() {
   const n = Number(process.argv[2] || 3);
   const ctx = await contextoSemanal(n);
-  if (ctx.sugerencia.length === 0) throw new Error("No hay temas candidatos en el backlog.");
+  if (ctx.sugerencia.length < n) {
+    throw new Error(`Sólo hay ${ctx.sugerencia.length} temas con fichas asociadas para una tanda de ${n}; no se crea un lote parcial.`);
+  }
   const semana = semanaISO();
   const corrida = process.env.LOTE_ID || undefined;
   const sys = await systemRedaccion();
@@ -213,7 +215,9 @@ async function main() {
     }
   }
 
-  if (specPiezas.length === 0) throw new Error("No se generó ninguna pieza (revisá el cerebro editorial y los logs).");
+  if (specPiezas.length !== n) {
+    throw new Error(`Se generaron ${specPiezas.length} de ${n} piezas; no se crea un lote parcial. Revisá el cerebro editorial y reintentá la tanda.`);
+  }
 
   // 6. Render de todas las piezas
   console.log("\n▶ render…");
