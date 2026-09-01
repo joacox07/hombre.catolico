@@ -19,7 +19,7 @@ import { ensamblarLote } from "./lote.js";
 import { chat } from "./texto.js";
 import { captionLista } from "./caption.js";
 import { humanizarPieza } from "./voz-humana.js";
-import { direccionAlternativa, normalizarDireccionVisual, validarComposiciones, origenDesdeArte } from "./direccion-visual.js";
+import { direccionAlternativa, normalizarDireccionVisual, validarComposiciones, origenDesdeArte, type DireccionVisual } from "./direccion-visual.js";
 import { crearControlCalidad, registrarRenderEnCalidad } from "./calidad.js";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -134,7 +134,7 @@ async function main() {
   const rutas: string[] = [];
   // Acumula las direcciones aceptadas en esta misma corrida: la regla de no
   // repetir no puede depender sólo del historial ya escrito en el registro.
-  const direccionesDelLote: Array<{ paleta: string; composicion_principal: string }> = [];
+  const direccionesDelLote: DireccionVisual[] = [];
   let dia = 2; // fechas propuestas escalonadas (mié/vie/dom orientativo)
 
   for (const [indice, { tema }] of ctx.sugerencia.entries()) {
