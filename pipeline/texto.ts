@@ -56,6 +56,9 @@ export function configuracionTexto(env: NodeJS.ProcessEnv = process.env): Config
 }
 
 const espera = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+// La redacción de un carrusel JSON puede superar el timeout típico de una petición web.
+// En Actions se prefiere esperar una respuesta completa antes que crear un lote parcial.
+const TIMEOUT_GENERACION_TEXTO_MS = 90_000;
 
 function headers(config: ConfiguracionTexto) {
   return {
@@ -91,7 +94,7 @@ async function post(config: ConfiguracionTexto, body: unknown): Promise<any> {
     method: "POST",
     headers: headers(config),
     body: JSON.stringify(body),
-    signal: AbortSignal.timeout(12_000),
+    signal: AbortSignal.timeout(TIMEOUT_GENERACION_TEXTO_MS),
   });
   if (res.status === 202 && config.proveedor === "codex_gateway") {
     const trabajo = await res.json();
