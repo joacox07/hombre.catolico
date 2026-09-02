@@ -1,13 +1,21 @@
 export const DESTINOS_ARTE = new Set(["post", "reel"]);
 const DATA_IMAGE = /^data:(image\/(?:png|jpeg|webp));base64,([A-Za-z0-9+/=]+)$/;
+const MAX_REFERENCIAS = 3;
+const MAX_REFERENCIA_BYTES = 400_000;
+const MAX_REFERENCIAS_BYTES = 1_000_000;
 
 export function referenciasValidas(valor: unknown): string[] {
   if (valor == null) return [];
-  if (!Array.isArray(valor) || valor.length > 3) throw new Error("Podés usar hasta tres referencias.");
+  if (!Array.isArray(valor) || valor.length > MAX_REFERENCIAS) throw new Error("Podés usar hasta tres referencias.");
+  let total = 0;
   return valor.map((referencia) => {
-    if (typeof referencia !== "string" || !DATA_IMAGE.test(referencia) || referencia.length > 2_100_000) {
-      throw new Error("Cada referencia debe ser PNG, JPG o WebP y pesar menos de 1,5 MB.");
+    const match = typeof referencia === "string" ? referencia.match(DATA_IMAGE) : null;
+    const bytes = match ? Buffer.from(match[2], "base64").length : 0;
+    if (!match || !bytes || bytes > MAX_REFERENCIA_BYTES) {
+      throw new Error("Cada referencia debe ser PNG, JPG o WebP y pesar menos de 400 KB.");
     }
+    total += bytes;
+    if (total > MAX_REFERENCIAS_BYTES) throw new Error("Las referencias juntas no pueden superar 1 MB.");
     return referencia;
   });
 }

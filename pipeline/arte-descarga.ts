@@ -80,6 +80,18 @@ export async function buscarObrasPublicas(query: string, limit = 12): Promise<Ca
     .slice(0, limit);
 }
 
+/** Combina búsquedas alternativas, sin repetir una obra ni cambiar sus requisitos de licencia. */
+export async function buscarObrasPublicasPorConsultas(consultas: string[], limit = 12): Promise<CandidatoArtePublico[]> {
+  const limpias = Array.from(new Set(consultas.map((consulta) => consulta.trim()).filter(Boolean))).slice(0, 3);
+  const porId = new Map<string, CandidatoArtePublico>();
+  for (const consulta of limpias) {
+    const obras = await buscarObrasPublicas(consulta, limit);
+    for (const obra of obras) if (!porId.has(obra.id)) porId.set(obra.id, obra);
+    if (porId.size >= limit) break;
+  }
+  return Array.from(porId.values()).slice(0, limit);
+}
+
 /** Descarga un candidato exacto por pageid; evita que una segunda búsqueda cambie la obra elegida. */
 export async function descargarObraPublica(id: string, width = 1600): Promise<ArteDescargado> {
   if (!/^\d+$/.test(id)) throw new Error("Obra inválida.");

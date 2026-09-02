@@ -21,6 +21,16 @@ para guardar el asset y la ficha de procedencia; Actions: Read and write para di
 Las referencias subidas al panel se envían sólo durante la generación, no se guardan en Vercel
 ni GitHub. El panel guarda únicamente la imagen final y su procedencia.
 
+Si una key se pegó en un chat, log o captura, revocarla en OpenAI y reemplazarla en Vercel antes
+de usar el generador otra vez. No enviar secretos por el panel ni agregarlos al repositorio.
+
+## Instalar en iPhone
+
+Abrir `https://hombre-catolico.vercel.app` en **Safari**, iniciar sesión y tocar **Compartir →
+Agregar a pantalla de inicio**. La app instalada conserva la interfaz y el último lote abierto
+para consulta sin conexión. Buscar arte, generar, guardar, renderizar y descargar ZIP requieren
+internet; al salir del panel se limpia ese lote de la caché local.
+
 ## Descargas
 
 Cada corrida publica una release `lote-<id>` con un ZIP por pieza. Cada ZIP contiene los PNG

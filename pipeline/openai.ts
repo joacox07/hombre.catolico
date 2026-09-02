@@ -65,7 +65,7 @@ function referenciaDataUrl(valor: string): { mime: string; buffer: Buffer; ext: 
   const match = valor.match(/^data:(image\/(?:png|jpeg|webp));base64,([A-Za-z0-9+/=]+)$/);
   if (!match) return null;
   const buffer = Buffer.from(match[2], "base64");
-  if (!buffer.length || buffer.length > 1_500_000) return null;
+  if (!buffer.length || buffer.length > 400_000) return null;
   return { mime: match[1], buffer, ext: match[1] === "image/png" ? "png" : match[1] === "image/webp" ? "webp" : "jpg" };
 }
 
@@ -88,17 +88,30 @@ export async function imagenEditorial(prompt: string, referencias: string[], opt
   return Buffer.from(b64, "base64");
 }
 
-/** Resume referencias en una consulta corta para Wikimedia. Falla hacia el texto original, no bloquea búsqueda. */
-export async function consultaVisual(texto: string, referencias: string[]): Promise<string> {
-  const imagenes = referencias.map(referenciaDataUrl).filter(Boolean);
-  if (!imagenes.length) return texto;
-  const contenido: any[] = [{ type: "text", text: `${texto}\nDevolvé sólo hasta 12 palabras de búsqueda en inglés para encontrar una obra pública. Describí sujeto, luz y atmósfera; no nombres artistas ni copies una obra.` }];
+function consultasSeguras(valor: unknown, respaldo: string): string[] {
+  const candidatas = Array.isArray(valor) ? valor : [];
+  const limpias = candidatas
+    .filter((consulta): consulta is string => typeof consulta === "string")
+    .map((consulta) => consulta.replace(/[^\p{L}\p{N}\s'-]/gu, " ").replace(/\s+/g, " ").trim().slice(0, 120))
+    .filter((consulta) => consulta.length >= 3);
+  return Array.from(new Set([...limpias, respaldo.trim().slice(0, 240)])).slice(0, 3);
+}
+
+/** Convierte una intención editorial a búsquedas breves para Wikimedia; las referencias sólo orientan, nunca se guardan. */
+export async function consultasWikimedia(texto: string, referencias: string[]): Promise<string[]> {
+  if (!process.env.OPENAI_API_KEY) return [texto];
+  const contenido: any[] = [{
+    type: "text",
+    text: `Pedido editorial: ${texto}\nDevolvé JSON estricto {"consultas":["..."]} con una a tres búsquedas breves en inglés para Wikimedia Commons. Describí sujeto, luz y atmósfera. No agregues el pilar, no inventes artistas ni copies una obra.`,
+  }];
   referencias.forEach((referencia) => contenido.push({ type: "image_url", image_url: { url: referencia, detail: "low" } }));
   const data = await post("/chat/completions", {
     model: process.env.OPENAI_VISION_MODEL || process.env.OPENAI_TEXT_MODEL || "gpt-4o",
-    messages: [{ role: "system", content: "Sos director de arte. Inferí una búsqueda visual sin copiar las referencias." }, { role: "user", content: contenido }],
+    messages: [{ role: "system", content: "Sos director de arte. Proponé búsquedas de obras públicas sin copiar referencias." }, { role: "user", content: contenido }],
+    response_format: { type: "json_object" },
     max_tokens: 80,
   });
-  const salida = String(data.choices?.[0]?.message?.content || "").replace(/[^\p{L}\p{N}\s'-]/gu, " ").replace(/\s+/g, " ").trim();
-  return salida ? salida.slice(0, 240) : texto;
+  const salida = String(data.choices?.[0]?.message?.content || "");
+  try { return consultasSeguras(JSON.parse(salida)?.consultas, texto); }
+  catch { return [texto]; }
 }

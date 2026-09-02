@@ -2,8 +2,14 @@
 <html lang="es">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#14110D" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Hombre Católico" />
 <title>Mesa editorial — @hombre.catolico</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" href="icons/icon-180.png" />
 <link rel="stylesheet" href="/templates/tokens.css" />
 <link rel="stylesheet" href="/templates/pieza.css" />
 <link rel="stylesheet" href="/panel/styles.css" />
@@ -32,9 +38,11 @@
       </div>
       <span class="sub" id="lote-info">Cargando lote…</span>
       <span class="grow"></span>
+      <button class="secondary install-help" id="install-help" type="button">Instalar</button>
       <button class="secondary" id="logout" type="button">Salir</button>
       <button class="primary" id="generar" type="button">Generar 3 piezas</button>
     </header>
+    <p class="network-status" id="network-status" role="status" aria-live="polite" hidden></p>
     <p class="generation-status" id="generation-status" aria-live="polite"></p>
     <div class="layout">
       <aside class="sidebar">
@@ -49,6 +57,11 @@
         <div id="detalle" class="post-wrap"></div>
       </main>
     </div>
+    <nav class="mobile-dock" id="mobile-dock" aria-label="Acciones de la pieza" hidden>
+      <button type="button" class="dock-action" data-mobile-action="arte">Arte</button>
+      <a class="dock-action" id="mobile-download" href="#">ZIP</a>
+      <button type="button" class="dock-action" data-mobile-action="decision">Decisión</button>
+    </nav>
   </div>
   <script src="/panel/app.js"></script>
 </body>

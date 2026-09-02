@@ -2,8 +2,9 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFileSync } from "node:fs";
 import vm from "node:vm";
-import { buscarObrasPublicas } from "../pipeline/arte-descarga.ts";
+import { buscarObrasPublicas, buscarObrasPublicasPorConsultas } from "../pipeline/arte-descarga.ts";
 import { artePendienteDeRender, referenciasValidas, validarSolicitudArte } from "../api/_lib/arte-editorial.ts";
+import { consultasWikimedia } from "../pipeline/openai.ts";
 
 const referencia = "data:image/png;base64,aGVsbG8=";
 
@@ -21,10 +22,43 @@ test("la búsqueda conserva sólo obras reutilizables y no IA", async () => {
   } finally { globalThis.fetch = anterior; }
 });
 
+test("la búsqueda por consultas alternativas no repite una misma obra", async () => {
+  const anterior = globalThis.fetch;
+  globalThis.fetch = (async () => new Response(JSON.stringify({ query: { pages: {
+    1: { pageid: 1, title: "Obra pública", categories: [], imageinfo: [{ thumburl: "https://img/1", descriptionurl: "https://commons/1", extmetadata: { ObjectName: { value: "Obra pública" }, LicenseShortName: { value: "CC BY" } } }] },
+  } } }), { status: 200 })) as typeof fetch;
+  try {
+    const obras = await buscarObrasPublicasPorConsultas(["candlelit carpenter", "carpenter at night"]);
+    assert.equal(obras.length, 1);
+    assert.equal(obras[0].id, "1");
+  } finally { globalThis.fetch = anterior; }
+});
+
+test("la intención en español se normaliza a búsquedas breves sin pilar agregado", async () => {
+  const fetchAnterior = globalThis.fetch;
+  const keyAnterior = process.env.OPENAI_API_KEY;
+  process.env.OPENAI_API_KEY = "prueba";
+  globalThis.fetch = (async (_url, opciones: any) => {
+    const cuerpo = JSON.parse(opciones.body);
+    assert.match(cuerpo.messages[1].content[0].text, /hombre trabajando madera/);
+    assert.doesNotMatch(cuerpo.messages[1].content[0].text, /Fortaleza/);
+    return new Response(JSON.stringify({ choices: [{ message: { content: '{"consultas":["candlelit carpenter","quiet woodworking workshop"]}' } }] }), { status: 200 });
+  }) as typeof fetch;
+  try {
+    assert.deepEqual(await consultasWikimedia("hombre trabajando madera a la luz de vela", []), ["candlelit carpenter", "quiet woodworking workshop", "hombre trabajando madera a la luz de vela"]);
+  } finally {
+    globalThis.fetch = fetchAnterior;
+    if (keyAnterior === undefined) delete process.env.OPENAI_API_KEY;
+    else process.env.OPENAI_API_KEY = keyAnterior;
+  }
+});
+
 test("la solicitud limita referencias y exige confirmación de derechos", () => {
   assert.throws(() => referenciasValidas([referencia, referencia, referencia, referencia]), /hasta tres/);
   assert.throws(() => validarSolicitudArte({ lote_id: "2026-W36", pieza_id: "pieza", destino: "post", consulta: "luz", referencias: [referencia] }), /Confirmá/);
   assert.equal(validarSolicitudArte({ lote_id: "2026-W36", pieza_id: "pieza", destino: "reel", consulta: "luz", referencias: [referencia], derechos_referencias: true }).destino, "reel");
+  const pesada = `data:image/png;base64,${Buffer.alloc(400_001).toString("base64")}`;
+  assert.throws(() => referenciasValidas([pesada]), /400 KB/);
 });
 
 test("un cambio de arte vuelve a exigir render", () => {

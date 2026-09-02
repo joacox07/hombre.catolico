@@ -41,6 +41,9 @@ async function main() {
   // app.js y styles.css tal cual (app.js ya usa window.SITE_BASE).
   await copyFile(join(ROOT, "panel", "app.js"), join(SITE, "app.js"));
   await copyFile(join(ROOT, "panel", "styles.css"), join(SITE, "styles.css"));
+  await copyFile(join(ROOT, "panel", "manifest.webmanifest"), join(SITE, "manifest.webmanifest"));
+  await copyFile(join(ROOT, "panel", "sw.js"), join(SITE, "sw.js"));
+  await cp(join(ROOT, "panel", "icons"), join(SITE, "icons"), { recursive: true });
 
   console.log("✓ site/ listo para Vercel");
 }
