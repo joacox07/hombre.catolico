@@ -207,7 +207,7 @@
       "citas_literales": false,
       "fuentes_verificadas": false,
       "arte_procedencia": true,
-      "render_tecnico": "pendiente"
+      "render_tecnico": true
     },
     "alertas": [
       {
@@ -224,11 +224,6 @@
         "codigo": "afirmaciones_sin_respaldo_claro",
         "nivel": "bloqueo",
         "detalle": "Hay afirmaciones doctrinales o factuales que requieren contraste humano."
-      },
-      {
-        "codigo": "render_pendiente",
-        "nivel": "bloqueo",
-        "detalle": "El arte cambió: falta validar el nuevo render."
       }
     ],
     "revision_humana_requerida": true,
