@@ -38,10 +38,16 @@ scripts/      Utilitarios (render de plantillas a PNG, etc.)
 
 - [x] **Fase 0 — Fundaciones:** estructura, manual, biblioteca (esquema + semilla),
       skill de revisión doctrinal, plantillas visuales, render de prueba.
-- [ ] **Fase 1 — Pipeline + visor:** generación con QA y verificación de citas, panel visor.
-- [ ] **Fase 2 — Acciones del panel:** aprobar / corregir / regenerar / descartar con persistencia.
-- [ ] **Fase 3 — Reels.**
+- [x] **Fase 1 — Pipeline + visor:** generación con QA y verificación de citas, render y panel.
+- [x] **Fase 2 — Mesa editorial:** aprobar / pedir cambios / descartar con persistencia versionada,
+      descargas ZIP y dirección de arte con procedencia.
+- [ ] **Fase 3 — Reels completos.** Hay portada 9:16, pero no edición ni publicación de video.
 - [ ] **Fase 4 — Graph API auto-publish + métricas.**
+
+El panel es una PWA privada para Vercel. Requiere `PANEL_PASSWORD`, `SESSION_SECRET` y una
+conexión GitHub de alcance mínimo (`GITHUB_TOKEN`, `GITHUB_OWNER`, `GITHUB_REPO`,
+`GITHUB_BRANCH`); ver [`.env.example`](.env.example). La aprobación humana y la publicación
+final en Instagram siguen siendo deliberadamente manuales.
 
 ## Costo
 

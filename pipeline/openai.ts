@@ -2,6 +2,9 @@
  *  Sin dependencias. La key sale de OPENAI_API_KEY. Corre en GitHub Actions (red abierta);
  *  en este sandbox la red externa está capada, así que se valida al correr en Actions. */
 
+import { consultasEditorialesBase, resumenPerfilVisual, type ContextoVisualEditorial } from "./perfil-visual.js";
+import type { CandidatoArtePublico } from "./arte-descarga.js";
+
 const BASE = process.env.OPENAI_BASE_URL || "https://api.openai.com/v1";
 
 function apiKey(): string {
@@ -88,30 +91,58 @@ export async function imagenEditorial(prompt: string, referencias: string[], opt
   return Buffer.from(b64, "base64");
 }
 
-function consultasSeguras(valor: unknown, respaldo: string): string[] {
+function consultasSeguras(valor: unknown, respaldo: string[]): string[] {
   const candidatas = Array.isArray(valor) ? valor : [];
   const limpias = candidatas
     .filter((consulta): consulta is string => typeof consulta === "string")
     .map((consulta) => consulta.replace(/[^\p{L}\p{N}\s'-]/gu, " ").replace(/\s+/g, " ").trim().slice(0, 120))
     .filter((consulta) => consulta.length >= 3);
-  return Array.from(new Set([...limpias, respaldo.trim().slice(0, 240)])).slice(0, 3);
+  return Array.from(new Set([...limpias, ...respaldo.map((consulta) => consulta.trim().slice(0, 240))])).slice(0, 4);
 }
 
 /** Convierte una intención editorial a búsquedas breves para Wikimedia; las referencias sólo orientan, nunca se guardan. */
-export async function consultasWikimedia(texto: string, referencias: string[]): Promise<string[]> {
-  if (!process.env.OPENAI_API_KEY) return [texto];
+export async function consultasWikimedia(entrada: ContextoVisualEditorial | string, referencias: string[]): Promise<string[]> {
+  const contexto: ContextoVisualEditorial = typeof entrada === "string" ? { consulta: entrada, destino: "post" } : entrada;
+  const base = consultasEditorialesBase(contexto);
+  if (!process.env.OPENAI_API_KEY) return base;
   const contenido: any[] = [{
     type: "text",
-    text: `Pedido editorial: ${texto}\nDevolvé JSON estricto {"consultas":["..."]} con una a tres búsquedas breves en inglés para Wikimedia Commons. Describí sujeto, luz y atmósfera. No agregues el pilar, no inventes artistas ni copies una obra.`,
+    text: `${resumenPerfilVisual(contexto)}\n\nPedido del editor: ${contexto.consulta}\nDevolvé JSON estricto {"consultas":["..."]} con dos a cuatro búsquedas breves, preferentemente en inglés y una alternativa en español, para Wikimedia Commons. Cada búsqueda debe describir sujeto, acción, lugar, época o estilo y atmósfera coherentes con la pieza. No inventes artistas, no copies una obra ni devuelvas libros, documentos, fotos de stock o términos de marca.`,
   }];
   referencias.forEach((referencia) => contenido.push({ type: "image_url", image_url: { url: referencia, detail: "low" } }));
   const data = await post("/chat/completions", {
     model: process.env.OPENAI_VISION_MODEL || process.env.OPENAI_TEXT_MODEL || "gpt-4o",
-    messages: [{ role: "system", content: "Sos director de arte. Proponé búsquedas de obras públicas sin copiar referencias." }, { role: "user", content: contenido }],
+    messages: [{ role: "system", content: "Sos director de arte católico. Proponé sólo búsquedas de obras públicas, históricas o artísticas que respeten el perfil editorial recibido." }, { role: "user", content: contenido }],
     response_format: { type: "json_object" },
     max_tokens: 80,
   });
   const salida = String(data.choices?.[0]?.message?.content || "");
-  try { return consultasSeguras(JSON.parse(salida)?.consultas, texto); }
-  catch { return [texto]; }
+  try { return consultasSeguras(JSON.parse(salida)?.consultas, base); }
+  catch { return base; }
+}
+
+/** Auditoría visual opcional: sólo se activa con un modelo de visión configurado.
+ * No persiste miniaturas ni reemplaza la revisión editorial humana del encuadre. */
+export async function filtrarCandidatosPorVision(contexto: ContextoVisualEditorial, candidatos: CandidatoArtePublico[]): Promise<CandidatoArtePublico[]> {
+  if (!process.env.OPENAI_API_KEY || !process.env.OPENAI_VISION_MODEL || !candidatos.length) return candidatos;
+  const muestra = candidatos.slice(0, 8);
+  const contenido: any[] = [{
+    type: "text",
+    text: `${resumenPerfilVisual(contexto)}\n\nRevisá las miniaturas candidatas. Devolvé JSON estricto {"aprobados":["pageid"]}. Aprobá sólo si la imagen realmente representa la intención editorial y es compatible con arte católico clásico y sobrio. Rechazá foto documental moderna, sujeto distinto, texto o marca de agua, estética de stock/IA, símbolos incoherentes y elementos relevantes que se perderían en un recorte ${contexto.destino === "reel" ? "9:16" : "4:5"}.`,
+  }];
+  muestra.forEach((candidato) => {
+    contenido.push({ type: "text", text: `Candidato ${candidato.id}: ${candidato.titulo}.` });
+    contenido.push({ type: "image_url", image_url: { url: candidato.thumbnail_url, detail: "low" } });
+  });
+  try {
+    const data = await post("/chat/completions", {
+      model: process.env.OPENAI_VISION_MODEL,
+      messages: [{ role: "system", content: "Sos auditor visual católico. Priorizá precisión y descartá antes que aprobar una imagen dudosa." }, { role: "user", content: contenido }],
+      response_format: { type: "json_object" }, max_tokens: 180,
+    });
+    const aprobados = new Set((JSON.parse(String(data.choices?.[0]?.message?.content || "{}"))?.aprobados || []).map(String));
+    return muestra.filter((candidato) => aprobados.has(candidato.id));
+  } catch {
+    return candidatos;
+  }
 }

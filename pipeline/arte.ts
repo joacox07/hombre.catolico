@@ -8,14 +8,15 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve, join } from "node:path";
 import { imagen as generarImagenOpenAI } from "./openai.js";
 import { descargarObra } from "./arte-descarga.js";
+import { PERFIL_VISUAL } from "./perfil-visual.js";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const ARTE = join(ROOT, "assets", "arte");
 const RECORTES_POR_DEFECTO = ["50% 42%", "32% 32%", "68% 34%", "38% 62%", "64% 64%", "50% 52%", "50% 50%", "50% 50%"];
 
 const ESTILO_IA =
-  "imagen editorial sobria y fílmica, con la paleta y la luz pedidas por la dirección visual; " +
-  "SIN texto, SIN palabras, SIN letras; sin rostros de santos identificables; " +
+  `imagen editorial ${PERFIL_VISUAL.identidad}, ${PERFIL_VISUAL.preferir.join(", ")}; ` +
+  `evitar ${PERFIL_VISUAL.evitar.join(", ")}; SIN texto, SIN palabras, SIN letras; sin rostros de santos identificables; ` +
   "composición vertical 4:5 con espacio negativo coherente con la composición del texto.";
 
 export type FuenteArte = "descarga" | "ia" | "curada";

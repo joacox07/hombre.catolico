@@ -27,6 +27,12 @@ export default async function handler(req: any, res: any) {
       },
     }));
   } catch (error: any) {
+    if (/Falta OPENAI_API_KEY/.test(String(error?.message))) {
+      return responder(res, 503, { error: "Falta configurar el servicio de generación de imágenes." });
+    }
+    if (/^OpenAI\b/.test(String(error?.message))) {
+      return responder(res, 502, { error: "La generación no pudo completarse. Reintentá en unos segundos." });
+    }
     responder(res, /inválid|Escribí|referencias|Lote|Pieza|Confirmá/.test(String(error?.message)) ? 400 : 502, { error: error.message || "No se pudo generar la imagen." });
   }
 }

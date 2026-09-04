@@ -75,3 +75,71 @@ test("generar guarda y dispara render sin devolver la imagen al navegador", asyn
     Object.assign(process.env, anteriorEnv);
   }
 });
+
+test("buscar usa el contexto de la pieza, filtra documentos y entrega metadatos editoriales", async () => {
+  const anteriorFetch = globalThis.fetch;
+  const anteriorEnv = { ...process.env };
+  const contenido = (valor: unknown, sha = "sha-lectura") => ({ encoding: "base64", content: Buffer.from(JSON.stringify(valor)).toString("base64"), sha });
+  const consultas: string[] = [];
+  process.env.SESSION_SECRET = "secreto-arte";
+  process.env.GITHUB_TOKEN = "prueba"; process.env.GITHUB_OWNER = "dueno"; process.env.GITHUB_REPO = "repo";
+  delete process.env.OPENAI_API_KEY;
+  globalThis.fetch = (async (url: string | URL) => {
+    const ruta = String(url);
+    if (ruta.includes("data/lotes/index.json")) return new Response(JSON.stringify(contenido({ lotes: [{ id: "2026-W36", file: "data/lotes/lote.json" }] })), { status: 200 });
+    if (ruta.includes("data/lotes/lote.json")) return new Response(JSON.stringify(contenido({ piezas: [{ ref: "data/piezas/pieza.json" }] })), { status: 200 });
+    if (ruta.includes("data/piezas/pieza.json")) return new Response(JSON.stringify(contenido({ id: "pieza", tema: "Discernir acompañado", titulo: "Un sacerdote para discernir", caption: "La oración pide acompañamiento.", santos: [], slides: [] })), { status: 200 });
+    if (ruta.includes("data/revisiones/")) return new Response("", { status: 404 });
+    if (ruta.includes("commons.wikimedia.org")) {
+      consultas.push(decodeURIComponent(new URL(ruta).searchParams.get("gsrsearch") || ""));
+      return new Response(JSON.stringify({ query: { pages: {
+        1: { pageid: 1, title: "Catholic Encyclopedia.pdf", categories: [], imageinfo: [{ thumburl: "https://img/1", mime: "image/jpeg", extmetadata: { LicenseShortName: { value: "Public domain" } } }] },
+        2: { pageid: 2, title: "Catholic priest praying in church painting", categories: [{ title: "Religious paintings" }], imageinfo: [{ thumburl: "https://img/2", mime: "image/jpeg", width: 1800, height: 2400, descriptionurl: "https://commons/2", extmetadata: { LicenseShortName: { value: "CC BY-SA 4.0" }, ObjectName: { value: "Catholic priest praying" } } }] },
+      } } }), { status: 200 });
+    }
+    throw new Error(`Ruta no esperada: ${ruta}`);
+  }) as typeof fetch;
+  try {
+    const res = respuesta();
+    await buscar(req({ lote_id: "2026-W36", pieza_id: "pieza", destino: "post", consulta: "Sacerdote", referencias: [], filtros: { licencia: "todas", orientacion: "vertical", tipo: "todos", alta_resolucion: true } }, true), res as any);
+    assert.equal(res.out.status, 200);
+    assert.ok(consultas.length >= 1);
+    assert.match(consultas[0], /Catholic confession/i);
+    assert.equal(res.out.body.candidatos.length, 1);
+    assert.equal(res.out.body.candidatos[0].fuente, "Wikimedia Commons");
+    assert.equal(res.out.body.candidatos[0].orientacion, "vertical");
+  } finally {
+    globalThis.fetch = anteriorFetch;
+    for (const clave of Object.keys(process.env)) if (!(clave in anteriorEnv)) delete process.env[clave];
+    Object.assign(process.env, anteriorEnv);
+  }
+});
+
+test("buscar traduce un fallo de red de Commons sin exponer el mensaje nativo", async () => {
+  const anteriorFetch = globalThis.fetch;
+  const anteriorEnv = { ...process.env };
+  const contenido = (valor: unknown, sha = "sha-lectura") => ({ encoding: "base64", content: Buffer.from(JSON.stringify(valor)).toString("base64"), sha });
+  process.env.SESSION_SECRET = "secreto-arte";
+  process.env.GITHUB_TOKEN = "prueba"; process.env.GITHUB_OWNER = "dueno"; process.env.GITHUB_REPO = "repo";
+  delete process.env.OPENAI_API_KEY;
+  globalThis.fetch = (async (url: string | URL) => {
+    const ruta = String(url);
+    if (ruta.includes("data/lotes/index.json")) return new Response(JSON.stringify(contenido({ lotes: [{ id: "2026-W36", file: "data/lotes/lote.json" }] })), { status: 200 });
+    if (ruta.includes("data/lotes/lote.json")) return new Response(JSON.stringify(contenido({ piezas: [{ ref: "data/piezas/pieza.json" }] })), { status: 200 });
+    if (ruta.includes("data/piezas/pieza.json")) return new Response(JSON.stringify(contenido({ id: "pieza", tema: "Discernir acompañado", slides: [] })), { status: 200 });
+    if (ruta.includes("data/revisiones/")) return new Response("", { status: 404 });
+    if (ruta.includes("commons.wikimedia.org")) throw new TypeError("Load failed");
+    throw new Error(`Ruta no esperada: ${ruta}`);
+  }) as typeof fetch;
+  try {
+    const res = respuesta();
+    await buscar(req({ lote_id: "2026-W36", pieza_id: "pieza", destino: "post", consulta: "Sacerdote", referencias: [] }, true), res as any);
+    assert.equal(res.out.status, 503);
+    assert.equal(res.out.body.error, "No pudimos conectarnos con la fuente de imágenes. Reintentá en unos segundos.");
+    assert.doesNotMatch(res.out.body.error, /Load failed/i);
+  } finally {
+    globalThis.fetch = anteriorFetch;
+    for (const clave of Object.keys(process.env)) if (!(clave in anteriorEnv)) delete process.env[clave];
+    Object.assign(process.env, anteriorEnv);
+  }
+});

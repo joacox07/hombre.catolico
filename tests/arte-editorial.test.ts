@@ -5,6 +5,7 @@ import vm from "node:vm";
 import { buscarObrasPublicas, buscarObrasPublicasPorConsultas } from "../pipeline/arte-descarga.ts";
 import { artePendienteDeRender, referenciasValidas, validarSolicitudArte } from "../api/_lib/arte-editorial.ts";
 import { consultasWikimedia } from "../pipeline/openai.ts";
+import { consultasEditorialesBase } from "../pipeline/perfil-visual.ts";
 
 const referencia = "data:image/png;base64,aGVsbG8=";
 
@@ -45,12 +46,53 @@ test("la intención en español se normaliza a búsquedas breves sin pilar agreg
     return new Response(JSON.stringify({ choices: [{ message: { content: '{"consultas":["candlelit carpenter","quiet woodworking workshop"]}' } }] }), { status: 200 });
   }) as typeof fetch;
   try {
-    assert.deepEqual(await consultasWikimedia("hombre trabajando madera a la luz de vela", []), ["candlelit carpenter", "quiet woodworking workshop", "hombre trabajando madera a la luz de vela"]);
+    assert.deepEqual(await consultasWikimedia("hombre trabajando madera a la luz de vela", []), ["candlelit carpenter", "quiet woodworking workshop", "hombre trabajando madera a la luz de vela classical painting", "hombre trabajando madera a la luz de vela historical religious art"]);
   } finally {
     globalThis.fetch = fetchAnterior;
     if (keyAnterior === undefined) delete process.env.OPENAI_API_KEY;
     else process.env.OPENAI_API_KEY = keyAnterior;
   }
+});
+
+test("una búsqueda genérica se enriquece con escenas católicas y no queda literal", () => {
+  const consultas = consultasEditorialesBase({ consulta: "Sacerdote", destino: "post", titulo: "Discernir acompañado", caption: "Un sacerdote ayuda a discernir." });
+  assert.deepEqual(consultas, [
+    "Catholic confession painting",
+    "priest spiritual direction classical painting",
+    "Catholic priest at altar painting",
+  ]);
+});
+
+test("las intenciones editoriales frecuentes generan búsquedas específicas", () => {
+  const casos: Array<[string, string]> = [
+    ["San José trabajador", "Saint Joseph carpenter"],
+    ["Padre enseñando a rezar a su hijo", "father teaching son prayer"],
+    ["Confesión", "Catholic confession"],
+    ["Virtud de la templanza", "man praying"],
+    ["Matrimonio católico", "Christian marriage"],
+    ["Hombre rezando antes de tomar una decisión", "man praying"],
+    ["Sacerdote celebrando la Misa", "Catholic priest at altar painting"],
+  ];
+  for (const [consulta, esperada] of casos) {
+    const consultas = consultasEditorialesBase({ consulta, destino: "post" });
+    assert.ok(consultas.some((valor) => valor.includes(esperada)), `${consulta} debería incluir ${esperada}`);
+  }
+});
+
+test("descarta documentos escaneados y ordena una obra apta por puntaje editorial", async () => {
+  const anterior = globalThis.fetch;
+  globalThis.fetch = (async () => new Response(JSON.stringify({ query: { pages: {
+    1: { pageid: 1, title: "Catholic Encyclopedia, volume 9.djvu", categories: [], imageinfo: [{ thumburl: "https://img/1", mime: "image/jpeg", width: 900, height: 1300, extmetadata: { LicenseShortName: { value: "Public domain" } } }] },
+    2: { pageid: 2, title: "Catholic priest at altar, oil painting", categories: [{ title: "Paintings of Catholic Mass" }], imageinfo: [{ thumburl: "https://img/2", mime: "image/jpeg", width: 1800, height: 2400, extmetadata: { ObjectName: { value: "Catholic priest at altar" }, LicenseShortName: { value: "Public domain" }, DateTimeOriginal: { value: "1884" } } }] },
+  } } }), { status: 200 })) as typeof fetch;
+  try {
+    const obras = await buscarObrasPublicas("Catholic priest celebrating Mass oil painting", 12, { destino: "post", texto: "sacerdote misa altar" });
+    assert.equal(obras.length, 1);
+    assert.equal(obras[0].titulo, "Catholic priest at altar");
+    assert.equal(obras[0].orientacion, "vertical");
+    assert.equal(obras[0].periodo, "1884");
+    assert.ok(obras[0].puntuacion >= 70);
+  } finally { globalThis.fetch = anterior; }
 });
 
 test("la solicitud limita referencias y exige confirmación de derechos", () => {

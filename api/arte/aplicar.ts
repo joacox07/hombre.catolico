@@ -1,4 +1,4 @@
-import { descargarObraPublica } from "../../pipeline/arte-descarga.js";
+import { descargarObraPublica, ErrorFuenteArte } from "../../pipeline/arte-descarga.js";
 import { piezaVersionada } from "../_lib/github.js";
 import { guardarArteYRender } from "../_lib/arte-guardar.js";
 import { validarSolicitudArte } from "../_lib/arte-editorial.js";
@@ -26,6 +26,9 @@ export default async function handler(req: any, res: any) {
     }));
   } catch (error: any) {
     if (error?.status === 409) return responder(res, 409, { error: "La pieza cambió en otro dispositivo. Recargá el lote." });
+    if (error instanceof ErrorFuenteArte) {
+      return responder(res, error.codigo === "timeout" ? 504 : 503, { error: error.codigo === "timeout" ? "La descarga de la obra tardó demasiado. Reintentá en unos segundos." : error.codigo === "saturado" ? "La fuente de imágenes está temporalmente ocupada. Reintentá en unos segundos." : "No pudimos descargar la obra desde su fuente original. Reintentá en unos segundos." });
+    }
     responder(res, /inválid|Escribí|referencias|Lote|Pieza|Elegí|Confirmá/.test(String(error?.message)) ? 400 : 502, { error: error.message || "No se pudo aplicar el arte." });
   }
 }

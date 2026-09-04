@@ -57,12 +57,9 @@ self.addEventListener("fetch", (event) => {
     return;
   }
   if (url.origin === self.location.origin && shellUrls.includes(url.pathname)) {
-    event.respondWith((async () => {
-      const cache = await caches.open(SHELL);
-      const guardada = await cache.match(request);
-      if (guardada) return guardada;
-      return redLuegoCache(request, SHELL);
-    })());
+    // La aplicación instalada recibe correcciones apenas recupera conexión;
+    // si no hay red conserva la última versión íntegra que sí cargó.
+    event.respondWith(redLuegoCache(request, SHELL));
   }
 });
 

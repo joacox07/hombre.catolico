@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="Hombre Católico" />
 <title>Mesa editorial — @hombre.catolico</title>
 <link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="icons/icon-192.png" type="image/png" />
 <link rel="apple-touch-icon" href="icons/icon-180.png" />
 <link rel="stylesheet" href="/templates/tokens.css" />
 <link rel="stylesheet" href="/templates/pieza.css" />
@@ -23,7 +24,7 @@
       <p>Ingresá la clave para revisar y descargar los lotes desde tu celular.</p>
       <label for="password">Clave</label>
       <div class="password-field">
-        <input id="password" name="password" type="password" autocomplete="current-password" required />
+        <input id="password" name="password" type="password" autocomplete="current-password" aria-describedby="login-error" required />
         <button class="password-toggle" id="password-toggle" type="button" aria-controls="password" aria-pressed="false">Mostrar</button>
       </div>
       <button type="submit">Entrar</button>

@@ -1,8 +1,21 @@
+import { PERFIL_VISUAL, resumenPerfilVisual, contextoVisualDePieza } from "../../pipeline/perfil-visual.js";
+
 export const DESTINOS_ARTE = new Set(["post", "reel"]);
 const DATA_IMAGE = /^data:(image\/(?:png|jpeg|webp));base64,([A-Za-z0-9+/=]+)$/;
 const MAX_REFERENCIAS = 3;
 const MAX_REFERENCIA_BYTES = 400_000;
 const MAX_REFERENCIAS_BYTES = 1_000_000;
+
+function filtrosValidos(valor: any) {
+  const filtros = valor && typeof valor === "object" ? valor : {};
+  const licencia = ["todas", "dominio_publico", "creative_commons"].includes(filtros.licencia) ? filtros.licencia : "todas";
+  const orientacion = ["todas", "vertical", "horizontal", "cuadrada"].includes(filtros.orientacion) ? filtros.orientacion : "todas";
+  const tipo = ["todos", "pintura", "grabado", "arquitectura", "escultura", "fotografia", "obra"].includes(filtros.tipo) ? filtros.tipo : "todos";
+  if (("licencia" in filtros && licencia !== filtros.licencia) || ("orientacion" in filtros && orientacion !== filtros.orientacion) || ("tipo" in filtros && tipo !== filtros.tipo) || ("alta_resolucion" in filtros && typeof filtros.alta_resolucion !== "boolean")) {
+    throw new Error("Filtros de arte inválidos.");
+  }
+  return { licencia, orientacion, tipo, alta_resolucion: filtros.alta_resolucion === true };
+}
 
 export function referenciasValidas(valor: unknown): string[] {
   if (valor == null) return [];
@@ -33,17 +46,20 @@ export function validarSolicitudArte(cuerpo: any) {
   if (referencias.length && cuerpo?.derechos_referencias !== true) {
     throw new Error("Confirmá que podés usar las referencias para orientar una creación original.");
   }
-  return { lote_id, pieza_id, destino: destino as "post" | "reel", consulta, referencias };
+  return { lote_id, pieza_id, destino: destino as "post" | "reel", consulta, referencias, filtros: filtrosValidos(cuerpo?.filtros) };
 }
 
 export function promptEditorial(pieza: any, consulta: string, destino: "post" | "reel"): string {
   const formato = destino === "reel" ? "vertical 9:16, con zona central despejada para portada de Reel" : "vertical 4:5, con espacio negativo para texto";
+  const contexto = contextoVisualDePieza(pieza, consulta, destino);
   return [
-    "Creá una imagen editorial original para @hombre.catolico.",
-    `Tema: ${pieza?.tema || pieza?.titulo || consulta}. Pedido del editor: ${consulta}.`,
+    `Creá una imagen editorial original para ${PERFIL_VISUAL.cuenta}.`,
+    resumenPerfilVisual(contexto),
+    `Pedido del editor: ${consulta}.`,
     `Formato: ${formato}.`,
-    "Estética: imagen evocadora, sobria y fílmica; luz cálida o chiaroscuro; crema, dorado, tabaco y negro; textura de grano; sin texto, letras, logos ni marcas.",
-    "No copies las referencias ni reproduzcas una obra reconocible. No representes santos identificables ni presentes la imagen como arte histórico.",
+    `Estética obligatoria: ${PERFIL_VISUAL.preferir.join(", ")}; paleta ${PERFIL_VISUAL.paleta.join(", ")}.`,
+    `Evitá: ${PERFIL_VISUAL.evitar.join(", ")}; anatomía o manos incorrectas, objetos litúrgicos inventados y símbolos religiosos incoherentes.`,
+    "Sin texto, letras, logos ni marcas. No copies las referencias ni reproduzcas una obra reconocible. No representes santos identificables ni presentes la imagen como arte histórico.",
   ].join(" ");
 }
 

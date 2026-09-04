@@ -41,8 +41,11 @@ minutos. **Nada se publica en Instagram.**
 ## Paso 3 — Ver el resultado
 
 - Los PNG y el lote quedan commiteados en `data/lotes/`, `data/piezas/` y `assets/arte/`.
-- Para verlos en el **panel** (el "clon de Instagram"), falta publicar la web en GitHub Pages
-  — es el próximo paso. Mientras tanto, los archivos generados ya están en el repo.
+- El **panel** se publica en Vercel. Configurá las variables privadas de `.env.example` y abrí
+  el dominio del proyecto. Allí podés revisar el último lote, consultar lotes anteriores,
+  registrar una decisión editorial, preparar arte y descargar el ZIP de cada pieza.
+- Para probarlo localmente sin acciones privadas: `npm run panel` y abrí
+  `http://localhost:5173/panel/`. El visor usa los lotes reales ya presentes en `data/`.
 
 ## Buscador y creador de arte en el panel
 
@@ -54,6 +57,11 @@ Podés subir hasta tres referencias para orientar una búsqueda o crear una imag
 referencias no se guardan. Para un santo concreto, el panel no genera una figura IA: pide elegir
 arte histórico verificable. Al aplicar, la pieza se bloquea hasta que GitHub Actions re-renderice
 el post o la portada Reel y actualice el ZIP.
+
+Además configurá `PANEL_PASSWORD`, `SESSION_SECRET`, `GITHUB_TOKEN`, `GITHUB_OWNER`,
+`GITHUB_REPO` y `GITHUB_BRANCH`. El token debe ser fine-grained, limitado a este repositorio y
+con sólo los permisos necesarios para contenido y Actions. Nunca uses estas variables en el
+cliente ni las agregues al repositorio.
 
 ## Notas honestas
 

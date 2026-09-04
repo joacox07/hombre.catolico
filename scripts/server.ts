@@ -3,7 +3,7 @@
 import http from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { dirname, resolve, join, normalize, extname } from "node:path";
+import { dirname, resolve, join, relative, isAbsolute, extname } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 export const ROOT = resolve(__dirname, "..");
@@ -24,13 +24,22 @@ const MIME: Record<string, string> = {
 
 export type RunningServer = { server: http.Server; port: number; url: string };
 
+/** Devuelve una ruta dentro de `root`, o `null` si el pedido intenta salir. */
+export function resolverArchivoSeguro(root: string, reqPath: string): string | null {
+  const rutaRelativa = reqPath.replace(/^[\\/]+/, "");
+  const filePath = resolve(root, rutaRelativa);
+  const fueraDeRoot = relative(root, filePath);
+  return fueraDeRoot.startsWith("..") || isAbsolute(fueraDeRoot) ? null : filePath;
+}
+
 export function startServer(port = 0, root = ROOT): Promise<RunningServer> {
   const server = http.createServer(async (req, res) => {
     try {
       const reqPath = decodeURIComponent((req.url || "/").split("?")[0]);
-      // Evita traversal: normaliza y confirma que quede dentro de root.
-      let filePath = normalize(join(root, reqPath));
-      if (!filePath.startsWith(root)) {
+      // Evita traversal: un prefijo de texto no alcanza (`/repo` también es
+      // prefijo de `/repo-vecino`). `relative` confirma pertenencia real.
+      let filePath = resolverArchivoSeguro(root, reqPath);
+      if (!filePath) {
         res.writeHead(403).end("Forbidden");
         return;
       }
